@@ -42,40 +42,61 @@
       #printArea { position: absolute; left: 0; top: 0; width: 100%; }
       .no-print { display: none !important; }
     }
+    /* Mobile usability enhancements: Prevent zoom on focus in iOS and increase touch targets */
+    @media (max-width: 640px) {
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+    }
   </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col">
+<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col pb-16 sm:pb-0">
 
   <!-- Top Header Navigation -->
   <header class="bg-indigo-700 text-white shadow-lg sticky top-0 z-30 no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <div class="bg-white/10 p-2 rounded-lg backdrop-blur-sm">
-          <i class="fa-solid fa-tags text-2xl text-amber-300"></i>
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-0 sm:h-16 flex flex-col sm:flex-row items-center justify-between gap-2.5">
+      
+      <div class="flex items-center justify-between w-full sm:w-auto">
+        <div class="flex items-center space-x-2.5">
+          <div class="bg-white/10 p-2 rounded-lg backdrop-blur-sm">
+            <i class="fa-solid fa-tags text-xl sm:text-2xl text-amber-300"></i>
+          </div>
+          <div>
+            <h1 class="font-bold text-base sm:text-lg leading-tight" id="businessTitleHeader">Control de Pedidos</h1>
+            <p class="text-[11px] sm:text-xs text-indigo-200">Etiquetas, Toppers, Stickers y Personalizados</p>
+          </div>
         </div>
-        <div>
-          <h1 class="font-bold text-lg leading-tight" id="businessTitleHeader">Control de Pedidos</h1>
-          <p class="text-xs text-indigo-200">Etiquetas, Toppers, Stickers y Personalizados</p>
-        </div>
+
+        <!-- Direct WhatsApp Header Contact -->
+        <a href="https://wa.me/524426004406" target="_blank" class="flex sm:hidden items-center space-x-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-2.5 py-1.5 rounded-lg font-semibold shadow-sm transition">
+          <i class="fa-brands fa-whatsapp text-sm"></i>
+          <span>442 600 4406</span>
+        </a>
       </div>
 
-      <div class="flex items-center space-x-2 sm:space-x-3">
-        <button onclick="loadRealImageData()" class="bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm px-3 py-2 rounded-lg font-medium transition flex items-center space-x-1.5 shadow-sm" title="Cargar los 6 pedidos de la lista de imagen">
+      <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto overflow-x-auto gap-2 py-0.5">
+        <!-- WhatsApp Contact Button (Desktop / Tablet) -->
+        <a href="https://wa.me/524426004406" target="_blank" class="hidden sm:flex items-center space-x-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm px-3 py-2 rounded-lg font-semibold shadow-sm transition whitespace-nowrap">
+          <i class="fa-brands fa-whatsapp text-base"></i>
+          <span>WhatsApp: 442 600 4406</span>
+        </a>
+
+        <button onclick="loadRealImageData()" class="bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm px-2.5 sm:px-3 py-2 rounded-lg font-medium transition flex items-center space-x-1 shadow-sm whitespace-nowrap" title="Cargar los pedidos de ejemplo">
           <i class="fa-solid fa-cloud-arrow-down"></i>
-          <span class="hidden sm:inline">Cargar Pedidos de Imagen</span>
+          <span class="hidden md:inline">Cargar Pedidos</span>
         </button>
 
-        <button onclick="openCatalogModal()" class="bg-indigo-800 hover:bg-indigo-900 text-xs sm:text-sm px-3 py-2 rounded-lg font-medium transition flex items-center space-x-1.5 border border-indigo-500 shadow-sm" title="Catálogo de Productos y Precios">
+        <button onclick="openCatalogModal()" class="bg-indigo-800 hover:bg-indigo-900 text-xs sm:text-sm px-2.5 sm:px-3 py-2 rounded-lg font-medium transition flex items-center space-x-1 border border-indigo-500 shadow-sm whitespace-nowrap">
           <i class="fa-solid fa-book-open text-amber-300"></i>
-          <span class="hidden sm:inline">Catálogo / Precios</span>
+          <span>Catálogo</span>
         </button>
 
-        <button onclick="exportToCSV()" class="bg-indigo-600 hover:bg-indigo-800 text-xs sm:text-sm px-3 py-2 rounded-lg font-medium transition flex items-center space-x-1 border border-indigo-500 shadow-sm" title="Exportar a Excel/CSV">
+        <button onclick="exportToCSV()" class="bg-indigo-600 hover:bg-indigo-800 text-xs sm:text-sm px-2.5 sm:px-3 py-2 rounded-lg font-medium transition flex items-center space-x-1 border border-indigo-500 shadow-sm whitespace-nowrap">
           <i class="fa-solid fa-file-excel text-emerald-400"></i>
           <span class="hidden md:inline">Exportar</span>
         </button>
 
-        <button onclick="openOrderModal()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs sm:text-sm px-3 sm:px-4 py-2 rounded-lg shadow-md transition flex items-center space-x-2">
+        <button onclick="openOrderModal()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs sm:text-sm px-3 sm:px-4 py-2 rounded-lg shadow-md transition flex items-center space-x-1.5 whitespace-nowrap">
           <i class="fa-solid fa-plus text-sm"></i>
           <span>Nuevo Pedido</span>
         </button>
@@ -83,45 +104,24 @@
     </div>
   </header>
 
+  <!-- Sticky Bottom Navigation Bar for Mobile -->
+  <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-2 z-40 sm:hidden flex items-center justify-around shadow-lg no-print">
+    <a href="https://wa.me/524426004406" target="_blank" class="flex flex-col items-center text-emerald-600 font-medium text-[11px]">
+      <i class="fa-brands fa-whatsapp text-lg"></i>
+      <span>WhatsApp</span>
+    </a>
+    <button onclick="openOrderModal()" class="flex items-center space-x-2 bg-emerald-500 text-white font-semibold text-xs px-4 py-2 rounded-full shadow-md">
+      <i class="fa-solid fa-plus"></i>
+      <span>Nuevo Pedido</span>
+    </button>
+    <button onclick="openCatalogModal()" class="flex flex-col items-center text-indigo-700 font-medium text-[11px]">
+      <i class="fa-solid fa-book-open text-lg"></i>
+      <span>Catálogo</span>
+    </button>
+  </div>
+
   <!-- Main Container -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-
-    <!-- Metrics / Summary Cards -->
-    <section class="grid grid-cols-2 md:grid-cols-4 gap-4 no-print">
-      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
-        <div class="p-3 bg-blue-50 text-blue-600 rounded-lg">
-          <i class="fa-solid fa-receipt text-xl"></i>
-        </div>
-        <div>
-          <p class="text-xs text-slate-500 font-medium">Total Pedidos</p>
-          <h3 class="text-xl sm:text-2xl font-bold text-slate-800" id="statTotalOrders">0</h3>
-        </div>
-      </div>
-
-      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
-        <div class="p-3 bg-indigo-50 text-indigo-600 rounded-lg">
-          <i class="fa-solid fa-file-invoice-dollar text-xl"></i>
-        </div>
-        <div>
-          <p class="text-xs text-slate-500 font-medium">Ventas Totales</p>
-          <h3 class="text-xl sm:text-2xl font-bold text-slate-800" id="statTotalSales">$0.00</h3>
-        </div>
-      </div>
-
-      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
-        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-lg">
-          <i class="fa-solid fa-hand-holding-dollar text-xl"></i>
-        </div>
-        <div>
-          <p class="text-xs text-slate-500 font-medium">Anticipos Cobrados</p>
-          <h3 class="text-xl sm:text-2xl font-bold text-emerald-600" id="statTotalAdvances">$0.00</h3>
-        </div>
-      </div>
-
-      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
-        <div class="p-3 bg-amber-50 text-amber-600 rounded-lg">
-          <i class="fa-solid fa-clock-rotate-left text-xl"></i>
-        </div>
+  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-6">
         <div>
           <p class="text-xs text-slate-500 font-medium">Pendiente por Cobrar</p>
           <h3 class="text-xl sm:text-2xl font-bold text-amber-600" id="statPendingBalance">$0.00</h3>
@@ -184,137 +184,143 @@
       <div class="hidden lg:block overflow-x-auto">
         <table class="w-full text-left text-sm">
           <thead class="bg-slate-100 text-slate-600 uppercase text-xs font-semibold border-b border-slate-200">
-            <tr>
-              <th class="py-3 px-4">Fecha</th>
-              <th class="py-3 px-4">Categoría</th>
-              <th class="py-3 px-4">Cliente / Contacto</th>
-              <th class="py-3 px-4">Producto / Detalles</th>
-              <th class="py-3 px-4 text-right">Costo Total</th>
-              <th class="py-3 px-4 text-right">Anticipo</th>
-              <th class="py-3 px-4 text-right">Restante</th>
-              <th class="py-3 px-4 text-center">Entrega</th>
-              <th class="py-3 px-4 text-center">Estado</th>
-              <th class="py-3 px-4 text-center">Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="ordersTableBody" class="divide-y divide-slate-200">
-            <!-- Dynamic rows inserted by JavaScript -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Mobile / Tablet Card View -->
-      <div id="ordersCardsContainer" class="lg:hidden divide-y divide-slate-200">
-        <!-- Dynamic cards inserted by JavaScript -->
-      </div>
-
-      <!-- Empty State View -->
-      <div id="emptyState" class="hidden p-12 text-center text-slate-500">
-        <i class="fa-solid fa-folder-open text-4xl text-slate-300 mb-3"></i>
-        <p class="font-medium text-slate-600">No se encontraron pedidos registrados</p>
-        <p class="text-xs text-slate-400 mt-1">Haz clic en "+ Nuevo Pedido" para registrar tu primer venta.</p>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Modal: Crear / Editar Pedido -->
-  <div id="orderModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden no-print">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-xl overflow-hidden flex flex-col max-h-[92vh]">
+  <!-- Modal: Crear / Editar Pedido con Carrito de Productos -->
+  <div id="orderModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 hidden no-print">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[94vh]">
       <!-- Modal Header -->
-      <div class="bg-slate-800 text-white px-6 py-4 flex items-center justify-between">
-        <h3 class="font-bold text-base flex items-center gap-2" id="modalOrderTitle">
+      <div class="bg-slate-800 text-white px-4 sm:px-6 py-3.5 flex items-center justify-between">
+        <h3 class="font-bold text-sm sm:text-base flex items-center gap-2" id="modalOrderTitle">
           <i class="fa-solid fa-cart-plus text-emerald-400"></i>
           <span>Registrar Nuevo Pedido</span>
         </h3>
-        <button onclick="closeOrderModal()" class="text-slate-400 hover:text-white transition text-lg">
+        <button onclick="closeOrderModal()" class="text-slate-400 hover:text-white transition text-xl p-1">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
 
       <!-- Modal Body / Form -->
-      <form id="orderForm" onsubmit="saveOrder(event)" class="p-6 space-y-4 overflow-y-auto flex-1 text-sm">
+      <form id="orderForm" onsubmit="saveOrder(event)" class="p-3.5 sm:p-6 space-y-4 overflow-y-auto flex-1 text-xs sm:text-sm">
         <input type="hidden" id="orderId">
 
-        <!-- Selección de Categoría y Producto Preestablecido -->
-        <div class="bg-slate-50 p-3.5 rounded-xl border border-indigo-100 space-y-3">
-          <p class="text-xs font-bold text-indigo-700 uppercase tracking-wider flex items-center gap-1.5">
-            <i class="fa-solid fa-bolt text-amber-500"></i> Seleccionar de Precios Preestablecidos
-          </p>
+        <!-- Cliente y Contacto -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Nombre del Cliente <span class="text-rose-500">*</span></label>
+            <input type="text" id="clientName" required placeholder="Ej. Maria López" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-sm">
+          </div>
+          <div>
+            <label class="block font-medium text-slate-600 mb-1">Teléfono / WhatsApp <span class="text-slate-400 font-normal">(Opcional)</span></label>
+            <input type="tel" id="clientPhone" placeholder="Ej. 5512345678" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-sm">
+          </div>
+        </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block font-semibold text-slate-700 mb-1 text-xs">Categoría *</label>
-              <select id="modalCategorySelect" onchange="onModalCategoryChange()" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs font-medium focus:ring-2 focus:ring-indigo-500 bg-white">
+        <!-- Carrito de Productos Multi-Item -->
+        <div class="bg-slate-50 p-3 sm:p-4 rounded-xl border border-indigo-100 space-y-3">
+          <div class="flex items-center justify-between">
+            <p class="text-xs font-bold text-indigo-800 uppercase tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-cart-shopping text-indigo-600"></i> Productos del Pedido <span class="text-rose-500">*</span>
+            </p>
+            <span class="text-[11px] text-slate-500 font-medium" id="cartItemCount">0 productos agregados</span>
+          </div>
+
+          <!-- Selector de Catálogo o Producto Personalizado -->
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 bg-white p-2.5 rounded-lg border border-slate-200">
+            <div class="sm:col-span-4">
+              <label class="block font-semibold text-slate-700 mb-0.5 text-[11px]">Categoría</label>
+              <select id="modalCategorySelect" onchange="onModalCategoryChange()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-medium bg-slate-50">
                 <option value="Etiquetas Escolares">🎒 Etiquetas Escolares</option>
                 <option value="Etiquetas para Ropa">👕 Etiquetas Ropa / Uniformes</option>
                 <option value="Toppers">🎂 Toppers</option>
                 <option value="Stickers Circulares">🔴 Stickers Circulares</option>
-                <option value="Stickers Silueta">✂️ Stickers Silueta / Troquelados</option>
-                <option value="Otros">✨ Otro / Especial</option>
+                <option value="Stickers Silueta">✂️ Stickers Silueta</option>
+                <option value="Otros">✨ Otro / Personalizado</option>
               </select>
             </div>
 
-            <div>
-              <label class="block font-semibold text-slate-700 mb-1 text-xs">Catálogo de Productos *</label>
-              <select id="modalPresetProductSelect" onchange="onPresetProductSelect()" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs font-medium focus:ring-2 focus:ring-indigo-500 bg-white">
-                <!-- Populated dynamically -->
+            <div class="sm:col-span-8">
+              <label class="block font-semibold text-slate-700 mb-0.5 text-[11px]">Catálogo Rápido</label>
+              <select id="modalPresetProductSelect" onchange="onPresetProductSelect()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-medium bg-slate-50">
+                <!-- Dynamic -->
               </select>
+            </div>
+
+            <div class="sm:col-span-6">
+              <label class="block font-semibold text-slate-700 mb-0.5 text-[11px]">Nombre del Producto / Detalle</label>
+              <input type="text" id="cartInputName" placeholder="Ej. Paquete Básico Spider-Man" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs">
+            </div>
+
+            <div class="sm:col-span-2">
+              <label class="block font-semibold text-slate-700 mb-0.5 text-[11px]">Cant.</label>
+              <input type="number" id="cartInputQty" min="1" value="1" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-semibold text-center">
+            </div>
+
+            <div class="sm:col-span-2">
+              <label class="block font-semibold text-slate-700 mb-0.5 text-[11px]">Precio C/U ($)</label>
+              <input type="number" step="0.01" min="0" id="cartInputPrice" placeholder="0.00" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold text-slate-800">
+            </div>
+
+            <div class="sm:col-span-2 flex items-end">
+              <button type="button" onclick="addCartItemFromInput()" class="w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-lg transition shadow-sm flex items-center justify-center gap-1">
+                <i class="fa-solid fa-plus"></i> Agregar
+              </button>
+            </div>
+          </div>
+
+          <!-- Tabla / Lista del Carrito -->
+          <div class="border border-slate-200 rounded-lg overflow-hidden bg-white max-h-48 overflow-y-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="py-2 px-3">Producto</th>
+                  <th class="py-2 px-2 text-center">Cant.</th>
+                  <th class="py-2 px-2 text-right">Precio</th>
+                  <th class="py-2 px-2 text-right">Subtotal</th>
+                  <th class="py-2 px-2 text-center"><i class="fa-solid fa-trash-can"></i></th>
+                </tr>
+              </thead>
+              <tbody id="cartItemsTableBody" class="divide-y divide-slate-100">
+                <!-- Dynamic cart rows -->
+              </tbody>
+            </table>
+            <div id="emptyCartMessage" class="p-3 text-center text-slate-400 text-xs italic">
+              No hay productos agregados al pedido. Agrega uno arriba.
             </div>
           </div>
         </div>
 
-        <!-- Cliente & Contacto -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Costos y Anticipo (Requeridos) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
           <div>
-            <label class="block font-semibold text-slate-700 mb-1">Nombre del Cliente *</label>
-            <input type="text" id="clientName" required placeholder="Ej. Maria López" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            <label class="block font-semibold text-slate-700 mb-1">Costo Total ($) <span class="text-rose-500">*</span></label>
+            <input type="number" step="0.01" min="0" id="totalCost" required oninput="calculateBalance()" placeholder="0.00" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-bold text-slate-800 focus:ring-2 focus:ring-indigo-500 text-sm">
           </div>
           <div>
-            <label class="block font-semibold text-slate-700 mb-1">Teléfono / WhatsApp</label>
-            <input type="tel" id="clientPhone" placeholder="Ej. 5512345678" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
-          </div>
-        </div>
-
-        <!-- Nombre del Producto / Descripción personalizada -->
-        <div>
-          <label class="block font-semibold text-slate-700 mb-1">Descripción del Producto / Detalle *</label>
-          <input type="text" id="productName" required placeholder="Ej. Paquete Escolar Tema Spider-Man - Niño Mateo" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 font-medium">
-        </div>
-
-        <!-- Costos y Anticipo -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-slate-50 p-3 rounded-xl border border-slate-200">
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Costo Total ($) *</label>
-            <input type="number" step="0.01" min="0" id="totalCost" required oninput="calculateBalance()" placeholder="0.00" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-bold text-slate-800 focus:ring-2 focus:ring-indigo-500">
+            <label class="block font-semibold text-slate-700 mb-1">Anticipo Dado ($) <span class="text-rose-500">*</span></label>
+            <input type="number" step="0.01" min="0" id="advancePayment" required oninput="calculateBalance()" placeholder="0.00" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-bold text-emerald-600 focus:ring-2 focus:ring-indigo-500 text-sm">
           </div>
           <div>
-            <label class="block font-semibold text-slate-700 mb-1">Anticipo Dado ($) *</label>
-            <input type="number" step="0.01" min="0" id="advancePayment" required oninput="calculateBalance()" placeholder="0.00" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-bold text-emerald-600 focus:ring-2 focus:ring-indigo-500">
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Saldo Restante</label>
-            <input type="text" id="remainingBalanceDisplay" readonly value="$0.00" class="w-full px-3 py-2 border border-slate-200 bg-slate-100 rounded-lg font-bold text-amber-600 cursor-not-allowed">
+            <label class="block font-semibold text-slate-700 mb-1">Saldo Restante <span class="text-rose-500">*</span></label>
+            <input type="text" id="remainingBalanceDisplay" readonly value="$0.00" class="w-full px-3 py-2 border border-slate-200 bg-slate-100 rounded-lg font-bold text-amber-600 cursor-not-allowed text-sm">
           </div>
         </div>
 
-        <!-- Fechas (Pedido y Entrega) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Fechas (Opcionales) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold text-slate-700 mb-1">Fecha de Pedido *</label>
-            <input type="date" id="orderDate" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            <label class="block font-medium text-slate-600 mb-1">Fecha de Pedido <span class="text-slate-400 font-normal">(Opcional)</span></label>
+            <input type="date" id="orderDate" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-sm">
           </div>
           <div>
-            <label class="block font-semibold text-slate-700 mb-1">Fecha Promesa de Entrega</label>
-            <input type="date" id="deliveryDate" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            <label class="block font-medium text-slate-600 mb-1">Fecha de Entrega <span class="text-slate-400 font-normal">(Opcional)</span></label>
+            <input type="date" id="deliveryDate" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-sm">
           </div>
         </div>
 
-        <!-- Estado de Entrega & Notas -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Estado de Impresión y Notas (Opcionales) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold text-slate-700 mb-1">Estado de Impresión / Entrega</label>
-            <select id="deliveryStatus" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 font-medium">
+            <label class="block font-medium text-slate-600 mb-1">Estado de Impresión / Entrega <span class="text-slate-400 font-normal">(Opcional)</span></label>
+            <select id="deliveryStatus" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 font-medium text-xs sm:text-sm">
               <option value="Pendiente de Impresión">🖨️ Pendiente de Impresión</option>
               <option value="Ya Impreso / Listo">📦 Ya Impreso / Listo para Entrega</option>
               <option value="Entregado">✅ Entregado</option>
@@ -322,21 +328,15 @@
             </select>
           </div>
           <div>
-            <label class="block font-semibold text-slate-700 mb-1">Notas / Tema / Detalles</label>
-            <input type="text" id="orderNotes" placeholder="Ej. Diseño Dinopolis, entrega en escuela" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+            <label class="block font-medium text-slate-600 mb-1">Notas / Detalles <span class="text-slate-400 font-normal">(Opcional)</span></label>
+            <input type="text" id="orderNotes" placeholder="Ej. Diseño Dinopolis, entregar en escuela" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-sm">
           </div>
-        </div>
-
-        <!-- Quick checkbox to add custom product to preset catalog -->
-        <div class="flex items-center space-x-2 pt-1 text-xs">
-          <input type="checkbox" id="saveToCatalogCheck" class="w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-          <label for="saveToCatalogCheck" class="text-slate-600 font-medium cursor-pointer">Guardar este producto y precio en mi catálogo para futuros pedidos</label>
         </div>
 
         <!-- Buttons -->
         <div class="pt-3 flex items-center justify-end space-x-3 border-t border-slate-100">
-          <button type="button" onclick="closeOrderModal()" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-600 hover:bg-slate-100 font-medium">Cancelar</button>
-          <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md transition">Guardar Pedido</button>
+          <button type="button" onclick="closeOrderModal()" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-600 hover:bg-slate-100 font-medium text-xs sm:text-sm">Cancelar</button>
+          <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md transition text-xs sm:text-sm">Guardar Pedido</button>
         </div>
       </form>
     </div>
@@ -542,120 +542,123 @@
     // PRE-ESTABLISHED DEFAULT CATALOG WITH PRESET COSTS
     const DEFAULT_CATALOG = [
       // 🎒 Etiquetas Escolares
-      { id: 'cat-1', category: 'Etiquetas Escolares', name: 'Paquete Básico Escolar (60 etiquetas variadas)', price: 180.00 },
-      { id: 'cat-2', category: 'Etiquetas Escolares', name: 'Paquete Completo Escolar (110 etiquetas + mini stickers)', price: 280.00 },
-      { id: 'cat-3', category: 'Etiquetas Escolares', name: 'Planilla Solo Cuadernos/Libros (20 etiquetas)', price: 75.00 },
-      { id: 'cat-4', category: 'Etiquetas Escolares', name: 'Planilla Lápices y Colores (50 mini etiquetas)', price: 65.00 },
+      { id: 'cat-1', category: 'Etiquetas Escolares', name: 'Paquete Básico (16 cuadernos, 50 colores, 4 multiusos)', price: 100.00 },
+      { id: 'cat-2', category: 'Etiquetas Escolares', name: 'Paquete Plus (Paquete Básico + Motivacionales)', price: 175.00 },
+      { id: 'cat-3', category: 'Etiquetas Escolares', name: 'Kit Escolar (Básico + 12 Ropa + 5 Toppers)', price: 250.00 },
+      { id: 'cat-4', category: 'Etiquetas Escolares', name: 'Paquete Premium (32 cuadernos, 70 colores, 20 multiusos, 10 toppers, 12 uniformes)', price: 300.00 },
+      { id: 'cat-5', category: 'Etiquetas Escolares', name: '75 Etiquetas solo para Colores', price: 100.00 },
+      { id: 'cat-6', category: 'Etiquetas Escolares', name: 'Etiquetas Motivacionales (75 frases variadas)', price: 100.00 },
+      { id: 'cat-7', category: 'Etiquetas Escolares', name: 'Paquete Materias (5 materias)', price: 70.00 },
+      { id: 'cat-8', category: 'Etiquetas Escolares', name: 'Portada Sencilla (1 pza)', price: 40.00 },
+      { id: 'cat-9', category: 'Etiquetas Escolares', name: 'Portada Holográfica (1 pza)', price: 55.00 },
 
       // 👕 Etiquetas para Ropa / Uniformes
-      { id: 'cat-5', category: 'Etiquetas para Ropa', name: 'Set 20 Etiquetas Planchables para Ropa / Uniformes', price: 130.00 },
-      { id: 'cat-6', category: 'Etiquetas para Ropa', name: 'Set 50 Etiquetas Planchables para Ropa / Uniformes', price: 240.00 },
-      { id: 'cat-7', category: 'Etiquetas para Ropa', name: 'Combo Ropa + Calzado (20 Planchables + 6 Pares Calzado)', price: 190.00 },
+      { id: 'cat-10', category: 'Etiquetas para Ropa', name: 'Paquete 20 Etiquetas Lavables para Ropa (7x3 cm)', price: 100.00 },
 
       // 🎂 Toppers
-      { id: 'cat-8', category: 'Toppers', name: 'Topper Sencillo 1 Capa para Pastel', price: 90.00 },
-      { id: 'cat-9', category: 'Toppers', name: 'Topper Multicapa 3D Personalizado', price: 160.00 },
-      { id: 'cat-10', category: 'Toppers', name: 'Topper 3D con Shaker / Acetato y Chispas', price: 220.00 },
-      { id: 'cat-11', category: 'Toppers', name: 'Set 12 Mini Toppers para Cupcakes / Postres', price: 120.00 },
+      { id: 'cat-11', category: 'Toppers', name: 'Paquete 5 Etiquetas Lavables para Toppers (10x5 cm)', price: 110.00 },
+      { id: 'cat-12', category: 'Toppers', name: 'Topper Sencillo 1 Capa para Pastel', price: 90.00 },
+      { id: 'cat-13', category: 'Toppers', name: 'Topper Multicapa 3D Personalizado', price: 160.00 },
+      { id: 'cat-14', category: 'Toppers', name: 'Topper 3D con Shaker / Acetato', price: 220.00 },
 
       // 🔴 Stickers Circulares
-      { id: 'cat-12', category: 'Stickers Circulares', name: 'Planilla 24 Stickers Circulares (5cm)', price: 80.00 },
-      { id: 'cat-13', category: 'Stickers Circulares', name: 'Planilla 48 Stickers Circulares (4cm)', price: 95.00 },
-      { id: 'cat-14', category: 'Stickers Circulares', name: 'Ciento de Stickers Circulares (5cm)', price: 250.00 },
+      { id: 'cat-15', category: 'Stickers Circulares', name: 'Planilla 24 Stickers Circulares (5cm)', price: 80.00 },
+      { id: 'cat-16', category: 'Stickers Circulares', name: 'Planilla 48 Stickers Circulares (4cm)', price: 95.00 },
+      { id: 'cat-17', category: 'Stickers Circulares', name: 'Ciento de Stickers Circulares (5cm)', price: 250.00 },
 
       // ✂️ Stickers Silueta / Troquelados
-      { id: 'cat-15', category: 'Stickers Silueta', name: 'Planilla Stickers Troquelados con Silueta (20-25 pzas)', price: 90.00 },
-      { id: 'cat-16', category: 'Stickers Silueta', name: 'Pack 50 Stickers de Vinil Troquelados Mate/Brillo', price: 190.00 },
-      { id: 'cat-17', category: 'Stickers Silueta', name: 'Pack 100 Stickers de Vinil Troquelados (Resistentes agua)', price: 320.00 },
+      { id: 'cat-18', category: 'Stickers Silueta', name: 'Planilla Stickers Troquelados Silueta (20-25 pzas)', price: 90.00 },
+      { id: 'cat-19', category: 'Stickers Silueta', name: 'Pack 50 Stickers Vinil Troquelados', price: 190.00 },
+      { id: 'cat-20', category: 'Stickers Silueta', name: 'Pack 100 Stickers Vinil Troquelados (A prueba de agua)', price: 320.00 },
 
       // ✨ Otros / Especiales
-      { id: 'cat-18', category: 'Otros', name: 'Diseño Personalizado / Especial', price: 100.00 }
+      { id: 'cat-21', category: 'Otros', name: 'Diseño Personalizado / Especial', price: 100.00 }
     ];
 
-    // REAL ORDERS FROM CUSTOMER IMAGE
     const SAMPLE_ORDERS = [
       {
         id: '1',
         category: 'Etiquetas Escolares',
         clientName: 'Paloma e Isabella',
         clientPhone: '+52 442 600 4406',
-        productName: '2 Paquetes Básicos (Equipo México y España)',
+        productName: '2 Paquetes básicos (Paloma e Isabella)',
         totalCost: 180.00,
         advancePayment: 180.00,
         orderDate: getRelativeDate(-3),
         deliveryDate: '',
         deliveryStatus: 'Pendiente de Impresión',
-        notes: '2 paquetes básicos: 1 del equipo de México y el 2do del equipo de España (Paloma e Isabella). PAGADO'
+        notes: '• 1 del equipo de México\n• 1 del equipo de España\n(PAGADO)'
       },
       {
         id: '2',
         category: 'Etiquetas Escolares',
         clientName: 'Cliente Plaza del Parque',
         clientPhone: '+52 442 865 9747',
-        productName: 'Paquete materias, y 3 básicos con holográficos',
+        productName: 'Paquete materias + 3 básicos con holográficos',
         totalCost: 415.00,
         advancePayment: 170.00,
         orderDate: getRelativeDate(-2),
         deliveryDate: '',
         deliveryStatus: 'Pendiente de Impresión',
-        notes: '3 básicos con holográficos. ENTREGAR EN PLAZA DEL PARQUE. FALTAN $245'
+        notes: '• 3 básicos con holográficos\n• Lugar de entrega: Plaza del Parque\n(Faltan $245)'
       },
       {
         id: '3',
         category: 'Etiquetas Escolares',
         clientName: 'Cliente Snoopy / CR7',
         clientPhone: '+52 442 865 9747',
-        productName: '3 Paquetes Básicos (Snoopy, Guerreras, Cristiano Ronaldo)',
+        productName: 'Snopy, Guerreras y Cristiano Ronaldo',
         totalCost: 235.00,
         advancePayment: 235.00,
         orderDate: getRelativeDate(-2),
         deliveryDate: '',
         deliveryStatus: 'Pendiente de Impresión',
-        notes: 'Snopy, Guerreras y Cristiano Ronaldo (3 básicos). PAGADO'
+        notes: '• 3 paquetes básicos (Snopy, Guerreras, Cristiano Ronaldo)\n(PAGADO)'
       },
       {
         id: '4',
         category: 'Otros',
-        clientName: 'Cliente Tatuajes',
+        clientName: 'Cliente Tatuajes 180',
         clientPhone: '+52 442 600 4406',
-        productName: 'Entrega Tatuajes 180 (Diseño e impresión)',
+        productName: 'Tatuajes 180',
         totalCost: 900.00,
         advancePayment: 450.00,
         orderDate: getRelativeDate(-1),
         deliveryDate: '',
         deliveryStatus: 'Pendiente de Impresión',
-        notes: 'TATUAJES 180 pzas. Diseño e impresión. FALTAN $450'
+        notes: '• Tatuajes 180 pzas\n• Diseño e impresión\n(Faltan $450)'
       },
       {
         id: '5',
         category: 'Stickers Silueta',
         clientName: 'Cliente Camisa Online You',
         clientPhone: '+52 442 600 4406',
-        productName: 'Camisa ONLINE YOU y Stickers (Siluetas)',
+        productName: 'Camisa Online You + Stickers',
         totalCost: 280.00,
         advancePayment: 280.00,
         orderDate: getRelativeDate(-1),
         deliveryDate: '',
         deliveryStatus: 'Pendiente de Impresión',
-        notes: 'CAMISA ONLINE YOU y stickers. Falta diseño e impresión (Siluetas). PAGADO'
+        notes: '• Camisa Online You\n• Stickers (Siluetas)\n• Falta diseño e impresión\n(PAGADO)'
       },
       {
         id: '6',
         category: 'Stickers Silueta',
-        clientName: 'Cliente Etiquetas 6cm',
+        clientName: 'Cliente Etiquetas 6 CM',
         clientPhone: '+52 442 600 4406',
-        productName: '28 Etiquetas de 6 CM con suaje (Siluetas)',
+        productName: '28 Etiquetas de 6 CM',
         totalCost: 150.00,
         advancePayment: 150.00,
         orderDate: getRelativeDate(0),
         deliveryDate: '',
         deliveryStatus: 'Ya Impreso / Listo',
-        notes: '28 etiquetas de 6 CM con suaje (Siluetas). PAGADO'
+        notes: '• 28 etiquetas de 6 CM con suaje (Siluetas)\n(PAGADO)'
       }
     ];
 
     let orders = [];
     let catalog = [];
+    let cartItems = []; // Shopping cart items for current modal
     let currentStatusFilter = 'all';
     let activeReceiptOrder = null;
 
@@ -663,6 +666,51 @@
       const d = new Date();
       d.setDate(d.getDate() + daysOffset);
       return d.toISOString().split('T')[0];
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadCatalog();
+      loadOrders();
+      document.getElementById('orderDate').value = new Date().toISOString().split('T')[0];
+    });
+
+    // Load Catalog from LocalStorage or default
+    function loadCatalog() {
+      const stored = localStorage.getItem('business_catalog_v2');
+      if (stored) {
+        try { catalog = JSON.parse(stored); } catch (e) { catalog = [...DEFAULT_CATALOG]; }
+      } else {
+        catalog = [...DEFAULT_CATALOG];
+        saveCatalogToLocalStorage();
+      }
+    }
+
+    function saveCatalogToLocalStorage() {
+      localStorage.setItem('business_catalog_v2', JSON.stringify(catalog));
+    }
+
+    // Load Orders from LocalStorage or sample
+    function loadOrders() {
+      const stored = localStorage.getItem('business_orders_v3');
+      if (stored) {
+        try { orders = JSON.parse(stored); } catch (e) { orders = [...SAMPLE_ORDERS]; }
+      } else {
+        orders = [...SAMPLE_ORDERS];
+        saveOrdersToLocalStorage();
+      }
+      renderOrders();
+    }
+
+    function loadRealImageData() {
+      if (confirm('¿Deseas restaurar los 6 pedidos registrados de tu lista?')) {
+        orders = [...SAMPLE_ORDERS];
+        saveOrdersToLocalStorage();
+        renderOrders();
+      }
+    }
+
+    function saveOrdersToLocalStorage() {
+      localStorage.setItem('business_orders_v3', JSON.stringify(orders));
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -797,7 +845,7 @@
         emptyState.classList.remove('hidden');
       } else {
         emptyState.classList.add('hidden');
-        filteredOrders.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
+        filteredOrders.sort((a, b) => new Date(b.orderDate || 0) - new Date(a.orderDate || 0));
 
         filteredOrders.forEach(order => {
           const remaining = order.totalCost - order.advancePayment;
@@ -809,7 +857,7 @@
           tr.className = 'hover:bg-slate-50 transition border-b border-slate-100';
           tr.innerHTML = `
             <td class="py-3 px-4 text-xs font-mono text-slate-600 whitespace-nowrap">
-              <div>${formatDate(order.orderDate)}</div>
+              <div>${order.orderDate ? formatDate(order.orderDate) : 'Sin fecha'}</div>
               <div class="text-[10px] text-slate-400">#${order.id}</div>
             </td>
             <td class="py-3 px-4 whitespace-nowrap">
@@ -865,7 +913,7 @@
           card.innerHTML = `
             <div class="flex items-start justify-between">
               <div>
-                <span class="text-[10px] font-mono text-slate-400">#${order.id} | ${formatDate(order.orderDate)}</span>
+                <span class="text-[10px] font-mono text-slate-400">#${order.id} | ${order.orderDate ? formatDate(order.orderDate) : 'Sin fecha'}</span>
                 <h4 class="font-bold text-slate-800 text-base">${escapeHtml(order.clientName)}</h4>
               </div>
               <div class="text-right space-y-1">
@@ -964,22 +1012,109 @@
     function openOrderModal(isEdit = false) {
       document.getElementById('orderForm').reset();
       document.getElementById('orderId').value = '';
-      document.getElementById('orderDate').value = new Date().toISOString().split('T')[0];
-      document.getElementById('saveToCatalogCheck').checked = false;
+      cartItems = [];
+      
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('orderDate').value = today;
+      document.getElementById('deliveryDate').value = '';
+      
       document.getElementById('modalOrderTitle').innerHTML = `
         <i class="fa-solid ${isEdit ? 'fa-pen-to-square text-blue-400' : 'fa-cart-plus text-emerald-400'}"></i>
         <span>${isEdit ? 'Editar Pedido' : 'Registrar Nuevo Pedido'}</span>
       `;
 
-      // Populate preset categories dropdown
       onModalCategoryChange();
-
+      renderCartTable();
       calculateBalance();
       document.getElementById('orderModal').classList.remove('hidden');
     }
 
     function closeOrderModal() {
       document.getElementById('orderModal').classList.add('hidden');
+      cartItems = [];
+    }
+
+    function addCartItemFromInput() {
+      const nameInput = document.getElementById('cartInputName');
+      const qtyInput = document.getElementById('cartInputQty');
+      const priceInput = document.getElementById('cartInputPrice');
+      const category = document.getElementById('modalCategorySelect').value;
+
+      const name = nameInput.value.trim();
+      const qty = parseInt(qtyInput.value) || 1;
+      const price = parseFloat(priceInput.value) || 0;
+
+      if (!name) {
+        alert('Por favor ingresa o selecciona el nombre del producto.');
+        return;
+      }
+
+      cartItems.push({
+        id: 'item-' + Date.now() + Math.random().toString(36).substr(2, 4),
+        name: name,
+        category: category,
+        qty: qty,
+        price: price,
+        total: qty * price
+      });
+
+      // Reset item inputs
+      nameInput.value = '';
+      priceInput.value = '';
+      qtyInput.value = '1';
+
+      renderCartTable();
+    }
+
+    function removeCartItem(itemId) {
+      cartItems = cartItems.filter(i => i.id !== itemId);
+      renderCartTable();
+    }
+
+    function renderCartTable() {
+      const tbody = document.getElementById('cartItemsTableBody');
+      const emptyMsg = document.getElementById('emptyCartMessage');
+      const countLabel = document.getElementById('cartItemCount');
+
+      tbody.innerHTML = '';
+
+      if (cartItems.length === 0) {
+        emptyMsg.classList.remove('hidden');
+        countLabel.innerText = '0 productos agregados';
+      } else {
+        emptyMsg.classList.add('hidden');
+        countLabel.innerText = `${cartItems.length} producto(s) en lista`;
+
+        let cartSum = 0;
+
+        cartItems.forEach((item, index) => {
+          const itemSubtotal = item.qty * item.price;
+          cartSum += itemSubtotal;
+
+          const tr = document.createElement('tr');
+          tr.className = 'hover:bg-slate-50 border-b border-slate-100 text-xs';
+          tr.innerHTML = `
+            <td class="py-2 px-3 font-semibold text-slate-800">
+              <div>${escapeHtml(item.name)}</div>
+              <div class="text-[10px] text-slate-400 font-normal">${escapeHtml(item.category || '')}</div>
+            </td>
+            <td class="py-2 px-2 text-center font-bold text-slate-700">${item.qty}</td>
+            <td class="py-2 px-2 text-right font-medium text-slate-600">${formatCurrency(item.price)}</td>
+            <td class="py-2 px-2 text-right font-bold text-indigo-700">${formatCurrency(itemSubtotal)}</td>
+            <td class="py-2 px-2 text-center">
+              <button type="button" onclick="removeCartItem('${item.id}')" class="text-rose-500 hover:text-rose-700 p-1">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        // Automatically update Total Cost input from Cart sum
+        document.getElementById('totalCost').value = cartSum.toFixed(2);
+      }
+
+      calculateBalance();
     }
 
     // Dynamic dropdown updates in Order Modal
@@ -999,7 +1134,7 @@
       } else {
         const defaultOpt = document.createElement('option');
         defaultOpt.value = "";
-        defaultOpt.innerText = "-- Selecciona un producto del catálogo --";
+        defaultOpt.innerText = "-- Selecciona para autocompletar --";
         presetSelect.appendChild(defaultOpt);
 
         items.forEach(item => {
@@ -1017,9 +1152,9 @@
 
       const item = catalog.find(c => c.id === presetId);
       if (item) {
-        document.getElementById('productName').value = item.name;
-        document.getElementById('totalCost').value = item.price.toFixed(2);
-        calculateBalance();
+        document.getElementById('cartInputName').value = item.name;
+        document.getElementById('cartInputPrice').value = item.price.toFixed(2);
+        document.getElementById('cartInputQty').value = '1';
       }
     }
 
@@ -1034,30 +1169,54 @@
       e.preventDefault();
 
       const id = document.getElementById('orderId').value || String(Date.now()).slice(-5);
-      const category = document.getElementById('modalCategorySelect').value;
       const clientName = document.getElementById('clientName').value.trim();
       const clientPhone = document.getElementById('clientPhone').value.trim();
-      const productName = document.getElementById('productName').value.trim();
       const totalCost = parseFloat(document.getElementById('totalCost').value) || 0;
       const advancePayment = parseFloat(document.getElementById('advancePayment').value) || 0;
       const orderDate = document.getElementById('orderDate').value;
       const deliveryDate = document.getElementById('deliveryDate').value;
-      const deliveryStatus = document.getElementById('deliveryStatus').value;
+      const deliveryStatus = document.getElementById('deliveryStatus').value || 'Pendiente de Impresión';
       const notes = document.getElementById('orderNotes').value.trim();
 
-      // Check if user wants to save this new item to the preset catalog
-      if (document.getElementById('saveToCatalogCheck').checked) {
-        const exists = catalog.some(c => c.name.toLowerCase() === productName.toLowerCase() && c.category === category);
-        if (!exists) {
-          catalog.push({
-            id: 'cat-' + Date.now(),
-            category: category,
-            name: productName,
-            price: totalCost
+      // STRICT MANDATORY FIELD VALIDATIONS REQUIRED BY USER:
+      // 1. Nombre
+      if (!clientName) {
+        alert('El nombre del cliente es obligatorio.');
+        return;
+      }
+
+      // 2. Productos (At least 1 item in cart or valid total)
+      if (cartItems.length === 0) {
+        // Fallback: If user didn't add to cart table but entered name in input
+        const cartInputName = document.getElementById('cartInputName').value.trim();
+        if (cartInputName) {
+          cartItems.push({
+            id: 'item-' + Date.now(),
+            name: cartInputName,
+            category: document.getElementById('modalCategorySelect').value,
+            qty: parseInt(document.getElementById('cartInputQty').value) || 1,
+            price: totalCost,
+            total: totalCost
           });
-          saveCatalogToLocalStorage();
+        } else {
+          alert('Debes agregar al menos un producto al pedido.');
+          return;
         }
       }
+
+      // 3. Costo Total & 4. Anticipo Dado
+      if (isNaN(totalCost) || totalCost < 0) {
+        alert('El costo total es obligatorio y debe ser un valor válido.');
+        return;
+      }
+      if (isNaN(advancePayment) || advancePayment < 0) {
+        alert('El anticipo dado es obligatorio.');
+        return;
+      }
+
+      // Generate concatenated product string from cart items for display/tables
+      const productName = cartItems.map(i => `${i.qty > 1 ? i.qty + 'x ' : ''}${i.name}`).join(', ');
+      const category = cartItems[0] ? cartItems[0].category : 'Otros';
 
       const existingIndex = orders.findIndex(o => o.id === id);
 
@@ -1067,6 +1226,7 @@
         clientName,
         clientPhone,
         productName,
+        items: [...cartItems],
         totalCost,
         advancePayment,
         orderDate,
@@ -1091,19 +1251,32 @@
       if (!order) return;
 
       document.getElementById('orderId').value = order.id;
-      document.getElementById('modalCategorySelect').value = order.category || 'Etiquetas Escolares';
-      onModalCategoryChange();
-
-      document.getElementById('clientName').value = order.clientName;
+      document.getElementById('clientName').value = order.clientName || '';
       document.getElementById('clientPhone').value = order.clientPhone || '';
-      document.getElementById('productName').value = order.productName;
-      document.getElementById('totalCost').value = order.totalCost;
-      document.getElementById('advancePayment').value = order.advancePayment;
-      document.getElementById('orderDate').value = order.orderDate;
+      document.getElementById('totalCost').value = order.totalCost !== undefined ? order.totalCost : '';
+      document.getElementById('advancePayment').value = order.advancePayment !== undefined ? order.advancePayment : '';
+      document.getElementById('orderDate').value = order.orderDate || new Date().toISOString().split('T')[0];
       document.getElementById('deliveryDate').value = order.deliveryDate || '';
-      document.getElementById('deliveryStatus').value = order.deliveryStatus;
+      document.getElementById('deliveryStatus').value = order.deliveryStatus || 'Pendiente de Impresión';
       document.getElementById('orderNotes').value = order.notes || '';
 
+      // Load cart items or create item from existing productName string
+      if (order.items && Array.isArray(order.items) && order.items.length > 0) {
+        cartItems = [...order.items];
+      } else if (order.productName) {
+        cartItems = [{
+          id: 'item-legacy-' + Date.now(),
+          name: order.productName,
+          category: order.category || 'Otros',
+          qty: 1,
+          price: Number(order.totalCost) || 0,
+          total: Number(order.totalCost) || 0
+        }];
+      } else {
+        cartItems = [];
+      }
+
+      renderCartTable();
       calculateBalance();
       openOrderModal(true);
     }
@@ -1259,7 +1432,7 @@
       document.getElementById('receiptFolio').innerText = `FOLIO: #${order.id}`;
       document.getElementById('receiptClient').innerText = order.clientName;
       document.getElementById('receiptPhone').innerText = order.clientPhone || 'N/A';
-      document.getElementById('receiptOrderDate').innerText = formatDate(order.orderDate);
+      document.getElementById('receiptOrderDate').innerText = order.orderDate ? formatDate(order.orderDate) : 'Sin fecha';
       document.getElementById('receiptDeliveryDate').innerText = order.deliveryDate ? formatDate(order.deliveryDate) : 'Por acordar';
       document.getElementById('receiptCategory').innerText = order.category || 'Otros';
       document.getElementById('receiptProduct').innerText = order.productName;
