@@ -91,6 +91,11 @@
           <span>Cargar 5 Pedidos</span>
         </button>
 
+        <button onclick="openQuoteModal()" class="bg-indigo-600 hover:bg-indigo-800 text-white text-xs sm:text-sm px-2.5 sm:px-3 py-2 rounded-lg font-medium transition flex items-center space-x-1 border border-indigo-500 shadow-sm whitespace-nowrap" title="Calculadora Inteligente de Cotizaciones">
+          <i class="fa-solid fa-calculator text-amber-300"></i>
+          <span>Cotizador</span>
+        </button>
+
         <button onclick="openCatalogModal()" class="bg-indigo-800 hover:bg-indigo-900 text-xs sm:text-sm px-2.5 sm:px-3 py-2 rounded-lg font-medium transition flex items-center space-x-1 border border-indigo-500 shadow-sm whitespace-nowrap">
           <i class="fa-solid fa-book-open text-amber-300"></i>
           <span>Catálogo</span>
@@ -114,6 +119,10 @@
     <button onclick="scrollToOrdersSection()" class="flex flex-col items-center text-indigo-700 font-medium text-[11px]">
       <i class="fa-solid fa-list-check text-lg"></i>
       <span>Mis Pedidos</span>
+    </button>
+    <button onclick="openQuoteModal()" class="flex flex-col items-center text-indigo-700 font-medium text-[11px]">
+      <i class="fa-solid fa-calculator text-lg text-amber-500"></i>
+      <span>Cotizador</span>
     </button>
     <button onclick="openOrderModal()" class="flex items-center space-x-2 bg-emerald-500 text-white font-semibold text-xs px-4 py-2 rounded-full shadow-md">
       <i class="fa-solid fa-plus"></i>
@@ -551,68 +560,301 @@
         </button>
       </div>
 
-      <!-- Receipt Printable Area -->
-      <div id="printArea" class="p-6 overflow-y-auto space-y-4 text-slate-800 bg-white">
-        <div class="text-center border-b border-slate-200 pb-4">
-          <h2 class="text-xl font-bold text-indigo-700">Diseños & Personalizaciones</h2>
-          <p class="text-xs text-slate-500">Comprobante de Pedido & Anticipo</p>
-          <p class="text-xs font-mono text-slate-400 mt-1" id="receiptFolio">FOLIO: #0000</p>
-        </div>
-
-        <div class="grid grid-cols-2 text-xs gap-y-2">
-          <div>
-            <span class="text-slate-400 block">Cliente:</span>
-            <strong class="text-sm text-slate-800" id="receiptClient">-</strong>
-          </div>
-          <div class="text-right">
-            <span class="text-slate-400 block">Fecha Pedido:</span>
-            <span class="font-medium text-slate-700" id="receiptOrderDate">-</span>
+  <!-- Modal: Cotizador Inteligente -->
+  <div id="quoteModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl overflow-hidden flex flex-col max-h-[95vh]">
+      
+      <!-- Modal Header -->
+      <div class="bg-gradient-to-r from-indigo-800 to-indigo-900 text-white px-5 py-3.5 flex items-center justify-between shrink-0">
+        <div class="flex items-center space-x-2.5">
+          <div class="bg-amber-400/20 text-amber-300 p-2 rounded-xl">
+            <i class="fa-solid fa-calculator text-xl"></i>
           </div>
           <div>
-            <span class="text-slate-400 block">Teléfono:</span>
-            <span class="font-medium text-slate-700" id="receiptPhone">-</span>
-          </div>
-          <div class="text-right">
-            <span class="text-slate-400 block">Entrega Estimada:</span>
-            <span class="font-semibold text-indigo-600" id="receiptDeliveryDate">-</span>
+            <h3 class="font-bold text-base sm:text-lg leading-tight flex items-center gap-2">
+              Cotizador Inteligente de Personalizados
+            </h3>
+            <p class="text-[11px] text-indigo-200">Cálculo preciso de pliegos, acomodo con rotación, costos directos/indirectos y anticipos</p>
           </div>
         </div>
-
-        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 my-2 space-y-1">
-          <span class="text-[10px] font-bold uppercase tracking-wide bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded" id="receiptCategory">-</span>
-          <p class="font-bold text-slate-800 text-sm pt-1" id="receiptProduct">-</p>
-          <p class="text-xs text-slate-500 italic" id="receiptNotes"></p>
-        </div>
-
-        <!-- Cost breakdown -->
-        <div class="space-y-1.5 border-t border-slate-200 pt-3 text-sm">
-          <div class="flex justify-between text-slate-600">
-            <span>Costo Total:</span>
-            <span class="font-semibold" id="receiptTotal">$0.00</span>
-          </div>
-          <div class="flex justify-between text-emerald-600">
-            <span>Anticipo / Pagado:</span>
-            <span class="font-semibold" id="receiptAdvance">-$0.00</span>
-          </div>
-          <div class="flex justify-between text-base font-bold text-slate-900 border-t border-dashed border-slate-300 pt-2">
-            <span>RESTANTE A PAGAR:</span>
-            <span class="text-amber-600" id="receiptRemaining">$0.00</span>
-          </div>
-        </div>
-
-        <div class="text-center pt-4 border-t border-slate-200 text-xs text-slate-400">
-          <p class="font-medium text-slate-600">¡Gracias por tu pedido y confianza!</p>
-          <p class="mt-0.5">Por favor conserva este comprobante para la entrega.</p>
-        </div>
+        <button onclick="closeQuoteModal()" class="text-white/80 hover:text-white text-xl p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
 
-      <!-- Actions -->
-      <div class="bg-slate-100 p-4 flex items-center justify-end space-x-2 border-t border-slate-200 no-print">
-        <button onclick="window.print()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-lg flex items-center gap-1.5 shadow-sm">
-          <i class="fa-solid fa-print"></i>
-          <span>Imprimir Nota</span>
-        </button>
-        <button onclick="closeReceiptModal()" class="px-4 py-2 bg-slate-300 hover:bg-slate-400 text-slate-800 font-medium text-xs rounded-lg">Cerrar</button>
+      <!-- Modal Content Body -->
+      <div class="p-4 sm:p-6 overflow-y-auto space-y-5 text-xs sm:text-sm bg-slate-50 flex-1">
+        
+        <!-- Row 1: Pieza, Pliego y Formato -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          
+          <!-- Column: Configuración de Pieza y Planilla -->
+          <div class="lg:col-span-7 bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+            <h4 class="font-bold text-indigo-900 text-sm flex items-center gap-2 border-b border-slate-100 pb-2">
+              <i class="fa-solid fa-ruler-combined text-indigo-600"></i>
+              <span>1. Dimensiones de Pieza y Formato de Material</span>
+            </h4>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <div>
+                <label class="block font-semibold text-slate-700 mb-1">Ancho Pieza (cm)</label>
+                <input type="number" id="quoteWidth" step="0.1" value="5" oninput="calculateQuote()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-sm font-bold text-indigo-900">
+              </div>
+              <div>
+                <label class="block font-semibold text-slate-700 mb-1">Alto Pieza (cm)</label>
+                <input type="number" id="quoteHeight" step="0.1" value="5" oninput="calculateQuote()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-sm font-bold text-indigo-900">
+              </div>
+              <div class="col-span-2 sm:col-span-1">
+                <label class="block font-semibold text-slate-700 mb-1">Piezas Deseadas</label>
+                <input type="number" id="quoteQty" min="1" value="50" oninput="calculateQuote()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-sm font-bold text-emerald-700 bg-emerald-50/50">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-semibold text-slate-700 mb-1">Formato de Material / Pliego</label>
+                <select id="quoteFormat" onchange="calculateQuote()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-xs font-semibold text-slate-700 bg-slate-50">
+                  <option value="tabloide_super">Super Tabloide / A3+ (33 x 48.3 cm)</option>
+                  <option value="tabloide">Tabloide Estándar (28 x 43 cm)</option>
+                  <option value="carta">Carta (21.6 x 27.9 cm)</option>
+                  <option value="a4">A4 (21 x 29.7 cm)</option>
+                  <option value="vinil_60">Vinil por Metro (60 cm ancho)</option>
+                  <option value="vinil_120">Vinil por Metro (120 cm ancho)</option>
+                  <option value="custom">Personalizado (cm)</option>
+                </select>
+              </div>
+
+              <div id="quoteCustomDimGroup" class="hidden flex items-center gap-2">
+                <div class="w-1/2">
+                  <label class="block font-semibold text-slate-700 mb-1">Ancho Pliego</label>
+                  <input type="number" id="quoteSheetWidth" step="0.1" value="33" oninput="calculateQuote()" class="w-full px-2 py-1.5 border border-slate-300 rounded-lg text-xs">
+                </div>
+                <div class="w-1/2">
+                  <label class="block font-semibold text-slate-700 mb-1">Alto Pliego</label>
+                  <input type="number" id="quoteSheetHeight" step="0.1" value="48.3" oninput="calculateQuote()" class="w-full px-2 py-1.5 border border-slate-300 rounded-lg text-xs">
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-semibold text-slate-700 mb-1">Margen / Medida Suaje (mm)</label>
+                <input type="number" id="quoteMargin" step="0.5" value="3" oninput="calculateQuote()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-xs">
+              </div>
+            </div>
+
+            <!-- Optimized Layout Box -->
+            <div class="bg-indigo-50/80 p-3 rounded-xl border border-indigo-100 grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+              <div>
+                <span class="text-indigo-600 block text-[10px] font-bold">Acomodo Estándar</span>
+                <span id="quoteRegularYield" class="font-bold text-slate-800">0 pzas/pliego</span>
+              </div>
+              <div>
+                <span class="text-indigo-600 block text-[10px] font-bold">Acomodo c/ Rotación 90°</span>
+                <span id="quoteRotatedYield" class="font-bold text-slate-800">0 pzas/pliego</span>
+              </div>
+              <div>
+                <span class="text-amber-700 block text-[10px] font-bold">Mejor Rendimiento</span>
+                <span id="quoteBestYield" class="font-bold text-amber-700">0 pzas</span>
+              </div>
+              <div>
+                <span class="text-emerald-700 block text-[10px] font-bold">Planillas / Metros</span>
+                <span id="quoteTotalSheets" class="font-bold text-emerald-700">0 planillas</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column: Live Canvas Visualizer -->
+          <div class="lg:col-span-5 bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+              <h4 class="font-bold text-indigo-900 text-sm flex items-center gap-2">
+                <i class="fa-solid fa-border-all text-indigo-600"></i>
+                <span>Vista Previa de Acomodo</span>
+              </h4>
+              <span id="quoteRotationUsedBadge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">Rotación Óptima</span>
+            </div>
+
+            <div class="flex-1 flex items-center justify-center my-3 bg-slate-100/70 rounded-xl p-2 border border-slate-200 min-h-[160px]">
+              <canvas id="quoteSheetCanvas" width="300" height="200" class="max-w-full max-h-[180px] object-contain rounded drop-shadow-sm"></canvas>
+            </div>
+
+            <p class="text-[11px] text-slate-500 text-center italic" id="quoteLayoutInfoText">
+              Calculando acomodo óptimo en el formato...
+            </p>
+          </div>
+        </div>
+
+        <!-- Row 2: Desglose de Costos de Producción -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
+          <h4 class="font-bold text-indigo-900 text-sm flex items-center justify-between border-b border-slate-100 pb-2">
+            <span class="flex items-center gap-2">
+              <i class="fa-solid fa-layer-group text-indigo-600"></i>
+              <span>2. Desglose de Procesos y Costos Directos / Indirectos</span>
+            </span>
+            <span class="text-xs font-normal text-slate-500">Ingresa los costos base requeridos</span>
+          </h4>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            <div>
+              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Costo Material Base ($)</label>
+              <input type="number" id="costMaterial" step="0.5" value="15" oninput="calculateQuote()" title="Costo por pliego o por metro" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
+              <span class="text-[9px] text-slate-400">Por pliego/metro</span>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Producto Base ($)</label>
+              <input type="number" id="costBaseProduct" step="1" value="0" oninput="calculateQuote()" title="Si aplica (playera, taza, termo, etc.) por pza" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
+              <span class="text-[9px] text-slate-400">Por unidad (ej. playera)</span>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Impresión ($)</label>
+              <input type="number" id="costPrint" step="0.5" value="10" oninput="calculateQuote()" title="Costo por impresión por pliego/metro" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
+              <span class="text-[9px] text-slate-400">Por pliego/metro</span>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Laminado ($)</label>
+              <input type="number" id="costLamination" step="0.5" value="8" oninput="calculateQuote()" title="Costo por pliego/metro de acabado" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
+              <span class="text-[9px] text-slate-400">Por pliego/metro</span>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Suaje / Plotter ($)</label>
+              <input type="number" id="costDieCut" step="0.5" value="5" oninput="calculateQuote()" title="Costo de corte por pliego/metro" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
+              <span class="text-[9px] text-slate-400">Por pliego/metro</span>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Corte / Depilado ($)</label>
+              <input type="number" id="costWeeding" step="0.5" value="0.5" oninput="calculateQuote()" title="Costo mano de obra por pieza" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
+              <span class="text-[9px] text-slate-400">Por pieza</span>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Planchado / Sublim. ($)</label>
+              <input type="number" id="costPressing" step="1" value="0" oninput="calculateQuote()" title="Costo proceso térmico por pieza" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
+              <span class="text-[9px] text-slate-400">Por pieza</span>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Diseño Personalizado ($)</label>
+              <input type="number" id="costDesign" step="10" value="50" oninput="calculateQuote()" title="Costo fijo del arte" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
+              <span class="text-[9px] text-slate-400">Costo único pedido</span>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Empaque / Bolsas ($)</label>
+              <input type="number" id="costPackaging" step="1" value="15" oninput="calculateQuote()" title="Costo total empaque" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
+              <span class="text-[9px] text-slate-400">Total pedido</span>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Mano de Obra ($/Hora)</label>
+              <input type="number" id="costLaborRate" step="5" value="60" oninput="calculateQuote()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
+              <span class="text-[9px] text-slate-400">Tarifa por hora</span>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Horas Est. Producción</label>
+              <input type="number" id="quoteEstHours" step="0.25" value="1.5" oninput="calculateQuote()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
+              <span class="text-[9px] text-slate-400">Horas trabajo</span>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Gastos Indirectos (%)</label>
+              <input type="number" id="indirectOverheadPct" step="1" value="10" oninput="calculateQuote()" title="Luz, merma, desgaste máquinas" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold text-amber-700 bg-amber-50">
+              <span class="text-[9px] text-slate-400">% sobre costo directo</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3: Resultados, Ganancia, Anticipo (60%) y Saldo (40%) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          
+          <!-- Margen y Precios Calculados -->
+          <div class="lg:col-span-8 bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+              <h4 class="font-bold text-indigo-900 text-sm flex items-center gap-2">
+                <i class="fa-solid fa-chart-line text-emerald-600"></i>
+                <span>3. Margen de Ganancia y Cotización Final</span>
+              </h4>
+              <div class="flex items-center space-x-2">
+                <label class="text-xs font-semibold text-slate-700">Ganancia Deseada:</label>
+                <select id="quoteProfitMargin" onchange="calculateQuote()" class="px-2 py-1 border border-indigo-300 bg-indigo-50 text-indigo-900 rounded-lg font-bold text-xs">
+                  <option value="30">30% (Bajo)</option>
+                  <option value="50">50% (Estándar)</option>
+                  <option value="80">80% (Recomendado)</option>
+                  <option value="100" selected>100% (Doble del Costo)</option>
+                  <option value="150">150% (Alto)</option>
+                  <option value="200">200% (Especial / Urgente)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                <span class="text-[11px] font-semibold text-slate-500 block">Costo Real Total</span>
+                <span id="quoteCalculatedCost" class="text-base sm:text-lg font-bold text-slate-800">$0.00</span>
+                <span id="quoteCostPerUnit" class="text-[10px] text-slate-400 block">$0.00 / pza</span>
+              </div>
+
+              <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                <span class="text-[11px] font-semibold text-emerald-800 block">Ganancia Neta</span>
+                <span id="quoteCalculatedProfit" class="text-base sm:text-lg font-bold text-emerald-600">$0.00</span>
+                <span id="quoteProfitPct" class="text-[10px] text-emerald-700 font-semibold block">+100%</span>
+              </div>
+
+              <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-200">
+                <span class="text-[11px] font-semibold text-indigo-900 block">Precio Venta Total</span>
+                <span id="quoteSellingPrice" class="text-base sm:text-lg font-bold text-indigo-700">$0.00</span>
+                <span id="quotePricePerUnit" class="text-[10px] text-indigo-600 font-bold block">$0.00 / pza</span>
+              </div>
+
+              <div class="bg-amber-50 p-3 rounded-xl border border-amber-200">
+                <span class="text-[11px] font-semibold text-amber-800 block">Tiempo Estimado</span>
+                <span id="quoteProductionTime" class="text-sm font-bold text-amber-900">0 hrs</span>
+                <span class="text-[10px] text-amber-700 block">Total Producción</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Anticipo 60% & Saldo 40% Card -->
+          <div class="lg:col-span-4 bg-gradient-to-br from-indigo-900 to-indigo-950 text-white p-4 rounded-xl shadow-md flex flex-col justify-between space-y-3">
+            <div>
+              <span class="text-[10px] uppercase font-bold tracking-wider text-amber-300 bg-amber-400/20 px-2 py-0.5 rounded">
+                Esquema de Pago Recomendado
+              </span>
+              <h5 class="text-sm font-bold text-white mt-1">Anticipo 60% & Saldo 40%</h5>
+            </div>
+
+            <div class="space-y-2 border-y border-indigo-700/60 py-2 text-xs">
+              <div class="flex justify-between items-center">
+                <span class="text-indigo-200">Anticipo (60%):</span>
+                <span id="quoteAdvance60" class="text-lg font-extrabold text-emerald-400">$0.00</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-indigo-200">Saldo al entregar (40%):</span>
+                <span id="quoteBalance40" class="text-base font-bold text-amber-300">$0.00</span>
+              </div>
+            </div>
+
+            <button type="button" onclick="transferQuoteToOrder()" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-lg transition shadow-md flex items-center justify-center gap-2 text-xs">
+              <i class="fa-solid fa-file-circle-plus text-sm"></i>
+              <span>Convertir en Pedido Nuevo</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Buttons -->
+      <div class="bg-white p-3 sm:px-6 flex items-center justify-between border-t border-slate-200 shrink-0 text-xs">
+        <span class="text-slate-500 font-medium hidden sm:inline"><i class="fa-solid fa-circle-info text-indigo-500 mr-1"></i>Los datos se calculan automáticamente en tiempo real.</span>
+        <div class="flex items-center space-x-2 w-full sm:w-auto justify-end">
+          <button type="button" onclick="closeQuoteModal()" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-600 hover:bg-slate-100 font-medium">Cerrar</button>
+          <button type="button" onclick="transferQuoteToOrder()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold shadow-sm transition">
+            Pasar a Registrar Pedido
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -741,12 +983,15 @@
     let cartItems = [];
     let currentStatusFilter = 'all';
 
+    let currentQuoteResult = null;
+
     window.addEventListener('DOMContentLoaded', () => {
       loadCatalog();
       loadOrders();
       const today = new Date().toISOString().split('T')[0];
       const orderDateInput = document.getElementById('orderDate');
       if (orderDateInput) orderDateInput.value = today;
+      calculateQuote();
     });
 
     function loadOrders() {
@@ -1530,6 +1775,234 @@
 
       okBtn.addEventListener('click', handleOk);
       cancelBtn.addEventListener('click', handleCancel);
+    }
+
+    function openQuoteModal() {
+      document.getElementById('quoteModal').classList.remove('hidden');
+      calculateQuote();
+    }
+
+    function closeQuoteModal() {
+      document.getElementById('quoteModal').classList.add('hidden');
+    }
+
+    function calculateQuote() {
+      // 1. Inputs
+      const pieceW = parseFloat(document.getElementById('quoteWidth').value) || 1;
+      const pieceH = parseFloat(document.getElementById('quoteHeight').value) || 1;
+      const targetQty = parseInt(document.getElementById('quoteQty').value) || 1;
+      const margin = (parseFloat(document.getElementById('quoteMargin').value) || 0) / 10; // convert mm to cm
+
+      const formatSelect = document.getElementById('quoteFormat').value;
+      const customDimGroup = document.getElementById('quoteCustomDimGroup');
+
+      let sheetW = 33;
+      let sheetH = 48.3;
+
+      if (formatSelect === 'custom') {
+        if (customDimGroup) customDimGroup.classList.remove('hidden');
+        sheetW = parseFloat(document.getElementById('quoteSheetWidth').value) || 30;
+        sheetH = parseFloat(document.getElementById('quoteSheetHeight').value) || 40;
+      } else {
+        if (customDimGroup) customDimGroup.classList.add('hidden');
+        switch(formatSelect) {
+          case 'tabloide_super': sheetW = 33; sheetH = 48.3; break;
+          case 'tabloide': sheetW = 28; sheetH = 43; break;
+          case 'carta': sheetW = 21.6; sheetH = 27.9; break;
+          case 'a4': sheetW = 21; sheetH = 29.7; break;
+          case 'vinil_60': sheetW = 60; sheetH = 100; break;
+          case 'vinil_120': sheetW = 120; sheetH = 100; break;
+        }
+      }
+
+      // 2. Piece Effective Dimensions including margin
+      const effW = pieceW + margin;
+      const effH = pieceH + margin;
+
+      // Regular Acomodo
+      const colsReg = Math.floor(sheetW / effW);
+      const rowsReg = Math.floor(sheetH / effH);
+      const yieldRegular = Math.max(0, colsReg * rowsReg);
+
+      // Rotated 90° Acomodo
+      const colsRot = Math.floor(sheetW / effH);
+      const rowsRot = Math.floor(sheetH / effW);
+      const yieldRotated = Math.max(0, colsRot * rowsRot);
+
+      let bestYield = yieldRegular;
+      let useRotation = false;
+      let colsUsed = colsReg;
+      let rowsUsed = rowsReg;
+      let effItemW = effW;
+      let effItemH = effH;
+
+      if (yieldRotated > yieldRegular) {
+        bestYield = yieldRotated;
+        useRotation = true;
+        colsUsed = colsRot;
+        rowsUsed = rowsRot;
+        effItemW = effH;
+        effItemH = effW;
+      }
+
+      if (bestYield <= 0) bestYield = 1;
+
+      const sheetsNeeded = Math.ceil(targetQty / bestYield);
+
+      // 3. Costs Inputs
+      const cMaterial = parseFloat(document.getElementById('costMaterial').value) || 0;
+      const cBaseProduct = parseFloat(document.getElementById('costBaseProduct').value) || 0;
+      const cPrint = parseFloat(document.getElementById('costPrint').value) || 0;
+      const cLamination = parseFloat(document.getElementById('costLamination').value) || 0;
+      const cDieCut = parseFloat(document.getElementById('costDieCut').value) || 0;
+      const cWeeding = parseFloat(document.getElementById('costWeeding').value) || 0;
+      const cPressing = parseFloat(document.getElementById('costPressing').value) || 0;
+      const cDesign = parseFloat(document.getElementById('costDesign').value) || 0;
+      const cPackaging = parseFloat(document.getElementById('costPackaging').value) || 0;
+      const cLaborRate = parseFloat(document.getElementById('costLaborRate').value) || 0;
+      const estHours = parseFloat(document.getElementById('quoteEstHours').value) || 0;
+      const indirectPct = (parseFloat(document.getElementById('indirectOverheadPct').value) || 0) / 100;
+
+      // 4. Calculate Subtotals
+      const totalSheetCosts = (cMaterial + cPrint + cLamination + cDieCut) * sheetsNeeded;
+      const totalPerPieceCosts = (cBaseProduct + cWeeding + cPressing) * targetQty;
+      const totalLaborCost = cLaborRate * estHours;
+      const totalFixedCosts = cDesign + cPackaging;
+
+      const directCost = totalSheetCosts + totalPerPieceCosts + totalLaborCost + totalFixedCosts;
+      const indirectCost = directCost * indirectPct;
+      const totalRealCost = directCost + indirectCost;
+
+      // 5. Margin and Price
+      const marginPct = (parseFloat(document.getElementById('quoteProfitMargin').value) || 100) / 100;
+      const netProfit = totalRealCost * marginPct;
+      const sellingPrice = totalRealCost + netProfit;
+      const pricePerUnit = sellingPrice / targetQty;
+
+      const advance60 = sellingPrice * 0.60;
+      const balance40 = sellingPrice * 0.40;
+
+      // Store in global state for order transfer
+      currentQuoteResult = {
+        pieceW, pieceH, targetQty, formatSelect, sheetW, sheetH,
+        bestYield, sheetsNeeded, useRotation,
+        totalRealCost, netProfit, sellingPrice, pricePerUnit,
+        advance60, balance40, estHours
+      };
+
+      // 6. Update UI Labels
+      document.getElementById('quoteRegularYield').innerText = `${yieldRegular} pzas`;
+      document.getElementById('quoteRotatedYield').innerText = `${yieldRotated} pzas`;
+      document.getElementById('quoteBestYield').innerText = `${bestYield} pzas/pliego`;
+
+      const unitLabel = (formatSelect === 'vinil_60' || formatSelect === 'vinil_120') ? 'metros' : 'planillas';
+      document.getElementById('quoteTotalSheets').innerText = `${sheetsNeeded} ${unitLabel}`;
+
+      const rotationBadge = document.getElementById('quoteRotationUsedBadge');
+      if (rotationBadge) {
+        if (useRotation) {
+          rotationBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-200';
+          rotationBadge.innerText = '↺ Rotado 90° (Óptimo)';
+        } else {
+          rotationBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200';
+          rotationBadge.innerText = '↕ Estándar (Sin rotar)';
+        }
+      }
+
+      document.getElementById('quoteCalculatedCost').innerText = formatCurrency(totalRealCost);
+      document.getElementById('quoteCostPerUnit').innerText = `${formatCurrency(totalRealCost / targetQty)} / pza`;
+
+      document.getElementById('quoteCalculatedProfit').innerText = formatCurrency(netProfit);
+      document.getElementById('quoteProfitPct').innerText = `+${Math.round(marginPct * 100)}% de margen`;
+
+      document.getElementById('quoteSellingPrice').innerText = formatCurrency(sellingPrice);
+      document.getElementById('quotePricePerUnit').innerText = `${formatCurrency(pricePerUnit)} / pza`;
+
+      document.getElementById('quoteProductionTime').innerText = `${estHours} hrs`;
+
+      document.getElementById('quoteAdvance60').innerText = formatCurrency(advance60);
+      document.getElementById('quoteBalance40').innerText = formatCurrency(balance40);
+
+      document.getElementById('quoteLayoutInfoText').innerText =
+        `Rendimiento máximo: ${bestYield} piezas por ${unitLabel.slice(0, -1)}. Total requerido: ${sheetsNeeded} ${unitLabel}.`;
+
+      // 7. Render Preview Canvas
+      drawSheetCanvas(sheetW, sheetH, effItemW, effItemH, colsUsed, rowsUsed);
+    }
+
+    function drawSheetCanvas(sheetW, sheetH, effItemW, effItemH, cols, rows) {
+      const canvas = document.getElementById('quoteSheetCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const padding = 12;
+      const maxW = canvas.width - (padding * 2);
+      const maxH = canvas.height - (padding * 2);
+
+      const scale = Math.min(maxW / sheetW, maxH / sheetH);
+      const drawSheetW = sheetW * scale;
+      const drawSheetH = sheetH * scale;
+
+      const startX = (canvas.width - drawSheetW) / 2;
+      const startY = (canvas.height - drawSheetH) / 2;
+
+      // Draw Sheet Background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(startX, startY, drawSheetW, drawSheetH);
+      ctx.strokeStyle = '#6366f1';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(startX, startY, drawSheetW, drawSheetH);
+
+      // Draw Grid Items
+      const drawItemW = effItemW * scale;
+      const drawItemH = effItemH * scale;
+
+      ctx.fillStyle = 'rgba(99, 102, 241, 0.15)';
+      ctx.strokeStyle = '#4f46e5';
+      ctx.lineWidth = 1;
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const x = startX + (c * drawItemW);
+          const y = startY + (r * drawItemH);
+
+          if (x + drawItemW <= startX + drawSheetW + 0.1 && y + drawItemH <= startY + drawSheetH + 0.1) {
+            ctx.fillRect(x + 1, y + 1, drawItemW - 2, drawItemH - 2);
+            ctx.strokeRect(x + 1, y + 1, drawItemW - 2, drawItemH - 2);
+          }
+        }
+      }
+
+      // Draw Dimension Labels on Canvas
+      ctx.fillStyle = '#475569';
+      ctx.font = '9px Inter, sans-serif';
+      ctx.fillText(`${sheetW} cm`, startX + (drawSheetW / 2) - 12, startY - 3);
+      ctx.fillText(`${sheetH} cm`, startX + drawSheetW + 3, startY + (drawSheetH / 2));
+    }
+
+    function transferQuoteToOrder() {
+      if (!currentQuoteResult) {
+        calculateQuote();
+      }
+      closeQuoteModal();
+
+      // Category map inference
+      const pieceW = currentQuoteResult.pieceW;
+      const pieceH = currentQuoteResult.pieceH;
+      const qty = currentQuoteResult.targetQty;
+      const price = currentQuoteResult.sellingPrice;
+      const advance = currentQuoteResult.advance60;
+
+      openOrderModal();
+
+      document.getElementById('productName').value = `${qty} pzas Personalizadas (${pieceW}x${pieceH} cm) - Cotizador`;
+      document.getElementById('totalCost').value = Math.round(price * 100) / 100;
+      document.getElementById('advancePayment').value = Math.round(advance * 100) / 100;
+      document.getElementById('orderNotes').value = `• Cotizado automáticamente con el Cotizador Inteligente\n• Rendimiento: ${currentQuoteResult.bestYield} pzas/pliego\n• Material requerido: ${currentQuoteResult.sheetsNeeded} planillas\n• Saldo restante: ${formatCurrency(currentQuoteResult.balance40)}`;
+
+      calculateBalance();
+      showToast('Cotización precargada en el Nuevo Pedido');
     }
   </script>
 </body>
