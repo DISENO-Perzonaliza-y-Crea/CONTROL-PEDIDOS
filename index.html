@@ -1,2009 +1,772 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Control de Pedidos y Entregas - Personalizados</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-          },
-          colors: {
-            brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
-              900: '#312e81',
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotizador | Personaliza Studio</title>
+    
+    <!-- Fuentes Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#7EB8DC',
+                            cyan: '#92DDEA',
+                            pink: '#FFA5D8',
+                            lilac: '#BF9DDF',
+                            purple: '#957AD0',
+                            textDark: '#1E293B', /* Gris oscuro neutro para textos */
+                            white: '#FFFFFF',
+                            bg: '#F8F9FA'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    }
+                }
             }
-          }
         }
-      }
-    }
-  </script>
-  
-  <style>
-    @media print {
-      body * { visibility: hidden; }
-      #printArea, #printArea * { visibility: visible; }
-      #printArea { position: absolute; left: 0; top: 0; width: 100%; }
-      .no-print { display: none !important; }
-    }
-    @media (max-width: 640px) {
-      input, select, textarea {
-        font-size: 16px !important;
-      }
-    }
-    /* Smooth custom scrollbars */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
-    }
-  </style>
+    </script>
+
+    <style>
+        body {
+            background-color: #F8F9FA;
+            padding-bottom: 70px;
+            color: #1E293B;
+        }
+        @media (min-width: 768px) {
+            body { padding-bottom: 0; }
+        }
+        .view-section {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .view-section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .receipt-card {
+            background: #fff;
+            border-top: 6px solid #957AD0; /* Actualizado al nuevo Morado */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-radius: 0 0 0.5rem 0.5rem;
+        }
+        .border-dashed-brand {
+            border-bottom: 1px dashed #BF9DDF; /* Actualizado al nuevo Lila */
+        }
+        /* Scroll personalizado adaptado a la nueva paleta */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #F8F9FA; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #957AD0; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #BF9DDF; }
+        
+        /* Contenedor SVG */
+        .svg-container svg {
+            filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+        }
+    </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col pb-16 sm:pb-0">
+<body class="antialiased font-sans">
 
-  <!-- Toast Notification Container -->
-  <div id="toastContainer" class="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none no-print"></div>
-
-  <!-- Top Header Navigation -->
-  <header class="bg-indigo-700 text-white shadow-lg sticky top-0 z-30 no-print">
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-0 sm:h-16 flex flex-col sm:flex-row items-center justify-between gap-2.5">
-      
-      <div class="flex items-center justify-between w-full sm:w-auto">
-        <div class="flex items-center space-x-2.5">
-          <div class="bg-white/10 p-2 rounded-lg backdrop-blur-sm">
-            <i class="fa-solid fa-tags text-xl sm:text-2xl text-amber-300"></i>
-          </div>
-          <div>
-            <h1 class="font-bold text-base sm:text-lg leading-tight" id="businessTitleHeader">Control de Pedidos</h1>
-            <p class="text-[11px] sm:text-xs text-indigo-200">Etiquetas, Toppers, Stickers y Personalizados</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto overflow-x-auto gap-2 py-0.5">
-        <button onclick="confirmRestoreSamples()" class="bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm px-2.5 sm:px-3 py-2 rounded-lg font-medium transition flex items-center space-x-1 shadow-sm whitespace-nowrap" title="Cargar los 5 pedidos de ejemplo">
-          <i class="fa-solid fa-cloud-arrow-down"></i>
-          <span>Cargar 5 Pedidos</span>
-        </button>
-
-        <button onclick="openQuoteModal()" class="bg-indigo-600 hover:bg-indigo-800 text-white text-xs sm:text-sm px-2.5 sm:px-3 py-2 rounded-lg font-medium transition flex items-center space-x-1 border border-indigo-500 shadow-sm whitespace-nowrap" title="Calculadora Inteligente de Cotizaciones">
-          <i class="fa-solid fa-calculator text-amber-300"></i>
-          <span>Cotizador</span>
-        </button>
-
-        <button onclick="openCatalogModal()" class="bg-indigo-800 hover:bg-indigo-900 text-xs sm:text-sm px-2.5 sm:px-3 py-2 rounded-lg font-medium transition flex items-center space-x-1 border border-indigo-500 shadow-sm whitespace-nowrap">
-          <i class="fa-solid fa-book-open text-amber-300"></i>
-          <span>Catálogo</span>
-        </button>
-
-        <button onclick="exportToCSV()" class="bg-indigo-600 hover:bg-indigo-800 text-xs sm:text-sm px-2.5 sm:px-3 py-2 rounded-lg font-medium transition flex items-center space-x-1 border border-indigo-500 shadow-sm whitespace-nowrap">
-          <i class="fa-solid fa-file-excel text-emerald-400"></i>
-          <span class="hidden md:inline">Exportar</span>
-        </button>
-
-        <button onclick="openOrderModal()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs sm:text-sm px-3 sm:px-4 py-2 rounded-lg shadow-md transition flex items-center space-x-1.5 whitespace-nowrap">
-          <i class="fa-solid fa-plus text-sm"></i>
-          <span>Nuevo Pedido</span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Sticky Bottom Navigation Bar for Mobile -->
-  <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-2 z-40 sm:hidden flex items-center justify-around shadow-lg no-print">
-    <button onclick="scrollToOrdersSection()" class="flex flex-col items-center text-indigo-700 font-medium text-[11px]">
-      <i class="fa-solid fa-list-check text-lg"></i>
-      <span>Mis Pedidos</span>
-    </button>
-    <button onclick="openQuoteModal()" class="flex flex-col items-center text-indigo-700 font-medium text-[11px]">
-      <i class="fa-solid fa-calculator text-lg text-amber-500"></i>
-      <span>Cotizador</span>
-    </button>
-    <button onclick="openOrderModal()" class="flex items-center space-x-2 bg-emerald-500 text-white font-semibold text-xs px-4 py-2 rounded-full shadow-md">
-      <i class="fa-solid fa-plus"></i>
-      <span>Nuevo Pedido</span>
-    </button>
-    <button onclick="openCatalogModal()" class="flex flex-col items-center text-indigo-700 font-medium text-[11px]">
-      <i class="fa-solid fa-book-open text-lg"></i>
-      <span>Catálogo</span>
-    </button>
-  </div>
-
-  <!-- Main Container -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-6">
-    <!-- Stat Cards Dashboard -->
-    <section class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 no-print">
-      <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
-        <p class="text-xs text-slate-500 font-medium">Total Pedidos</p>
-        <h3 class="text-xl sm:text-2xl font-bold text-slate-800" id="statTotalOrders">0</h3>
-      </div>
-      <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
-        <p class="text-xs text-slate-500 font-medium">Ventas Totales</p>
-        <h3 class="text-xl sm:text-2xl font-bold text-indigo-600" id="statTotalSales">$0.00</h3>
-      </div>
-      <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
-        <p class="text-xs text-slate-500 font-medium">Anticipos Recibidos</p>
-        <h3 class="text-xl sm:text-2xl font-bold text-emerald-600" id="statTotalAdvances">$0.00</h3>
-      </div>
-      <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
-        <p class="text-xs text-slate-500 font-medium">Pendiente por Cobrar</p>
-        <h3 class="text-xl sm:text-2xl font-bold text-amber-600" id="statPendingBalance">$0.00</h3>
-      </div>
-    </section>
-
-    <!-- Dedicated Section for Existing Orders -->
-    <section id="pedidosSection" class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4 no-print">
-      
-      <!-- Section Header -->
-      <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 pb-3 gap-2">
-        <div>
-          <h2 class="text-lg sm:text-xl font-bold text-slate-800 flex items-center gap-2">
-            <i class="fa-solid fa-boxes-packing text-indigo-600"></i>
-            <span>Apartado de Pedidos Registrados</span>
-          </h2>
-          <p class="text-xs text-slate-500">Consulta y organiza todos los pedidos registrados por estado y fecha.</p>
-        </div>
-
-        <div class="flex items-center space-x-2 text-xs">
-          <span class="font-semibold text-slate-600 whitespace-nowrap"><i class="fa-solid fa-arrow-down-short-wide mr-1"></i>Fecha:</span>
-          <select id="dateSortInput" onchange="renderOrders()" class="border border-slate-300 rounded-lg px-2.5 py-1.5 bg-slate-50 font-medium text-slate-700 focus:ring-2 focus:ring-indigo-500">
-            <option value="desc">Más recientes primero</option>
-            <option value="asc">Más antiguos primero</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Filters & Date Range Row -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-3">
-        <!-- Search Bar -->
-        <div class="md:col-span-5 relative">
-          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-          <input type="text" id="searchInput" oninput="renderOrders()" placeholder="Buscar cliente, producto o nota..." class="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-        </div>
-
-        <!-- Category Selector -->
-        <div class="md:col-span-3 flex items-center space-x-1.5">
-          <select id="categoryFilter" onchange="renderOrders()" class="w-full text-xs sm:text-sm border border-slate-300 rounded-lg px-2.5 py-2 bg-slate-50 font-medium text-slate-700 focus:ring-2 focus:ring-indigo-500">
-            <option value="all">Todas las Categorías</option>
-            <option value="Etiquetas Escolares">🎒 Etiquetas Escolares</option>
-            <option value="Etiquetas para Ropa">👕 Etiquetas Ropa / Uniformes</option>
-            <option value="Toppers">🎂 Toppers</option>
-            <option value="Stickers Circulares">🔴 Stickers Circulares</option>
-            <option value="Stickers Silueta">✂️ Stickers Silueta / Troquelados</option>
-            <option value="Otros">✨ Otros / Especiales</option>
-          </select>
-        </div>
-
-        <!-- Date Range Filter -->
-        <div class="md:col-span-4 flex items-center space-x-1 text-xs">
-          <input type="date" id="dateFromFilter" onchange="renderOrders()" title="Filtrar desde fecha" class="w-full border border-slate-300 rounded-lg px-2 py-1.5 bg-slate-50 text-slate-700">
-          <span class="text-slate-400 font-medium">a</span>
-          <input type="date" id="dateToFilter" onchange="renderOrders()" title="Filtrar hasta fecha" class="w-full border border-slate-300 rounded-lg px-2 py-1.5 bg-slate-50 text-slate-700">
-          <button onclick="clearDateFilter()" title="Limpiar filtro de fechas" class="px-2 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-600 rounded-lg font-semibold">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Main Status Navigation Tabs -->
-      <div class="flex flex-wrap items-center gap-1.5 pt-2 border-t border-slate-100 text-xs sm:text-sm">
-        <button onclick="setStatusFilter('all')" id="btnFilterAll" class="px-3 py-2 rounded-xl border text-xs font-bold transition bg-indigo-50 text-indigo-700 border-indigo-200 shadow-sm flex items-center gap-1.5">
-          <span>📋 Todos</span>
-          <span id="countAll" class="bg-indigo-200/70 text-indigo-900 px-1.5 py-0.5 rounded-full text-[10px]">0</span>
-        </button>
-
-        <button onclick="setStatusFilter('pending_print')" id="btnFilterPendingPrint" class="px-3 py-2 rounded-xl border text-xs font-semibold transition bg-white text-slate-600 border-slate-200 hover:bg-slate-50 flex items-center gap-1.5">
-          <span>🖨️ Pendientes de Imprimir</span>
-          <span id="countPendingPrint" class="bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded-full text-[10px]">0</span>
-        </button>
-
-        <button onclick="setStatusFilter('pending_delivery')" id="btnFilterPendingDelivery" class="px-3 py-2 rounded-xl border text-xs font-semibold transition bg-white text-slate-600 border-slate-200 hover:bg-slate-50 flex items-center gap-1.5">
-          <span>⏳ Pendientes de Entregar</span>
-          <span id="countPendingDelivery" class="bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded-full text-[10px]">0</span>
-        </button>
-
-        <button onclick="setStatusFilter('printed')" id="btnFilterPrinted" class="px-3 py-2 rounded-xl border text-xs font-semibold transition bg-white text-slate-600 border-slate-200 hover:bg-slate-50 flex items-center gap-1.5">
-          <span>📦 Ya Impresos / Listos</span>
-          <span id="countPrinted" class="bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded-full text-[10px]">0</span>
-        </button>
-
-        <button onclick="setStatusFilter('delivered')" id="btnFilterDelivered" class="px-3 py-2 rounded-xl border text-xs font-semibold transition bg-white text-slate-600 border-slate-200 hover:bg-slate-50 flex items-center gap-1.5">
-          <span>✅ Entregados</span>
-          <span id="countDelivered" class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded-full text-[10px]">0</span>
-        </button>
-
-        <button onclick="setStatusFilter('unpaid')" id="btnFilterUnpaid" class="px-3 py-2 rounded-xl border text-xs font-semibold transition bg-white text-slate-600 border-slate-200 hover:bg-slate-50 flex items-center gap-1.5">
-          <span>💵 Con Saldo Pendiente</span>
-          <span id="countUnpaid" class="bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded-full text-[10px]">0</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- Orders Table & Responsive Mobile Cards -->
-    <section class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden no-print">
-      
-      <!-- Desktop Table View -->
-      <div class="hidden lg:block overflow-x-auto">
-        <table class="w-full text-left text-sm">
-          <thead class="bg-slate-100 text-slate-600 uppercase text-xs font-semibold border-b border-slate-200">
-            <tr>
-              <th class="py-3 px-4">Fecha / ID</th>
-              <th class="py-3 px-4">Categoría</th>
-              <th class="py-3 px-4">Cliente</th>
-              <th class="py-3 px-4">Productos / Detalles</th>
-              <th class="py-3 px-4 text-right">Total</th>
-              <th class="py-3 px-4 text-right">Anticipo</th>
-              <th class="py-3 px-4 text-right">Saldo</th>
-              <th class="py-3 px-4 text-center">Entrega</th>
-              <th class="py-3 px-4 text-center">Estatus</th>
-              <th class="py-3 px-4 text-center">Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="ordersTableBody" class="divide-y divide-slate-200">
-            <!-- Dynamic Rows -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Mobile Responsive Cards Container -->
-      <div id="ordersCardsContainer" class="lg:hidden divide-y divide-slate-200">
-        <!-- Dynamic Cards -->
-      </div>
-
-      <!-- Empty State -->
-      <div id="emptyState" class="p-8 text-center hidden">
-        <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400 mb-3 text-xl">
-          <i class="fa-solid fa-folder-open"></i>
-        </div>
-        <h4 class="font-bold text-slate-700 text-sm">No se encontraron pedidos</h4>
-        <p class="text-xs text-slate-400 mt-1 mb-4">Prueba cambiando los filtros o restaura los 5 pedidos de ejemplo.</p>
-        <button onclick="confirmRestoreSamples()" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold transition">
-          <i class="fa-solid fa-rotate-left mr-1"></i> Cargar 5 Pedidos Iniciales
-        </button>
-      </div>
-    </section>
-  </main>
-
-  <!-- Modal: Registrar / Editar Pedido -->
-  <div id="orderModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 hidden">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[92vh]">
-      
-      <!-- Modal Header -->
-      <div class="bg-indigo-700 text-white px-5 py-3.5 flex items-center justify-between">
-        <h3 class="font-bold text-base sm:text-lg flex items-center gap-2" id="orderModalTitle">
-          <i class="fa-solid fa-plus-circle text-amber-300"></i>
-          <span>Nuevo Pedido</span>
-        </h3>
-        <button onclick="closeOrderModal()" class="text-white/80 hover:text-white text-lg">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-
-      <!-- Modal Body Form -->
-      <form id="orderForm" onsubmit="saveOrder(event)" class="p-4 sm:p-6 overflow-y-auto space-y-4 text-xs sm:text-sm">
-        <input type="hidden" id="orderId">
-
-        <!-- Datos del Cliente -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Nombre del Cliente <span class="text-rose-500">*</span></label>
-            <input type="text" id="clientName" required placeholder="Ej. Maria Lopez" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-sm">
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Teléfono / Celular <span class="text-slate-400 font-normal">(Opcional)</span></label>
-            <input type="tel" id="clientPhone" placeholder="Ej. 4421234567" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-sm">
-          </div>
-        </div>
-
-        <!-- Categoría Principal y Selector de Producto -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Categoría Principal <span class="text-rose-500">*</span></label>
-            <select id="orderCategory" required onchange="onCategoryChange()" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-slate-50 font-medium text-sm">
-              <option value="Etiquetas Escolares">🎒 Etiquetas Escolares</option>
-              <option value="Etiquetas para Ropa">👕 Etiquetas para Ropa</option>
-              <option value="Toppers">🎂 Toppers</option>
-              <option value="Stickers Circulares">🔴 Stickers Circulares</option>
-              <option value="Stickers Silueta">✂️ Stickers Silueta / Troquelados</option>
-              <option value="Otros">✨ Otros / Especiales</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Descripción del Pedido <span class="text-rose-500">*</span></label>
-            <input type="text" id="productName" required placeholder="Ej. 2 Paquetes básicos + etiquetas extra" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-sm">
-          </div>
-        </div>
-
-        <!-- Carrito de Selección Rápida del Catálogo -->
-        <div class="bg-indigo-50/60 p-3 rounded-xl border border-indigo-100 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="font-bold text-indigo-900 text-xs flex items-center gap-1.5">
-              <i class="fa-solid fa-cart-plus text-indigo-600"></i>
-              <span>Agregar productos desde el Catálogo (Opcional)</span>
-            </span>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
-            <div class="sm:col-span-6">
-              <select id="cartCatalogSelect" onchange="onCatalogSelectChange()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-medium text-slate-700">
-                <option value="">-- Seleccionar producto del catálogo --</option>
-              </select>
-            </div>
-            <div class="sm:col-span-2">
-              <input type="number" min="1" id="cartInputQty" value="1" placeholder="Cant." class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs text-center font-bold">
-            </div>
-            <div class="sm:col-span-2">
-              <input type="number" step="0.01" min="0" id="cartInputPrice" placeholder="Precio" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold text-slate-800">
-            </div>
-            <div class="sm:col-span-2">
-              <button type="button" onclick="addCartItemFromInput()" class="w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-lg transition shadow-sm flex items-center justify-center gap-1">
-                <i class="fa-solid fa-plus"></i> Añadir
-              </button>
-            </div>
-          </div>
-
-          <!-- Tabla / Lista del Carrito -->
-          <div class="border border-slate-200 rounded-lg overflow-hidden bg-white max-h-36 overflow-y-auto">
-            <table class="w-full text-left text-xs">
-              <thead class="bg-slate-100 text-slate-600 font-semibold border-b border-slate-200">
-                <tr>
-                  <th class="py-1.5 px-3">Producto</th>
-                  <th class="py-1.5 px-2 text-center">Cant.</th>
-                  <th class="py-1.5 px-2 text-right">Precio</th>
-                  <th class="py-1.5 px-2 text-right">Subtotal</th>
-                  <th class="py-1.5 px-2 text-center"><i class="fa-solid fa-trash-can"></i></th>
-                </tr>
-              </thead>
-              <tbody id="cartItemsTableBody" class="divide-y divide-slate-100">
-                <!-- Dynamic cart rows -->
-              </tbody>
-            </table>
-            <div id="emptyCartMessage" class="p-2 text-center text-slate-400 text-[11px] italic">
-              No hay ítems desglosados. Puedes escribir el total directamente abajo o agregar productos aquí.
-            </div>
-          </div>
-        </div>
-
-        <!-- Costos y Anticipo (Requeridos) -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Costo Total ($) <span class="text-rose-500">*</span></label>
-            <input type="number" step="0.01" min="0" id="totalCost" required oninput="calculateBalance()" placeholder="0.00" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-bold text-slate-800 focus:ring-2 focus:ring-indigo-500 text-sm">
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Anticipo Dado ($) <span class="text-rose-500">*</span></label>
-            <input type="number" step="0.01" min="0" id="advancePayment" required oninput="calculateBalance()" placeholder="0.00" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-bold text-emerald-600 focus:ring-2 focus:ring-indigo-500 text-sm">
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Saldo Restante</label>
-            <input type="text" id="remainingBalanceDisplay" readonly value="$0.00" class="w-full px-3 py-2 border border-slate-200 bg-slate-100 rounded-lg font-bold text-amber-600 cursor-not-allowed text-sm">
-          </div>
-        </div>
-
-        <!-- Fechas -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block font-medium text-slate-600 mb-1">Fecha de Pedido</label>
-            <input type="date" id="orderDate" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-sm">
-          </div>
-          <div>
-            <label class="block font-medium text-slate-600 mb-1">Fecha de Entrega Estimada</label>
-            <input type="date" id="deliveryDate" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-sm">
-          </div>
-        </div>
-
-        <!-- Estado de Impresión y Notas -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block font-medium text-slate-600 mb-1">Estado de Impresión / Entrega</label>
-            <select id="deliveryStatus" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 font-medium text-xs sm:text-sm">
-              <option value="Pendiente de Impresión">🖨️ Pendiente de Impresión</option>
-              <option value="Ya Impreso / Listo">📦 Ya Impreso / Listo para Entrega</option>
-              <option value="Entregado">✅ Entregado</option>
-              <option value="Cancelado">❌ Cancelado</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-medium text-slate-600 mb-1">Notas / Detalles Especiales</label>
-            <input type="text" id="orderNotes" placeholder="Ej. Temática Dinopolis, entregar en escuela" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-sm">
-          </div>
-        </div>
-
-        <!-- Buttons -->
-        <div class="pt-3 flex items-center justify-end space-x-3 border-t border-slate-100">
-          <button type="button" onclick="closeOrderModal()" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-600 hover:bg-slate-100 font-medium text-xs sm:text-sm">Cancelar</button>
-          <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md transition text-xs sm:text-sm">Guardar Pedido</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal: Registrar Abono / Pago Parcial -->
-  <div id="paymentModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden flex flex-col">
-      <div class="bg-emerald-600 text-white px-5 py-3.5 flex items-center justify-between">
-        <h3 class="font-bold text-base flex items-center gap-2">
-          <i class="fa-solid fa-hand-holding-dollar"></i>
-          <span>Registrar Abono / Pago</span>
-        </h3>
-        <button onclick="closePaymentModal()" class="text-white/80 hover:text-white text-lg">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-
-      <div class="p-5 space-y-4 text-xs sm:text-sm">
-        <input type="hidden" id="paymentOrderId">
-        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1">
-          <p class="text-slate-500">Cliente: <strong id="paymentClientName" class="text-slate-800"></strong></p>
-          <p class="text-slate-500">Costo Total: <span id="paymentTotalCost" class="font-semibold text-slate-800"></span></p>
-          <p class="text-slate-500">Anticipo Anterior: <span id="paymentCurrentAdvance" class="font-semibold text-emerald-600"></span></p>
-          <p class="text-amber-700 font-bold">Saldo Pendiente Actual: <span id="paymentCurrentBalance"></span></p>
-        </div>
-
-        <div>
-          <label class="block font-semibold text-slate-700 mb-1">Monto a Abonar ($) <span class="text-rose-500">*</span></label>
-          <input type="number" step="0.01" min="0.01" id="paymentAmountInput" placeholder="0.00" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-base font-bold text-emerald-600 focus:ring-2 focus:ring-emerald-500">
-        </div>
-
-        <div class="flex items-center justify-end space-x-2 pt-2 border-t border-slate-100">
-          <button type="button" onclick="closePaymentModal()" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-600 hover:bg-slate-100 font-medium text-xs">Cancelar</button>
-          <button type="button" onclick="submitPayment()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow-md transition text-xs">Guardar Abono</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal: Catálogo de Precios -->
-  <div id="catalogModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 hidden">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[90vh]">
-      <div class="bg-indigo-800 text-white px-5 py-3.5 flex items-center justify-between">
-        <h3 class="font-bold text-base sm:text-lg flex items-center gap-2">
-          <i class="fa-solid fa-book-open text-amber-300"></i>
-          <span>Catálogo de Precios y Productos</span>
-        </h3>
-        <button onclick="closeCatalogModal()" class="text-white/80 hover:text-white text-lg">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-
-      <div class="p-4 sm:p-6 overflow-y-auto space-y-4">
-        <!-- Form Add/Edit Catalog Item -->
-        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs space-y-3">
-          <h4 class="font-bold text-slate-800 text-sm"><i class="fa-solid fa-plus-circle text-indigo-600 mr-1"></i> Agregar Producto al Catálogo</h4>
-          <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
-            <div class="sm:col-span-4">
-              <select id="newCatCategory" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs">
-                <option value="Etiquetas Escolares">🎒 Etiquetas Escolares</option>
-                <option value="Etiquetas para Ropa">👕 Etiquetas para Ropa</option>
-                <option value="Toppers">🎂 Toppers</option>
-                <option value="Stickers Circulares">🔴 Stickers Circulares</option>
-                <option value="Stickers Silueta">✂️ Stickers Silueta</option>
-                <option value="Otros">✨ Otros / Especiales</option>
-              </select>
-            </div>
-            <div class="sm:col-span-5">
-              <input type="text" id="newCatName" placeholder="Nombre del paquete o producto" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs">
-            </div>
-            <div class="sm:col-span-3">
-              <input type="number" step="0.01" id="newCatPrice" placeholder="Precio ($)" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
-            </div>
-          </div>
-          <div class="flex justify-end">
-            <button onclick="addCatalogItem()" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold text-xs shadow-sm">
-              <i class="fa-solid fa-plus mr-1"></i> Guardar en Catálogo
-            </button>
-          </div>
-        </div>
-
-        <!-- Catalog List -->
-        <div class="border border-slate-200 rounded-xl overflow-hidden bg-white">
-          <table class="w-full text-left text-xs sm:text-sm">
-            <thead class="bg-slate-100 text-slate-600 uppercase text-xs font-semibold border-b border-slate-200">
-              <tr>
-                <th class="py-2.5 px-3">Categoría</th>
-                <th class="py-2.5 px-3">Producto / Paquete</th>
-                <th class="py-2.5 px-3 text-right">Precio Sugerido</th>
-                <th class="py-2.5 px-3 text-center">Acción</th>
-              </tr>
-            </thead>
-            <tbody id="catalogTableBody" class="divide-y divide-slate-100">
-              <!-- Dynamic Catalog Items -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="bg-slate-100 p-3 flex justify-between items-center text-xs border-t border-slate-200">
-        <button onclick="restoreDefaultCatalog()" class="text-indigo-600 hover:text-indigo-800 font-semibold">
-          <i class="fa-solid fa-rotate-left mr-1"></i> Restaurar precios originales
-        </button>
-        <button onclick="closeCatalogModal()" class="px-4 py-1.5 bg-slate-300 hover:bg-slate-400 text-slate-800 rounded-lg font-medium">Cerrar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal: Receipt / Printable Ticket -->
-  <div id="receiptModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
-      <div class="bg-slate-800 text-white px-6 py-4 flex items-center justify-between no-print">
-        <h3 class="font-bold text-base flex items-center gap-2">
-          <i class="fa-solid fa-receipt text-amber-400"></i>
-          <span>Nota de Venta / Comprobante</span>
-        </h3>
-        <button onclick="closeReceiptModal()" class="text-slate-400 hover:text-white text-lg">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-
-  <!-- Modal: Cotizador Inteligente -->
-  <div id="quoteModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 hidden">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl overflow-hidden flex flex-col max-h-[95vh]">
-      
-      <!-- Modal Header -->
-      <div class="bg-gradient-to-r from-indigo-800 to-indigo-900 text-white px-5 py-3.5 flex items-center justify-between shrink-0">
-        <div class="flex items-center space-x-2.5">
-          <div class="bg-amber-400/20 text-amber-300 p-2 rounded-xl">
-            <i class="fa-solid fa-calculator text-xl"></i>
-          </div>
-          <div>
-            <h3 class="font-bold text-base sm:text-lg leading-tight flex items-center gap-2">
-              Cotizador Inteligente de Personalizados
-            </h3>
-            <p class="text-[11px] text-indigo-200">Cálculo preciso de pliegos, acomodo con rotación, costos directos/indirectos y anticipos</p>
-          </div>
-        </div>
-        <button onclick="closeQuoteModal()" class="text-white/80 hover:text-white text-xl p-1">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-
-      <!-- Modal Content Body -->
-      <div class="p-4 sm:p-6 overflow-y-auto space-y-5 text-xs sm:text-sm bg-slate-50 flex-1">
-        
-        <!-- Row 1: Pieza, Pliego y Formato -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-          
-          <!-- Column: Configuración de Pieza y Planilla -->
-          <div class="lg:col-span-7 bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
-            <h4 class="font-bold text-indigo-900 text-sm flex items-center gap-2 border-b border-slate-100 pb-2">
-              <i class="fa-solid fa-ruler-combined text-indigo-600"></i>
-              <span>1. Dimensiones de Pieza y Formato de Material</span>
-            </h4>
-
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <div>
-                <label class="block font-semibold text-slate-700 mb-1">Ancho Pieza (cm)</label>
-                <input type="number" id="quoteWidth" step="0.1" value="5" oninput="calculateQuote()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-sm font-bold text-indigo-900">
-              </div>
-              <div>
-                <label class="block font-semibold text-slate-700 mb-1">Alto Pieza (cm)</label>
-                <input type="number" id="quoteHeight" step="0.1" value="5" oninput="calculateQuote()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-sm font-bold text-indigo-900">
-              </div>
-              <div class="col-span-2 sm:col-span-1">
-                <label class="block font-semibold text-slate-700 mb-1">Piezas Deseadas</label>
-                <input type="number" id="quoteQty" min="1" value="50" oninput="calculateQuote()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-sm font-bold text-emerald-700 bg-emerald-50/50">
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label class="block font-semibold text-slate-700 mb-1">Formato de Material / Pliego</label>
-                <select id="quoteFormat" onchange="calculateQuote()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-xs font-semibold text-slate-700 bg-slate-50">
-                  <option value="tabloide_super">Super Tabloide / A3+ (33 x 48.3 cm)</option>
-                  <option value="tabloide">Tabloide Estándar (28 x 43 cm)</option>
-                  <option value="carta">Carta (21.6 x 27.9 cm)</option>
-                  <option value="a4">A4 (21 x 29.7 cm)</option>
-                  <option value="vinil_60">Vinil por Metro (60 cm ancho)</option>
-                  <option value="vinil_120">Vinil por Metro (120 cm ancho)</option>
-                  <option value="custom">Personalizado (cm)</option>
-                </select>
-              </div>
-
-              <div id="quoteCustomDimGroup" class="hidden flex items-center gap-2">
-                <div class="w-1/2">
-                  <label class="block font-semibold text-slate-700 mb-1">Ancho Pliego</label>
-                  <input type="number" id="quoteSheetWidth" step="0.1" value="33" oninput="calculateQuote()" class="w-full px-2 py-1.5 border border-slate-300 rounded-lg text-xs">
+    <!-- Header / Navbar -->
+    <header class="bg-brand-purple text-brand-white shadow-lg sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="navegarA('inicio')">
+                <div class="bg-brand-pink text-brand-purple w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold shadow-md">
+                    PS
                 </div>
-                <div class="w-1/2">
-                  <label class="block font-semibold text-slate-700 mb-1">Alto Pliego</label>
-                  <input type="number" id="quoteSheetHeight" step="0.1" value="48.3" oninput="calculateQuote()" class="w-full px-2 py-1.5 border border-slate-300 rounded-lg text-xs">
+                <h1 class="text-xl font-bold tracking-wide">Personaliza <span class="text-brand-pink">Studio</span></h1>
+            </div>
+            
+            <nav class="hidden md:flex gap-6">
+                <button onclick="navegarA('inicio')" class="hover:text-brand-pink transition font-medium"><i class="fa-solid fa-house mr-2"></i> Inicio</button>
+                <button onclick="navegarA('cotizador')" class="bg-brand-blue hover:opacity-90 text-white px-5 py-2 rounded-lg transition font-medium shadow-md"><i class="fa-solid fa-calculator mr-2"></i> Cotizador</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6 max-w-5xl">
+
+        <!-- VISTA: INICIO -->
+        <section id="vista-inicio" class="view-section active">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden mt-4 md:mt-10 max-w-4xl mx-auto border border-gray-100">
+                <div class="bg-brand-blue p-8 md:p-12 text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-20">
+                        <i class="fa-solid fa-print text-6xl text-white"></i>
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4 text-brand-textDark drop-shadow-sm">Bienvenido a<br><span class="text-white mt-2 inline-block">Personaliza Studio</span></h2>
+                    <p class="text-lg md:text-xl font-medium max-w-2xl mx-auto text-brand-textDark opacity-90">
+                        Tu herramienta profesional para calcular precios, materiales y ganancias de manera rápida y precisa.
+                    </p>
                 </div>
-              </div>
-
-              <div>
-                <label class="block font-semibold text-slate-700 mb-1">Margen / Medida Suaje (mm)</label>
-                <input type="number" id="quoteMargin" step="0.5" value="3" oninput="calculateQuote()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-xs">
-              </div>
-            </div>
-
-            <!-- Optimized Layout Box -->
-            <div class="bg-indigo-50/80 p-3 rounded-xl border border-indigo-100 grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
-              <div>
-                <span class="text-indigo-600 block text-[10px] font-bold">Acomodo Estándar</span>
-                <span id="quoteRegularYield" class="font-bold text-slate-800">0 pzas/pliego</span>
-              </div>
-              <div>
-                <span class="text-indigo-600 block text-[10px] font-bold">Acomodo c/ Rotación 90°</span>
-                <span id="quoteRotatedYield" class="font-bold text-slate-800">0 pzas/pliego</span>
-              </div>
-              <div>
-                <span class="text-amber-700 block text-[10px] font-bold">Mejor Rendimiento</span>
-                <span id="quoteBestYield" class="font-bold text-amber-700">0 pzas</span>
-              </div>
-              <div>
-                <span class="text-emerald-700 block text-[10px] font-bold">Planillas / Metros</span>
-                <span id="quoteTotalSheets" class="font-bold text-emerald-700">0 planillas</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Column: Live Canvas Visualizer -->
-          <div class="lg:col-span-5 bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-              <h4 class="font-bold text-indigo-900 text-sm flex items-center gap-2">
-                <i class="fa-solid fa-border-all text-indigo-600"></i>
-                <span>Vista Previa de Acomodo</span>
-              </h4>
-              <span id="quoteRotationUsedBadge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">Rotación Óptima</span>
-            </div>
-
-            <div class="flex-1 flex items-center justify-center my-3 bg-slate-100/70 rounded-xl p-2 border border-slate-200 min-h-[160px]">
-              <canvas id="quoteSheetCanvas" width="300" height="200" class="max-w-full max-h-[180px] object-contain rounded drop-shadow-sm"></canvas>
-            </div>
-
-            <p class="text-[11px] text-slate-500 text-center italic" id="quoteLayoutInfoText">
-              Calculando acomodo óptimo en el formato...
-            </p>
-          </div>
-        </div>
-
-        <!-- Row 2: Desglose de Costos de Producción -->
-        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
-          <h4 class="font-bold text-indigo-900 text-sm flex items-center justify-between border-b border-slate-100 pb-2">
-            <span class="flex items-center gap-2">
-              <i class="fa-solid fa-layer-group text-indigo-600"></i>
-              <span>2. Desglose de Procesos y Costos Directos / Indirectos</span>
-            </span>
-            <span class="text-xs font-normal text-slate-500">Ingresa los costos base requeridos</span>
-          </h4>
-
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            <div>
-              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Costo Material Base ($)</label>
-              <input type="number" id="costMaterial" step="0.5" value="15" oninput="calculateQuote()" title="Costo por pliego o por metro" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
-              <span class="text-[9px] text-slate-400">Por pliego/metro</span>
-            </div>
-
-            <div>
-              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Producto Base ($)</label>
-              <input type="number" id="costBaseProduct" step="1" value="0" oninput="calculateQuote()" title="Si aplica (playera, taza, termo, etc.) por pza" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
-              <span class="text-[9px] text-slate-400">Por unidad (ej. playera)</span>
-            </div>
-
-            <div>
-              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Impresión ($)</label>
-              <input type="number" id="costPrint" step="0.5" value="10" oninput="calculateQuote()" title="Costo por impresión por pliego/metro" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
-              <span class="text-[9px] text-slate-400">Por pliego/metro</span>
-            </div>
-
-            <div>
-              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Laminado ($)</label>
-              <input type="number" id="costLamination" step="0.5" value="8" oninput="calculateQuote()" title="Costo por pliego/metro de acabado" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
-              <span class="text-[9px] text-slate-400">Por pliego/metro</span>
-            </div>
-
-            <div>
-              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Suaje / Plotter ($)</label>
-              <input type="number" id="costDieCut" step="0.5" value="5" oninput="calculateQuote()" title="Costo de corte por pliego/metro" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
-              <span class="text-[9px] text-slate-400">Por pliego/metro</span>
-            </div>
-
-            <div>
-              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Corte / Depilado ($)</label>
-              <input type="number" id="costWeeding" step="0.5" value="0.5" oninput="calculateQuote()" title="Costo mano de obra por pieza" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
-              <span class="text-[9px] text-slate-400">Por pieza</span>
-            </div>
-
-            <div>
-              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Planchado / Sublim. ($)</label>
-              <input type="number" id="costPressing" step="1" value="0" oninput="calculateQuote()" title="Costo proceso térmico por pieza" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
-              <span class="text-[9px] text-slate-400">Por pieza</span>
-            </div>
-
-            <div>
-              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Diseño Personalizado ($)</label>
-              <input type="number" id="costDesign" step="10" value="50" oninput="calculateQuote()" title="Costo fijo del arte" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
-              <span class="text-[9px] text-slate-400">Costo único pedido</span>
-            </div>
-
-            <div>
-              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Empaque / Bolsas ($)</label>
-              <input type="number" id="costPackaging" step="1" value="15" oninput="calculateQuote()" title="Costo total empaque" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
-              <span class="text-[9px] text-slate-400">Total pedido</span>
-            </div>
-
-            <div>
-              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Mano de Obra ($/Hora)</label>
-              <input type="number" id="costLaborRate" step="5" value="60" oninput="calculateQuote()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
-              <span class="text-[9px] text-slate-400">Tarifa por hora</span>
-            </div>
-
-            <div>
-              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Horas Est. Producción</label>
-              <input type="number" id="quoteEstHours" step="0.25" value="1.5" oninput="calculateQuote()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold">
-              <span class="text-[9px] text-slate-400">Horas trabajo</span>
-            </div>
-
-            <div>
-              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Gastos Indirectos (%)</label>
-              <input type="number" id="indirectOverheadPct" step="1" value="10" oninput="calculateQuote()" title="Luz, merma, desgaste máquinas" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold text-amber-700 bg-amber-50">
-              <span class="text-[9px] text-slate-400">% sobre costo directo</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Row 3: Resultados, Ganancia, Anticipo (60%) y Saldo (40%) -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-          
-          <!-- Margen y Precios Calculados -->
-          <div class="lg:col-span-8 bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-              <h4 class="font-bold text-indigo-900 text-sm flex items-center gap-2">
-                <i class="fa-solid fa-chart-line text-emerald-600"></i>
-                <span>3. Margen de Ganancia y Cotización Final</span>
-              </h4>
-              <div class="flex items-center space-x-2">
-                <label class="text-xs font-semibold text-slate-700">Ganancia Deseada:</label>
-                <select id="quoteProfitMargin" onchange="calculateQuote()" class="px-2 py-1 border border-indigo-300 bg-indigo-50 text-indigo-900 rounded-lg font-bold text-xs">
-                  <option value="30">30% (Bajo)</option>
-                  <option value="50">50% (Estándar)</option>
-                  <option value="80">80% (Recomendado)</option>
-                  <option value="100" selected>100% (Doble del Costo)</option>
-                  <option value="150">150% (Alto)</option>
-                  <option value="200">200% (Especial / Urgente)</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span class="text-[11px] font-semibold text-slate-500 block">Costo Real Total</span>
-                <span id="quoteCalculatedCost" class="text-base sm:text-lg font-bold text-slate-800">$0.00</span>
-                <span id="quoteCostPerUnit" class="text-[10px] text-slate-400 block">$0.00 / pza</span>
-              </div>
-
-              <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
-                <span class="text-[11px] font-semibold text-emerald-800 block">Ganancia Neta</span>
-                <span id="quoteCalculatedProfit" class="text-base sm:text-lg font-bold text-emerald-600">$0.00</span>
-                <span id="quoteProfitPct" class="text-[10px] text-emerald-700 font-semibold block">+100%</span>
-              </div>
-
-              <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-200">
-                <span class="text-[11px] font-semibold text-indigo-900 block">Precio Venta Total</span>
-                <span id="quoteSellingPrice" class="text-base sm:text-lg font-bold text-indigo-700">$0.00</span>
-                <span id="quotePricePerUnit" class="text-[10px] text-indigo-600 font-bold block">$0.00 / pza</span>
-              </div>
-
-              <div class="bg-amber-50 p-3 rounded-xl border border-amber-200">
-                <span class="text-[11px] font-semibold text-amber-800 block">Tiempo Estimado</span>
-                <span id="quoteProductionTime" class="text-sm font-bold text-amber-900">0 hrs</span>
-                <span class="text-[10px] text-amber-700 block">Total Producción</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Anticipo 60% & Saldo 40% Card -->
-          <div class="lg:col-span-4 bg-gradient-to-br from-indigo-900 to-indigo-950 text-white p-4 rounded-xl shadow-md flex flex-col justify-between space-y-3">
-            <div>
-              <span class="text-[10px] uppercase font-bold tracking-wider text-amber-300 bg-amber-400/20 px-2 py-0.5 rounded">
-                Esquema de Pago Recomendado
-              </span>
-              <h5 class="text-sm font-bold text-white mt-1">Anticipo 60% & Saldo 40%</h5>
-            </div>
-
-            <div class="space-y-2 border-y border-indigo-700/60 py-2 text-xs">
-              <div class="flex justify-between items-center">
-                <span class="text-indigo-200">Anticipo (60%):</span>
-                <span id="quoteAdvance60" class="text-lg font-extrabold text-emerald-400">$0.00</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-indigo-200">Saldo al entregar (40%):</span>
-                <span id="quoteBalance40" class="text-base font-bold text-amber-300">$0.00</span>
-              </div>
-            </div>
-
-            <button type="button" onclick="transferQuoteToOrder()" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-lg transition shadow-md flex items-center justify-center gap-2 text-xs">
-              <i class="fa-solid fa-file-circle-plus text-sm"></i>
-              <span>Convertir en Pedido Nuevo</span>
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Footer Buttons -->
-      <div class="bg-white p-3 sm:px-6 flex items-center justify-between border-t border-slate-200 shrink-0 text-xs">
-        <span class="text-slate-500 font-medium hidden sm:inline"><i class="fa-solid fa-circle-info text-indigo-500 mr-1"></i>Los datos se calculan automáticamente en tiempo real.</span>
-        <div class="flex items-center space-x-2 w-full sm:w-auto justify-end">
-          <button type="button" onclick="closeQuoteModal()" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-600 hover:bg-slate-100 font-medium">Cerrar</button>
-          <button type="button" onclick="transferQuoteToOrder()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold shadow-sm transition">
-            Pasar a Registrar Pedido
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Generic Custom Confirmation Modal -->
-  <div id="confirmModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden p-5 space-y-4 text-center">
-      <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto text-amber-600 text-xl">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-      </div>
-      <div>
-        <h3 class="font-bold text-slate-800 text-base" id="confirmTitle">Confirmar Acción</h3>
-        <p class="text-xs text-slate-500 mt-1" id="confirmMessage">¿Estás seguro de realizar esta acción?</p>
-      </div>
-      <div class="flex items-center justify-center space-x-3 pt-2">
-        <button id="confirmCancelBtn" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg font-medium text-xs">Cancelar</button>
-        <button id="confirmOkBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold text-xs">Aceptar</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // 1. Initial Default Catalog Data
-    const DEFAULT_CATALOG = [
-      { id: 'cat-1', category: 'Etiquetas Escolares', name: 'Paquete Básico (16 cuadernos, 50 colores, 4 multiusos)', price: 100.00 },
-      { id: 'cat-2', category: 'Etiquetas Escolares', name: 'Paquete Plus (Paquete Básico + Motivacionales)', price: 175.00 },
-      { id: 'cat-3', category: 'Etiquetas Escolares', name: 'Kit Escolar (Básico + 12 Ropa + 5 Toppers)', price: 250.00 },
-      { id: 'cat-4', category: 'Etiquetas Escolares', name: 'Paquete Premium (32 cuadernos, 70 colores, 20 multiusos, 10 toppers, 12 uniformes)', price: 300.00 },
-      { id: 'cat-5', category: 'Etiquetas Escolares', name: '75 Etiquetas solo para Colores', price: 100.00 },
-      { id: 'cat-6', category: 'Etiquetas Escolares', name: 'Etiquetas Motivacionales (75 frases variadas)', price: 100.00 },
-      { id: 'cat-7', category: 'Etiquetas Escolares', name: 'Paquete Materias (5 materias)', price: 70.00 },
-      { id: 'cat-8', category: 'Etiquetas Escolares', name: 'Portada Sencilla (1 pza)', price: 40.00 },
-      { id: 'cat-9', category: 'Etiquetas Escolares', name: 'Portada Holográfica (1 pza)', price: 55.00 },
-      { id: 'cat-10', category: 'Etiquetas para Ropa', name: 'Paquete 20 Etiquetas Lavables para Ropa (7x3 cm)', price: 100.00 },
-      { id: 'cat-11', category: 'Toppers', name: 'Paquete 5 Etiquetas Lavables para Toppers (10x5 cm)', price: 110.00 },
-      { id: 'cat-12', category: 'Toppers', name: 'Topper Sencillo 1 Capa para Pastel', price: 90.00 },
-      { id: 'cat-13', category: 'Toppers', name: 'Topper Multicapa 3D Personalizado', price: 160.00 },
-      { id: 'cat-14', category: 'Toppers', name: 'Topper 3D con Shaker / Acetato', price: 220.00 },
-      { id: 'cat-15', category: 'Stickers Circulares', name: 'Planilla 24 Stickers Circulares (5cm)', price: 80.00 },
-      { id: 'cat-16', category: 'Stickers Circulares', name: 'Planilla 48 Stickers Circulares (4cm)', price: 95.00 },
-      { id: 'cat-17', category: 'Stickers Circulares', name: 'Ciento de Stickers Circulares (5cm)', price: 250.00 },
-      { id: 'cat-18', category: 'Stickers Silueta', name: 'Planilla Stickers Troquelados Silueta (20-25 pzas)', price: 90.00 },
-      { id: 'cat-19', category: 'Stickers Silueta', name: 'Pack 50 Stickers Vinil Troquelados', price: 190.00 },
-      { id: 'cat-20', category: 'Stickers Silueta', name: 'Pack 100 Stickers Vinil Troquelados (A prueba de agua)', price: 320.00 },
-      { id: 'cat-21', category: 'Otros', name: 'Diseño Personalizado / Especial', price: 100.00 }
-    ];
-
-    function getRelativeDate(daysOffset) {
-      const d = new Date();
-      d.setDate(d.getDate() + daysOffset);
-      return d.toISOString().split('T')[0];
-    }
-
-    // 2. The 5 Initial Sample Orders Requested
-    const SAMPLE_ORDERS = [
-      {
-        id: '1001',
-        category: 'Etiquetas Escolares',
-        clientName: 'Paloma e Isabella',
-        clientPhone: '4426004406',
-        productName: '2 Paquetes básicos (Equipos Futball México + España)',
-        totalCost: 200.00,
-        advancePayment: 200.00,
-        orderDate: getRelativeDate(-3),
-        deliveryDate: getRelativeDate(2),
-        deliveryStatus: 'Pendiente de Impresión',
-        notes: '• Equipos de Futball: México + España\n• Nombres: Paloma e Isabella\n• Monto: Pagado completo'
-      },
-      {
-        id: '1002',
-        category: 'Etiquetas Escolares',
-        clientName: 'Plaza del Parque',
-        clientPhone: '4428659747',
-        productName: 'Paquete materias + 3 básicos con holográficos',
-        totalCost: 415.00,
-        advancePayment: 170.00,
-        orderDate: getRelativeDate(-2),
-        deliveryDate: getRelativeDate(3),
-        deliveryStatus: 'Pendiente de Impresión',
-        notes: '• Lugar de entrega: Plaza del Parque\n• Monto: $415 total ($245 pendientes)'
-      },
-      {
-        id: '1003',
-        category: 'Etiquetas Escolares',
-        clientName: 'Snopy, Guerreras y Cristiano',
-        clientPhone: '4428659747',
-        productName: '3 Paquetes básicos (Snopy, Guerreras, Cristiano Ronaldo)',
-        totalCost: 300.00,
-        advancePayment: 300.00,
-        orderDate: getRelativeDate(-2),
-        deliveryDate: getRelativeDate(1),
-        deliveryStatus: 'Pendiente de Impresión',
-        notes: '• Temáticas: Snopy, Guerreras y Cristiano Ronaldo\n• Monto: Pagado completo'
-      },
-      {
-        id: '1004',
-        category: 'Otros',
-        clientName: 'Tatuajes 180',
-        clientPhone: '4426004406',
-        productName: 'Tatuajes 180 (Diseño e impresión)',
-        totalCost: 900.00,
-        advancePayment: 450.00,
-        orderDate: getRelativeDate(-1),
-        deliveryDate: getRelativeDate(4),
-        deliveryStatus: 'Pendiente de Impresión',
-        notes: '• 180 Tatuajes personalizados (Diseño e impresión)\n• Monto: $900 total ($450 pendientes)'
-      },
-      {
-        id: '1005',
-        category: 'Stickers Silueta',
-        clientName: 'Camisa y Etiquetas (Siluetas)',
-        clientPhone: '4426004406',
-        productName: 'Camisa Online You ($280) + 28 Etiquetas 6 CM con suaje ($150)',
-        totalCost: 430.00,
-        advancePayment: 150.00,
-        orderDate: getRelativeDate(0),
-        deliveryDate: getRelativeDate(5),
-        deliveryStatus: 'Pendiente de Impresión',
-        notes: '• Camisa Online You ($280)\n• 28 Etiquetas 6 CM con suaje ($150 - Pagado)\n• Monto total: $430 ($280 pendientes)'
-      }
-    ];
-
-    // Global App State
-    let orders = [];
-    let catalog = [];
-    let cartItems = [];
-    let currentStatusFilter = 'all';
-
-    let currentQuoteResult = null;
-
-    window.addEventListener('DOMContentLoaded', () => {
-      loadCatalog();
-      loadOrders();
-      const today = new Date().toISOString().split('T')[0];
-      const orderDateInput = document.getElementById('orderDate');
-      if (orderDateInput) orderDateInput.value = today;
-      calculateQuote();
-    });
-
-    function loadOrders() {
-      const stored = localStorage.getItem('business_orders_v7');
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            orders = parsed;
-          } else {
-            orders = [...SAMPLE_ORDERS];
-            saveOrdersToLocalStorage();
-          }
-        } catch (e) {
-          orders = [...SAMPLE_ORDERS];
-          saveOrdersToLocalStorage();
-        }
-      } else {
-        orders = [...SAMPLE_ORDERS];
-        saveOrdersToLocalStorage();
-      }
-      renderOrders();
-    }
-
-    function saveOrdersToLocalStorage() {
-      localStorage.setItem('business_orders_v7', JSON.stringify(orders));
-    }
-
-    function loadCatalog() {
-      const stored = localStorage.getItem('business_catalog_v3');
-      if (stored) {
-        try {
-          catalog = JSON.parse(stored);
-        } catch (e) {
-          catalog = [...DEFAULT_CATALOG];
-        }
-      } else {
-        catalog = [...DEFAULT_CATALOG];
-        saveCatalogToLocalStorage();
-      }
-    }
-
-    function saveCatalogToLocalStorage() {
-      localStorage.setItem('business_catalog_v3', JSON.stringify(catalog));
-    }
-
-    function renderOrders() {
-      const searchInput = document.getElementById('searchInput');
-      const categoryFilter = document.getElementById('categoryFilter');
-      const dateSortInput = document.getElementById('dateSortInput');
-      const dateFromFilter = document.getElementById('dateFromFilter');
-      const dateToFilter = document.getElementById('dateToFilter');
-
-      const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
-      const selectedCat = categoryFilter ? categoryFilter.value : 'all';
-      const dateSort = dateSortInput ? dateSortInput.value : 'desc';
-      const dateFrom = dateFromFilter ? dateFromFilter.value : '';
-      const dateTo = dateToFilter ? dateToFilter.value : '';
-
-      const tbody = document.getElementById('ordersTableBody');
-      const cardsContainer = document.getElementById('ordersCardsContainer');
-      const emptyState = document.getElementById('emptyState');
-
-      if (tbody) tbody.innerHTML = '';
-      if (cardsContainer) cardsContainer.innerHTML = '';
-
-      let totalSales = 0;
-      let totalAdvances = 0;
-      let totalPendingBalance = 0;
-      let pendingPrintCount = 0;
-      let printedCount = 0;
-      let pendingDeliveryCount = 0;
-      let deliveredCount = 0;
-      let unpaidCount = 0;
-
-      orders.forEach(o => {
-        const remaining = Math.max(0, Number(o.totalCost || 0) - Number(o.advancePayment || 0));
-        totalSales += Number(o.totalCost || 0);
-        totalAdvances += Number(o.advancePayment || 0);
-        totalPendingBalance += remaining;
-
-        const st = o.deliveryStatus || 'Pendiente de Impresión';
-        if (st === 'Pendiente de Impresión' || st === 'Pendiente' || st === 'En Proceso') {
-          pendingPrintCount++;
-        }
-        if (st === 'Ya Impreso / Listo' || st === 'Listo') {
-          printedCount++;
-        }
-        if (st !== 'Entregado' && st !== 'Cancelado') {
-          pendingDeliveryCount++;
-        }
-        if (st === 'Entregado') {
-          deliveredCount++;
-        }
-        if (remaining > 0) unpaidCount++;
-      });
-
-      // Update Dashboard Counters
-      document.getElementById('statTotalOrders').innerText = orders.length;
-      document.getElementById('statTotalSales').innerText = formatCurrency(totalSales);
-      document.getElementById('statTotalAdvances').innerText = formatCurrency(totalAdvances);
-      document.getElementById('statPendingBalance').innerText = formatCurrency(totalPendingBalance);
-
-      // Update Tabs Counters
-      document.getElementById('countAll').innerText = orders.length;
-      document.getElementById('countPendingPrint').innerText = pendingPrintCount;
-      document.getElementById('countPrinted').innerText = printedCount;
-      document.getElementById('countPendingDelivery').innerText = pendingDeliveryCount;
-      document.getElementById('countDelivered').innerText = deliveredCount;
-      document.getElementById('countUnpaid').innerText = unpaidCount;
-
-      // Filter Logic
-      const filteredOrders = orders.filter(order => {
-        const remaining = Math.max(0, Number(order.totalCost || 0) - Number(order.advancePayment || 0));
-        const st = order.deliveryStatus || 'Pendiente de Impresión';
-
-        if (selectedCat !== 'all' && order.category !== selectedCat) return false;
-
-        if (currentStatusFilter === 'pending_print' && (st !== 'Pendiente de Impresión' && st !== 'Pendiente' && st !== 'En Proceso')) return false;
-        if (currentStatusFilter === 'printed' && (st !== 'Ya Impreso / Listo' && st !== 'Listo')) return false;
-        if (currentStatusFilter === 'pending_delivery' && (st === 'Entregado' || st === 'Cancelado')) return false;
-        if (currentStatusFilter === 'delivered' && st !== 'Entregado') return false;
-        if (currentStatusFilter === 'unpaid' && remaining <= 0) return false;
-
-        if (dateFrom && order.orderDate && order.orderDate < dateFrom) return false;
-        if (dateTo && order.orderDate && order.orderDate > dateTo) return false;
-
-        if (searchTerm) {
-          const matchClient = (order.clientName || '').toLowerCase().includes(searchTerm);
-          const matchProduct = (order.productName || '').toLowerCase().includes(searchTerm);
-          const matchPhone = (order.clientPhone || '').includes(searchTerm);
-          const matchNotes = (order.notes || '').toLowerCase().includes(searchTerm);
-          return matchClient || matchProduct || matchPhone || matchNotes;
-        }
-
-        return true;
-      });
-
-      if (filteredOrders.length === 0) {
-        if (emptyState) emptyState.classList.remove('hidden');
-      } else {
-        if (emptyState) emptyState.classList.add('hidden');
-        
-        // Sorting by Date
-        filteredOrders.sort((a, b) => {
-          const dateA = new Date(a.orderDate || '1970-01-01');
-          const dateB = new Date(b.orderDate || '1970-01-01');
-          return dateSort === 'asc' ? dateA - dateB : dateB - dateA;
-        });
-
-        filteredOrders.forEach(order => {
-          const remaining = Math.max(0, Number(order.totalCost || 0) - Number(order.advancePayment || 0));
-          const statusBadge = getStatusBadgeHTML(order.deliveryStatus);
-          const categoryBadge = getCategoryBadgeHTML(order.category || 'Otros');
-
-          // Desktop Row
-          if (tbody) {
-            const tr = document.createElement('tr');
-            tr.className = 'hover:bg-slate-50 transition border-b border-slate-100';
-            tr.innerHTML = `
-              <td class="py-3 px-4 text-xs font-mono text-slate-600 whitespace-nowrap">
-                <div class="font-semibold text-slate-700">${order.orderDate ? formatDate(order.orderDate) : 'Sin fecha'}</div>
-                <div class="text-[10px] text-slate-400">#${order.id}</div>
-              </td>
-              <td class="py-3 px-4 whitespace-nowrap">
-                ${categoryBadge}
-              </td>
-              <td class="py-3 px-4">
-                <div class="font-bold text-slate-800">${escapeHtml(order.clientName)}</div>
-                ${order.clientPhone ? `<div class="text-xs text-slate-500"><i class="fa-solid fa-phone text-[10px] mr-1 text-slate-400"></i>${escapeHtml(order.clientPhone)}</div>` : ''}
-              </td>
-              <td class="py-3 px-4">
-                <div class="font-medium text-slate-800 max-w-xs">${escapeHtml(order.productName)}</div>
-                ${order.notes ? `<div class="text-xs text-slate-500 whitespace-pre-line mt-1 bg-amber-50/80 p-1.5 rounded border border-amber-100 max-w-xs"><i class="fa-regular fa-note-sticky text-amber-600 mr-1"></i>${escapeHtml(order.notes)}</div>` : ''}
-              </td>
-              <td class="py-3 px-4 text-right font-semibold text-slate-800 whitespace-nowrap">
-                ${formatCurrency(order.totalCost)}
-              </td>
-              <td class="py-3 px-4 text-right font-semibold text-emerald-600 whitespace-nowrap">
-                ${formatCurrency(order.advancePayment)}
-              </td>
-              <td class="py-3 px-4 text-right whitespace-nowrap">
-                <span class="font-bold ${remaining > 0 ? 'text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200' : 'text-slate-400'}">${formatCurrency(remaining)}</span>
-              </td>
-              <td class="py-3 px-4 text-center text-xs whitespace-nowrap">
-                <div class="font-medium text-slate-700">${order.deliveryDate ? formatDate(order.deliveryDate) : 'Por acordar'}</div>
-              </td>
-              <td class="py-3 px-4 text-center whitespace-nowrap">
-                ${statusBadge}
-              </td>
-              <td class="py-3 px-4 text-center whitespace-nowrap">
-                <div class="flex items-center justify-center space-x-1">
-                  ${remaining > 0 ? `
-                    <button onclick="openPaymentModal('${order.id}')" title="Registrar Abono" class="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-md">
-                      <i class="fa-solid fa-hand-holding-dollar"></i>
+                
+                <div class="p-8 md:p-12 text-center">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                        <div class="p-6 bg-brand-lilac/20 rounded-xl border border-brand-lilac/30 hover:bg-brand-lilac/30 transition">
+                            <i class="fa-solid fa-bolt text-3xl text-brand-purple mb-3"></i>
+                            <h3 class="font-bold text-lg text-brand-purple">Rápido</h3>
+                            <p class="text-sm text-gray-600 mt-2">Cálculos automáticos en segundos.</p>
+                        </div>
+                        <div class="p-6 bg-brand-lilac/20 rounded-xl border border-brand-lilac/30 hover:bg-brand-lilac/30 transition">
+                            <i class="fa-solid fa-bullseye text-3xl text-brand-purple mb-3"></i>
+                            <h3 class="font-bold text-lg text-brand-purple">Preciso</h3>
+                            <p class="text-sm text-gray-600 mt-2">Algoritmos inteligentes para ahorrar material.</p>
+                        </div>
+                        <div class="p-6 bg-brand-lilac/20 rounded-xl border border-brand-lilac/30 hover:bg-brand-lilac/30 transition">
+                            <i class="fa-solid fa-chart-line text-3xl text-brand-purple mb-3"></i>
+                            <h3 class="font-bold text-lg text-brand-purple">Rentable</h3>
+                            <p class="text-sm text-gray-600 mt-2">Control total de tus ganancias.</p>
+                        </div>
+                    </div>
+                    
+                    <button onclick="navegarA('cotizador')" class="bg-brand-pink hover:opacity-90 text-brand-textDark text-lg font-bold py-4 px-10 rounded-full shadow-lg transform transition hover:scale-105 border-2 border-brand-pink">
+                        <i class="fa-solid fa-calculator mr-2"></i> ABRIR COTIZADOR
                     </button>
-                  ` : ''}
-                  <button onclick="openReceiptModal('${order.id}')" title="Ver Recibo / Nota" class="p-1.5 text-indigo-600 hover:bg-indigo-50 rounded-md">
-                    <i class="fa-solid fa-receipt"></i>
-                  </button>
-                  <button onclick="editOrder('${order.id}')" title="Editar" class="p-1.5 text-blue-600 hover:bg-blue-50 rounded-md">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                  </button>
-                  <button onclick="deleteOrder('${order.id}')" title="Eliminar" class="p-1.5 text-rose-500 hover:bg-rose-50 rounded-md">
-                    <i class="fa-solid fa-trash-can"></i>
-                  </button>
                 </div>
-              </td>
-            `;
-            tbody.appendChild(tr);
-          }
+            </div>
+        </section>
 
-          // Mobile Card
-          if (cardsContainer) {
-            const card = document.createElement('div');
-            card.className = 'p-4 space-y-3 bg-white border-b border-slate-200';
-            card.innerHTML = `
-              <div class="flex items-start justify-between">
-                <div>
-                  <span class="text-[10px] font-mono text-slate-400">#${order.id} | ${order.orderDate ? formatDate(order.orderDate) : 'Sin fecha'}</span>
-                  <h4 class="font-bold text-slate-800 text-base">${escapeHtml(order.clientName)}</h4>
-                  ${order.clientPhone ? `<p class="text-xs text-slate-500"><i class="fa-solid fa-phone text-[10px] mr-1 text-slate-400"></i>${escapeHtml(order.clientPhone)}</p>` : ''}
-                </div>
-                <div class="text-right space-y-1">
-                  ${statusBadge}
-                  <div>${categoryBadge}</div>
-                </div>
-              </div>
-
-              <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100 text-xs space-y-1">
-                <p class="font-semibold text-slate-800"><i class="fa-solid fa-box text-indigo-500 mr-1"></i>${escapeHtml(order.productName)}</p>
-                ${order.notes ? `<p class="text-slate-600 whitespace-pre-line bg-amber-50 p-1.5 rounded border border-amber-200/60 mt-1"><i class="fa-regular fa-note-sticky text-amber-600 mr-1"></i>${escapeHtml(order.notes)}</p>` : ''}
-                ${order.deliveryDate ? `<p class="text-indigo-600 font-medium pt-0.5"><i class="fa-solid fa-calendar-day mr-1"></i>Entrega: ${formatDate(order.deliveryDate)}</p>` : ''}
-              </div>
-
-              <div class="grid grid-cols-3 gap-2 text-center text-xs py-2 bg-slate-50 rounded-lg">
-                <div>
-                  <span class="text-slate-400 block text-[10px]">Costo Total</span>
-                  <span class="font-bold text-slate-800">${formatCurrency(order.totalCost)}</span>
-                </div>
-                <div>
-                  <span class="text-slate-400 block text-[10px]">Anticipo</span>
-                  <span class="font-bold text-emerald-600">${formatCurrency(order.advancePayment)}</span>
-                </div>
-                <div>
-                  <span class="text-slate-400 block text-[10px]">Saldo Restante</span>
-                  <span class="font-bold ${remaining > 0 ? 'text-amber-600' : 'text-slate-400'}">${formatCurrency(remaining)}</span>
-                </div>
-              </div>
-
-              <div class="flex items-center justify-end pt-1 text-xs space-x-2">
-                ${remaining > 0 ? `
-                  <button onclick="openPaymentModal('${order.id}')" class="px-3 py-1.5 bg-emerald-50 text-emerald-700 font-semibold rounded-lg border border-emerald-200">
-                    + Abono
-                  </button>
-                ` : ''}
-                <button onclick="openReceiptModal('${order.id}')" class="p-1.5 text-indigo-600 border border-indigo-200 rounded-lg">
-                  <i class="fa-solid fa-receipt"></i>
+        <!-- VISTA: COTIZADOR -->
+        <section id="vista-cotizador" class="view-section">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-brand-purple"><i class="fa-solid fa-file-invoice-dollar mr-2"></i> Nueva Cotización</h2>
+                <button onclick="nuevaCotizacion()" class="bg-brand-cyan/20 hover:bg-brand-cyan/40 text-brand-purple px-4 py-2 rounded-lg text-sm font-semibold transition border border-brand-cyan">
+                    <i class="fa-solid fa-plus mr-1"></i> Nueva
                 </button>
-                <button onclick="editOrder('${order.id}')" class="p-1.5 text-blue-600 border border-blue-200 rounded-lg">
-                  <i class="fa-solid fa-pen-to-square"></i>
-                </button>
-                <button onclick="deleteOrder('${order.id}')" class="p-1.5 text-rose-500 border border-rose-200 rounded-lg">
-                  <i class="fa-solid fa-trash-can"></i>
-                </button>
-              </div>
-            `;
-            cardsContainer.appendChild(card);
-          }
-        });
-      }
-    }
+            </div>
 
-    function openOrderModal(isEdit = false) {
-      if (!isEdit) {
-        document.getElementById('orderModalTitle').innerHTML = '<i class="fa-solid fa-plus-circle text-amber-300"></i><span>Nuevo Pedido</span>';
-        document.getElementById('orderForm').reset();
-        document.getElementById('orderId').value = '';
-        document.getElementById('orderDate').value = new Date().toISOString().split('T')[0];
-        document.getElementById('deliveryStatus').value = 'Pendiente de Impresión';
-        cartItems = [];
-        renderCartItems();
-        onCategoryChange();
-      }
-      document.getElementById('orderModal').classList.remove('hidden');
-    }
+            <!-- Alerta Errores -->
+            <div id="alerta-error" class="hidden bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded mb-6 shadow-sm" role="alert">
+                <p class="font-bold">Error</p>
+                <p id="alerta-mensaje">Por favor, revisa los datos ingresados.</p>
+            </div>
 
-    function closeOrderModal() {
-      document.getElementById('orderModal').classList.add('hidden');
-    }
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                
+                <!-- Columna Izquierda: Formulario -->
+                <div class="bg-white rounded-xl shadow-md p-6 border border-gray-100 sticky top-20">
+                    <form id="form-cotizador" onsubmit="event.preventDefault(); calcularCotizacion();">
+                        
+                        <!-- 1. Producto -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Producto</label>
+                            <select id="producto" onchange="manejarCambioProducto()" class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-brand-cyan focus:border-brand-cyan block p-3 transition" required>
+                                <option value="" disabled selected>Selecciona un producto...</option>
+                                <option value="playera">👕 Playera ($180)</option>
+                                <option value="sudadera">🧥 Sudadera ($260)</option>
+                                <option value="bolsa">👜 Bolsa ($100)</option>
+                                <option value="gorra">🧢 Gorra ($100)</option>
+                                <option value="taza">🥤 Taza de 11 oz ($80)</option>
+                                <option value="etiquetas">🏷️ Etiquetas (Cálculo dinámico)</option>
+                            </select>
+                        </div>
 
-    function editOrder(id) {
-      const order = orders.find(o => o.id === id);
-      if (!order) return;
+                        <!-- 2. Cantidad -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Cantidad de Piezas</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <i class="fa-solid fa-hashtag text-gray-400"></i>
+                                </div>
+                                <input type="number" id="cantidad" min="1" class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-brand-cyan focus:border-brand-cyan block p-3 pl-10 transition" placeholder="Ej: 50" required>
+                            </div>
+                        </div>
 
-      document.getElementById('orderModalTitle').innerHTML = '<i class="fa-solid fa-pen-to-square text-amber-300"></i><span>Editar Pedido #' + order.id + '</span>';
-      document.getElementById('orderId').value = order.id;
-      document.getElementById('clientName').value = order.clientName || '';
-      document.getElementById('clientPhone').value = order.clientPhone || '';
-      document.getElementById('orderCategory').value = order.category || 'Etiquetas Escolares';
-      document.getElementById('productName').value = order.productName || '';
-      document.getElementById('totalCost').value = order.totalCost || 0;
-      document.getElementById('advancePayment').value = order.advancePayment || 0;
-      document.getElementById('orderDate').value = order.orderDate || '';
-      document.getElementById('deliveryDate').value = order.deliveryDate || '';
-      document.getElementById('deliveryStatus').value = order.deliveryStatus || 'Pendiente de Impresión';
-      document.getElementById('orderNotes').value = order.notes || '';
+                        <!-- 3. Etiquetas (Dinámico) -->
+                        <div id="seccion-etiquetas" class="hidden bg-brand-lilac/20 p-4 rounded-lg mb-6 border border-brand-lilac/50">
+                            <h3 class="font-bold text-brand-purple mb-4"><i class="fa-solid fa-tags mr-2"></i> Configuración de Etiqueta</h3>
+                            
+                            <div class="mb-4">
+                                <label class="block text-sm font-semibold text-brand-purple mb-2">Papel / Material</label>
+                                <select id="material" class="w-full bg-white border border-gray-300 text-gray-900 rounded-lg focus:ring-brand-cyan focus:border-brand-cyan block p-3 transition">
+                                    <option value="" disabled selected>Selecciona material...</option>
+                                    <optgroup label="Por Planilla ($11)">
+                                        <option value="couche">📄 Papel couché (33x48cm)</option>
+                                        <option value="adhesivo">🏷️ Papel adhesivo (33x48cm)</option>
+                                        <option value="opalina">📄 Opalina (33x48cm)</option>
+                                    </optgroup>
+                                    <optgroup label="Por Metro">
+                                        <option value="vinil">🔵 Vinil adhesivo (55cm ancho)</option>
+                                        <option value="dtfTextil">🔥 DTF Textil (55cm ancho)</option>
+                                        <option value="dtfUV">🔥 DTF UV (55cm ancho)</option>
+                                    </optgroup>
+                                </select>
+                            </div>
 
-      cartItems = [];
-      renderCartItems();
-      onCategoryChange();
-      calculateBalance();
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-brand-purple mb-2">Ancho (cm)</label>
+                                    <input type="number" id="ancho" step="0.1" min="0.1" class="w-full bg-white border border-gray-300 text-gray-900 rounded-lg focus:ring-brand-cyan focus:border-brand-cyan block p-3 transition" placeholder="Ej: 7">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-brand-purple mb-2">Alto (cm)</label>
+                                    <input type="number" id="alto" step="0.1" min="0.1" class="w-full bg-white border border-gray-300 text-gray-900 rounded-lg focus:ring-brand-cyan focus:border-brand-cyan block p-3 transition" placeholder="Ej: 7">
+                                </div>
+                            </div>
+                        </div>
 
-      openOrderModal(true);
-    }
+                        <!-- 4. Ajustes Financieros -->
+                        <div class="bg-brand-blue/10 p-4 rounded-lg mb-6 border border-brand-blue/20">
+                            <h3 class="font-bold text-brand-purple mb-3"><i class="fa-solid fa-coins mr-2"></i> Ajustes de Venta</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Ganancia (%)</label>
+                                    <div class="relative">
+                                        <input type="number" id="margen" min="0" value="50" class="w-full bg-white border border-gray-300 text-gray-900 rounded-lg focus:ring-brand-cyan focus:border-brand-cyan block p-2 transition">
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">%</div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Anticipo (%)</label>
+                                    <div class="relative">
+                                        <input type="number" id="anticipo_pct" min="0" max="100" value="50" class="w-full bg-white border border-gray-300 text-gray-900 rounded-lg focus:ring-brand-cyan focus:border-brand-cyan block p-2 transition">
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-    function saveOrder(e) {
-      e.preventDefault();
-      const id = document.getElementById('orderId').value;
-      const clientName = document.getElementById('clientName').value.trim();
-      const clientPhone = document.getElementById('clientPhone').value.trim();
-      const category = document.getElementById('orderCategory').value;
-      const productName = document.getElementById('productName').value.trim();
-      const totalCost = parseFloat(document.getElementById('totalCost').value) || 0;
-      const advancePayment = parseFloat(document.getElementById('advancePayment').value) || 0;
-      const orderDate = document.getElementById('orderDate').value;
-      const deliveryDate = document.getElementById('deliveryDate').value;
-      const deliveryStatus = document.getElementById('deliveryStatus').value;
-      const notes = document.getElementById('orderNotes').value.trim();
+                        <!-- Botones Acción -->
+                        <div class="flex gap-3 mt-6">
+                            <button type="button" onclick="limpiarFormulario()" class="w-1/3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg text-sm py-3 transition">
+                                <i class="fa-solid fa-trash-can"></i> Limpiar
+                            </button>
+                            <button type="submit" class="w-2/3 bg-brand-purple hover:opacity-90 text-white font-bold rounded-lg text-lg py-3 shadow-md transition transform hover:-translate-y-0.5">
+                                <i class="fa-solid fa-calculator mr-2"></i> Calcular
+                            </button>
+                        </div>
+                    </form>
+                </div>
 
-      if (id) {
-        // Update
-        const index = orders.findIndex(o => o.id === id);
-        if (index !== -1) {
-          orders[index] = { ...orders[index], clientName, clientPhone, category, productName, totalCost, advancePayment, orderDate, deliveryDate, deliveryStatus, notes };
-          showToast('Pedido #' + id + ' actualizado con éxito');
+                <!-- Columna Derecha: Resumen y Planillas -->
+                <div class="space-y-6">
+                    
+                    <!-- Resumen Financiero -->
+                    <div id="seccion-resumen" class="hidden">
+                        <div class="receipt-card p-6 relative">
+                            <!-- Marca agua -->
+                            <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none overflow-hidden">
+                                <i class="fa-solid fa-certificate text-9xl text-brand-purple"></i>
+                            </div>
+
+                            <div class="text-center mb-6 relative z-10">
+                                <h3 class="text-xl font-bold tracking-widest text-brand-purple">RESUMEN DE COTIZACIÓN</h3>
+                                <div class="h-1 w-16 bg-brand-pink mx-auto mt-2 rounded"></div>
+                            </div>
+
+                            <div class="space-y-4 text-sm relative z-10">
+                                <div class="flex justify-between pb-2 border-dashed-brand">
+                                    <span class="text-gray-500 font-medium">Producto:</span>
+                                    <span id="res-producto" class="font-bold text-brand-textDark">---</span>
+                                </div>
+                                <div class="flex justify-between pb-2 border-dashed-brand">
+                                    <span class="text-gray-500 font-medium">Cantidad:</span>
+                                    <span id="res-cantidad" class="font-bold text-brand-textDark">---</span>
+                                </div>
+
+                                <!-- Contenedor dinámico Etiquetas Resumen -->
+                                <div id="res-detalles-etiquetas" class="hidden bg-brand-lilac/10 border border-brand-lilac/30 p-3 rounded text-xs space-y-2 mt-2 mb-4">
+                                    <div class="flex justify-between"><span class="text-gray-600">Material:</span><span id="res-material" class="font-semibold text-brand-textDark">---</span></div>
+                                    <div class="flex justify-between"><span class="text-gray-600">Medida Original:</span><span id="res-medidas" class="font-semibold text-brand-textDark">---</span></div>
+                                    <div class="flex justify-between"><span class="text-gray-600">Acomodo:</span><span id="res-orientacion" class="font-semibold text-brand-purple">---</span></div>
+                                    <div class="flex justify-between"><span class="text-gray-600">Rendimiento:</span><span id="res-rendimiento" class="font-semibold text-brand-textDark">---</span></div>
+                                    <div class="flex justify-between"><span class="text-gray-600">Material Total:</span><span id="res-necesario" class="font-bold text-brand-purple bg-brand-cyan/30 px-2 py-0.5 rounded">---</span></div>
+                                </div>
+
+                                <div class="pt-2">
+                                    <div class="flex justify-between py-1">
+                                        <span class="text-gray-500">Costo Producción:</span>
+                                        <span id="res-costo" class="font-semibold text-brand-textDark">$0.00</span>
+                                    </div>
+                                    <div class="flex justify-between py-1">
+                                        <span class="text-gray-500">Ganancia (<span id="res-margen-pct">0</span>%):</span>
+                                        <span id="res-ganancia" class="font-semibold text-green-600">+$0.00</span>
+                                    </div>
+                                </div>
+
+                                <div class="bg-brand-purple text-white p-4 rounded-lg my-4 shadow-md">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm font-medium opacity-90">PRECIO DE VENTA:</span>
+                                        <span id="res-precio-venta" class="text-2xl font-bold text-brand-pink">$0.00</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-between py-1 border-dashed-brand pb-2">
+                                    <span class="text-gray-600 font-medium">Anticipo (<span id="res-anticipo-pct-label">0</span>%):</span>
+                                    <span id="res-anticipo" class="font-bold text-brand-purple">$0.00</span>
+                                </div>
+                                <div class="flex justify-between py-2 text-lg">
+                                    <span class="font-bold text-brand-textDark">Saldo Pendiente:</span>
+                                    <span id="res-saldo" class="font-bold text-brand-textDark">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NUEVA SECCIÓN: VISTA PREVIA DE PLANILLA (Acomodo Virtual) -->
+                    <div id="seccion-vista-previa" class="hidden bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden transition-all duration-300">
+                        <!-- Cabecera y Botón Toggle -->
+                        <div class="bg-gray-50 p-4 border-b flex justify-between items-center cursor-pointer hover:bg-gray-100 transition" onclick="toggleVistaPrevia()">
+                            <h4 class="font-bold text-brand-purple text-lg"><i class="fa-solid fa-ruler-combined mr-2"></i> Vista Previa de Planilla</h4>
+                            <button id="btn-toggle-vista" class="text-brand-purple hover:text-brand-pink transition">
+                                <i class="fa-solid fa-chevron-up"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Contenido Desplegable -->
+                        <div id="contenido-vista-previa" class="p-4">
+                            <!-- Info Técnica del Acomodo -->
+                            <div id="info-acomodo" class="bg-brand-lilac/20 border border-brand-lilac/50 p-3 rounded-lg text-xs text-gray-700 mb-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <!-- Llenado por JS -->
+                            </div>
+                            
+                            <!-- Contenedor Visual (SVGs) -->
+                            <div class="bg-brand-blue/5 p-4 rounded-lg shadow-inner border border-gray-100">
+                                <div id="contenedor-planillas" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 max-h-[60vh] overflow-y-auto svg-container p-2">
+                                    <!-- SVGs inyectados por JS -->
+                                </div>
+                            </div>
+                            
+                            <!-- Leyenda de colores -->
+                            <div class="flex justify-center flex-wrap gap-4 mt-4 text-xs text-brand-purple font-medium">
+                                <div class="flex items-center"><div class="w-3 h-3 bg-white border border-brand-purple mr-1"></div> Planilla Real</div>
+                                <div class="flex items-center"><div class="w-3 h-3 border border-brand-purple border-dashed mr-1"></div> Área Útil</div>
+                                <div class="flex items-center"><div class="w-3 h-3 bg-brand-cyan border border-brand-blue mr-1"></div> Etiqueta</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Navegación Móvil -->
+    <nav class="fixed bottom-0 w-full bg-brand-purple text-white flex md:hidden z-50 border-t border-brand-dark shadow-[0_-4px_10px_rgba(0,0,0,0.15)]">
+        <button onclick="navegarA('inicio')" class="flex-1 py-4 text-center hover:bg-black/10 transition">
+            <i class="fa-solid fa-house text-xl mb-1" id="nav-icon-inicio"></i><br>
+            <span class="text-xs font-medium">Inicio</span>
+        </button>
+        <button onclick="navegarA('cotizador')" class="flex-1 py-4 text-center hover:bg-black/10 transition">
+            <i class="fa-solid fa-calculator text-xl mb-1 text-brand-pink" id="nav-icon-cotizador"></i><br>
+            <span class="text-xs font-medium text-brand-pink" id="nav-text-cotizador">Cotizador</span>
+        </button>
+    </nav>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // ------------------ BASE DE DATOS LOCAL ------------------
+        const productos = {
+            playera: { nombre: "👕 Playera", costo: 180, tipo: "fijo" },
+            sudadera: { nombre: "🧥 Sudadera", costo: 260, tipo: "fijo" },
+            bolsa: { nombre: "👜 Bolsa", costo: 100, tipo: "fijo" },
+            gorra: { nombre: "🧢 Gorra", costo: 100, tipo: "fijo" },
+            taza: { nombre: "🥤 Taza de 11 oz", costo: 80, tipo: "fijo" },
+            etiquetas: { nombre: "🏷️ Etiquetas", costo: 0, tipo: "variable" }
+        };
+
+        const materiales = {
+            couche: { nombre: "📄 Papel couché", costo: 11, unidad: "planilla", ancho: 33, alto: 48, anchoUtil: 31, altoUtil: 47 },
+            adhesivo: { nombre: "🏷️ Papel adhesivo", costo: 11, unidad: "planilla", ancho: 33, alto: 48, anchoUtil: 31, altoUtil: 47 },
+            opalina: { nombre: "📄 Opalina", costo: 11, unidad: "planilla", ancho: 33, alto: 48, anchoUtil: 31, altoUtil: 47 },
+            vinil: { nombre: "🔵 Vinil adhesivo", costo: 400, unidad: "metro", anchoUtil: 55 },
+            dtfTextil: { nombre: "🔥 DTF Textil", costo: 250, unidad: "metro", anchoUtil: 55 },
+            dtfUV: { nombre: "🔥 DTF UV", costo: 600, unidad: "metro", anchoUtil: 55 }
+        };
+
+        // ------------------ NAVEGACIÓN Y VISTAS ------------------
+        function navegarA(vista) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(`vista-${vista}`).classList.add('active');
+            
+            if(window.innerWidth < 768) {
+                const isInicio = vista === 'inicio';
+                document.getElementById('nav-icon-inicio').className = `fa-solid fa-house text-xl mb-1 ${isInicio ? 'text-brand-pink' : ''}`;
+                document.getElementById('nav-icon-cotizador').className = `fa-solid fa-calculator text-xl mb-1 ${!isInicio ? 'text-brand-pink' : ''}`;
+                document.querySelector('#nav-icon-inicio + br + span').className = `text-xs font-medium ${isInicio ? 'text-brand-pink' : ''}`;
+                document.getElementById('nav-text-cotizador').className = `text-xs font-medium ${!isInicio ? 'text-brand-pink' : ''}`;
+            }
+            window.scrollTo(0, 0);
         }
-      } else {
-        // Create
-        const newId = (1001 + orders.length + Math.floor(Math.random() * 100)).toString();
-        orders.unshift({
-          id: newId,
-          clientName,
-          clientPhone,
-          category,
-          productName,
-          totalCost,
-          advancePayment,
-          orderDate,
-          deliveryDate,
-          deliveryStatus,
-          notes
-        });
-        showToast('Nuevo pedido #' + newId + ' registrado');
-      }
 
-      saveOrdersToLocalStorage();
-      renderOrders();
-      closeOrderModal();
-    }
+        function manejarCambioProducto() {
+            const productoId = document.getElementById('producto').value;
+            const seccionEtiquetas = document.getElementById('seccion-etiquetas');
+            const esEtiqueta = productos[productoId]?.tipo === 'variable';
 
-    function onCategoryChange() {
-      const selectedCat = document.getElementById('orderCategory').value;
-      const select = document.getElementById('cartCatalogSelect');
-      if (!select) return;
-
-      select.innerHTML = '<option value="">-- Seleccionar producto del catálogo --</option>';
-      const filtered = catalog.filter(c => c.category === selectedCat || selectedCat === 'Otros');
-      filtered.forEach(item => {
-        const opt = document.createElement('option');
-        opt.value = item.id;
-        opt.textContent = `${item.name} - ${formatCurrency(item.price)}`;
-        select.appendChild(opt);
-      });
-    }
-
-    function onCatalogSelectChange() {
-      const id = document.getElementById('cartCatalogSelect').value;
-      const item = catalog.find(c => c.id === id);
-      if (item) {
-        document.getElementById('cartInputPrice').value = item.price;
-        document.getElementById('cartInputQty').value = 1;
-      }
-    }
-
-    function addCartItemFromInput() {
-      const select = document.getElementById('cartCatalogSelect');
-      const qtyInput = document.getElementById('cartInputQty');
-      const priceInput = document.getElementById('cartInputPrice');
-
-      const itemId = select.value;
-      const qty = parseInt(qtyInput.value) || 1;
-      const price = parseFloat(priceInput.value) || 0;
-
-      let name = '';
-      if (itemId) {
-        const item = catalog.find(c => c.id === itemId);
-        if (item) name = item.name;
-      }
-
-      if (!name) {
-        name = 'Producto Personalizado';
-      }
-
-      cartItems.push({ name, qty, price, subtotal: qty * price });
-      renderCartItems();
-
-      // Recalculate cost total
-      const totalCart = cartItems.reduce((acc, curr) => acc + curr.subtotal, 0);
-      document.getElementById('totalCost').value = totalCart;
-      
-      // Auto build product summary
-      if (!document.getElementById('productName').value.trim()) {
-        document.getElementById('productName').value = cartItems.map(c => `${c.qty}x ${c.name}`).join(', ');
-      }
-
-      calculateBalance();
-      select.value = '';
-      priceInput.value = '';
-    }
-
-    function removeCartItem(index) {
-      cartItems.splice(index, 1);
-      renderCartItems();
-      const totalCart = cartItems.reduce((acc, curr) => acc + curr.subtotal, 0);
-      if (cartItems.length > 0) {
-        document.getElementById('totalCost').value = totalCart;
-      }
-      calculateBalance();
-    }
-
-    function renderCartItems() {
-      const tbody = document.getElementById('cartItemsTableBody');
-      const emptyMsg = document.getElementById('emptyCartMessage');
-      if (!tbody) return;
-
-      tbody.innerHTML = '';
-      if (cartItems.length === 0) {
-        if (emptyMsg) emptyMsg.classList.remove('hidden');
-      } else {
-        if (emptyMsg) emptyMsg.classList.add('hidden');
-        cartItems.forEach((item, idx) => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td class="py-1.5 px-3 font-medium text-slate-800">${escapeHtml(item.name)}</td>
-            <td class="py-1.5 px-2 text-center font-bold">${item.qty}</td>
-            <td class="py-1.5 px-2 text-right">${formatCurrency(item.price)}</td>
-            <td class="py-1.5 px-2 text-right font-bold text-indigo-600">${formatCurrency(item.subtotal)}</td>
-            <td class="py-1.5 px-2 text-center">
-              <button type="button" onclick="removeCartItem(${idx})" class="text-rose-500 hover:text-rose-700">
-                <i class="fa-solid fa-xmark"></i>
-              </button>
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
-      }
-    }
-
-    function calculateBalance() {
-      const total = parseFloat(document.getElementById('totalCost').value) || 0;
-      const advance = parseFloat(document.getElementById('advancePayment').value) || 0;
-      const remaining = Math.max(0, total - advance);
-      document.getElementById('remainingBalanceDisplay').value = formatCurrency(remaining);
-    }
-
-    function openPaymentModal(orderId) {
-      const order = orders.find(o => o.id === orderId);
-      if (!order) return;
-
-      const remaining = Math.max(0, order.totalCost - order.advancePayment);
-      document.getElementById('paymentOrderId').value = order.id;
-      document.getElementById('paymentClientName').innerText = order.clientName;
-      document.getElementById('paymentTotalCost').innerText = formatCurrency(order.totalCost);
-      document.getElementById('paymentCurrentAdvance').innerText = formatCurrency(order.advancePayment);
-      document.getElementById('paymentCurrentBalance').innerText = formatCurrency(remaining);
-      document.getElementById('paymentAmountInput').value = remaining;
-
-      document.getElementById('paymentModal').classList.remove('hidden');
-    }
-
-    function closePaymentModal() {
-      document.getElementById('paymentModal').classList.add('hidden');
-    }
-
-    function submitPayment() {
-      const id = document.getElementById('paymentOrderId').value;
-      const amount = parseFloat(document.getElementById('paymentAmountInput').value) || 0;
-
-      if (amount <= 0) {
-        showToast('Ingresa un monto de abono válido', 'error');
-        return;
-      }
-
-      const index = orders.findIndex(o => o.id === id);
-      if (index !== -1) {
-        orders[index].advancePayment = Number(orders[index].advancePayment || 0) + amount;
-        saveOrdersToLocalStorage();
-        renderOrders();
-        showToast(`Abono de ${formatCurrency(amount)} registrado al pedido #${id}`);
-      }
-      closePaymentModal();
-    }
-
-    function openCatalogModal() {
-      renderCatalogTable();
-      document.getElementById('catalogModal').classList.remove('hidden');
-    }
-
-    function closeCatalogModal() {
-      document.getElementById('catalogModal').classList.add('hidden');
-    }
-
-    function renderCatalogTable() {
-      const tbody = document.getElementById('catalogTableBody');
-      if (!tbody) return;
-      tbody.innerHTML = '';
-
-      catalog.forEach((item, index) => {
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-slate-50 transition border-b border-slate-100';
-        tr.innerHTML = `
-          <td class="py-2.5 px-3 font-semibold text-slate-700 text-xs">${getCategoryBadgeHTML(item.category)}</td>
-          <td class="py-2.5 px-3 font-medium text-slate-800">${escapeHtml(item.name)}</td>
-          <td class="py-2.5 px-3 text-right font-bold text-indigo-700">${formatCurrency(item.price)}</td>
-          <td class="py-2.5 px-3 text-center">
-            <button onclick="deleteCatalogItem(${index})" class="p-1 text-rose-500 hover:text-rose-700">
-              <i class="fa-solid fa-trash-can"></i>
-            </button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function addCatalogItem() {
-      const category = document.getElementById('newCatCategory').value;
-      const name = document.getElementById('newCatName').value.trim();
-      const price = parseFloat(document.getElementById('newCatPrice').value) || 0;
-
-      if (!name || price <= 0) {
-        showToast('Completa el nombre y un precio válido', 'error');
-        return;
-      }
-
-      const newItem = {
-        id: 'cat-' + Date.now(),
-        category,
-        name,
-        price
-      };
-
-      catalog.push(newItem);
-      saveCatalogToLocalStorage();
-      renderCatalogTable();
-      document.getElementById('newCatName').value = '';
-      document.getElementById('newCatPrice').value = '';
-      showToast('Producto agregado al catálogo');
-    }
-
-    function deleteCatalogItem(index) {
-      catalog.splice(index, 1);
-      saveCatalogToLocalStorage();
-      renderCatalogTable();
-      showToast('Producto eliminado del catálogo');
-    }
-
-    function restoreDefaultCatalog() {
-      showConfirmModal('Restaurar Catálogo', '¿Deseas restaurar los precios y paquetes por defecto del catálogo?', () => {
-        catalog = [...DEFAULT_CATALOG];
-        saveCatalogToLocalStorage();
-        renderCatalogTable();
-        showToast('Catálogo restaurado a valores por defecto');
-      });
-    }
-
-    function openReceiptModal(id) {
-      const order = orders.find(o => o.id === id);
-      if (!order) return;
-
-      const remaining = Math.max(0, order.totalCost - order.advancePayment);
-      document.getElementById('receiptFolio').innerText = 'FOLIO: #' + order.id;
-      document.getElementById('receiptClient').innerText = order.clientName;
-      document.getElementById('receiptPhone').innerText = order.clientPhone || 'N/A';
-      document.getElementById('receiptOrderDate').innerText = order.orderDate ? formatDate(order.orderDate) : 'N/A';
-      document.getElementById('receiptDeliveryDate').innerText = order.deliveryDate ? formatDate(order.deliveryDate) : 'Por acordar';
-      document.getElementById('receiptCategory').innerText = order.category || 'Personalizado';
-      document.getElementById('receiptProduct').innerText = order.productName;
-      document.getElementById('receiptNotes').innerText = order.notes ? ('Notas: ' + order.notes) : '';
-      document.getElementById('receiptTotal').innerText = formatCurrency(order.totalCost);
-      document.getElementById('receiptAdvance').innerText = '-' + formatCurrency(order.advancePayment);
-      document.getElementById('receiptRemaining').innerText = formatCurrency(remaining);
-
-      document.getElementById('receiptModal').classList.remove('hidden');
-    }
-
-    function closeReceiptModal() {
-      document.getElementById('receiptModal').classList.add('hidden');
-    }
-
-    function deleteOrder(id) {
-      showConfirmModal('Eliminar Pedido', `¿Estás seguro de eliminar el pedido #${id}?`, () => {
-        orders = orders.filter(o => o.id !== id);
-        saveOrdersToLocalStorage();
-        renderOrders();
-        showToast('Pedido eliminado correctamente');
-      });
-    }
-
-    function confirmRestoreSamples() {
-      showConfirmModal('Restaurar 5 Pedidos Iniciales', '¿Deseas volver a cargar los 5 pedidos de ejemplo originales?', () => {
-        orders = [...SAMPLE_ORDERS];
-        saveOrdersToLocalStorage();
-        renderOrders();
-        showToast('Los 5 pedidos han sido cargados con éxito');
-      });
-    }
-
-    function setStatusFilter(filter) {
-      currentStatusFilter = filter;
-      const buttons = {
-        'all': 'btnFilterAll',
-        'pending_print': 'btnFilterPendingPrint',
-        'pending_delivery': 'btnFilterPendingDelivery',
-        'printed': 'btnFilterPrinted',
-        'delivered': 'btnFilterDelivered',
-        'unpaid': 'btnFilterUnpaid'
-      };
-
-      Object.keys(buttons).forEach(key => {
-        const btn = document.getElementById(buttons[key]);
-        if (btn) {
-          if (key === filter) {
-            btn.className = 'px-3 py-2 rounded-xl border text-xs font-bold transition bg-indigo-50 text-indigo-700 border-indigo-200 shadow-sm flex items-center gap-1.5';
-          } else {
-            btn.className = 'px-3 py-2 rounded-xl border text-xs font-semibold transition bg-white text-slate-600 border-slate-200 hover:bg-slate-50 flex items-center gap-1.5';
-          }
+            if (esEtiqueta) {
+                seccionEtiquetas.classList.remove('hidden');
+                document.getElementById('material').setAttribute('required', 'true');
+                document.getElementById('ancho').setAttribute('required', 'true');
+                document.getElementById('alto').setAttribute('required', 'true');
+            } else {
+                seccionEtiquetas.classList.add('hidden');
+                document.getElementById('material').removeAttribute('required');
+                document.getElementById('ancho').removeAttribute('required');
+                document.getElementById('alto').removeAttribute('required');
+                document.getElementById('material').value = "";
+                document.getElementById('ancho').value = "";
+                document.getElementById('alto').value = "";
+            }
+            
+            // Ocultar resultados al cambiar parámetros clave
+            document.getElementById('seccion-resumen').classList.add('hidden');
+            document.getElementById('seccion-vista-previa').classList.add('hidden');
+            ocultarError();
         }
-      });
 
-      renderOrders();
-    }
-
-    function clearDateFilter() {
-      document.getElementById('dateFromFilter').value = '';
-      document.getElementById('dateToFilter').value = '';
-      renderOrders();
-    }
-
-    function scrollToOrdersSection() {
-      const el = document.getElementById('pedidosSection');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function exportToCSV() {
-      if (orders.length === 0) {
-        showToast('No hay pedidos para exportar', 'error');
-        return;
-      }
-
-      let csv = 'ID,Categoria,Fecha Pedido,Cliente,Telefono,Producto,Costo Total,Anticipo,Saldo Restante,Fecha Entrega,Estado Entrega,Notas\n';
-
-      orders.forEach(o => {
-        const remaining = Math.max(0, o.totalCost - o.advancePayment);
-        csv += `"${o.id}","${escapeCsv(o.category)}","${o.orderDate || ''}","${escapeCsv(o.clientName)}","${escapeCsv(o.clientPhone)}","${escapeCsv(o.productName)}",${o.totalCost},${o.advancePayment},${remaining},"${o.deliveryDate || ''}","${o.deliveryStatus}","${escapeCsv(o.notes)}"\n`;
-      });
-
-      const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `Reporte_Pedidos_${new Date().toISOString().split('T')[0]}.csv`;
-      link.click();
-      showToast('Archivo CSV descargado correctamente');
-    }
-
-    function formatCurrency(val) {
-      return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(val || 0);
-    }
-
-    function formatDate(dateStr) {
-      if (!dateStr) return '';
-      const parts = dateStr.split('-');
-      if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
-      return dateStr;
-    }
-
-    function escapeHtml(text) {
-      if (!text) return '';
-      return text.toString().replace(/[&<>"']/g, function(m) {
-        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
-      });
-    }
-
-    function escapeCsv(text) {
-      if (!text) return '';
-      return text.toString().replace(/"/g, '""');
-    }
-
-    function getCategoryBadgeHTML(cat) {
-      switch(cat) {
-        case 'Etiquetas Escolares':
-          return `<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-purple-100 text-purple-800 border border-purple-200">🎒 Escolares</span>`;
-        case 'Etiquetas para Ropa':
-          return `<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-100 text-blue-800 border border-blue-200">👕 Ropa</span>`;
-        case 'Toppers':
-          return `<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-pink-100 text-pink-800 border border-pink-200">🎂 Topper</span>`;
-        case 'Stickers Circulares':
-          return `<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-100 text-amber-800 border border-amber-200">🔴 Circulares</span>`;
-        case 'Stickers Silueta':
-          return `<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">✂️ Silueta</span>`;
-        default:
-          return `<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">✨ ${escapeHtml(cat)}</span>`;
-      }
-    }
-
-    function getStatusBadgeHTML(status) {
-      switch (status) {
-        case 'Pendiente de Impresión':
-        case 'Pendiente':
-          return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-200">🖨️ Pend. Impresión</span>`;
-        case 'En Proceso':
-          return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 border border-blue-200">🛠️ En Impresión</span>`;
-        case 'Ya Impreso / Listo':
-        case 'Listo':
-          return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800 border border-indigo-200">📦 Ya Impreso / Listo</span>`;
-        case 'Entregado':
-          return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">✅ Entregado</span>`;
-        case 'Cancelado':
-          return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-100 text-rose-800 border border-rose-200">❌ Cancelado</span>`;
-        default:
-          return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-800">${escapeHtml(status)}</span>`;
-      }
-    }
-
-    function showToast(message, type = 'success') {
-      const container = document.getElementById('toastContainer');
-      if (!container) return;
-
-      const toast = document.createElement('div');
-      const isError = type === 'error';
-      toast.className = `pointer-events-auto px-4 py-2.5 rounded-xl shadow-lg font-medium text-xs sm:text-sm text-white flex items-center gap-2 transform transition duration-300 translate-y-2 opacity-0 ${isError ? 'bg-rose-600' : 'bg-slate-800'}`;
-      toast.innerHTML = `<i class="fa-solid ${isError ? 'fa-circle-xmark' : 'fa-circle-check text-emerald-400'}"></i><span>${escapeHtml(message)}</span>`;
-
-      container.appendChild(toast);
-      setTimeout(() => {
-        toast.classList.remove('translate-y-2', 'opacity-0');
-      }, 10);
-
-      setTimeout(() => {
-        toast.classList.add('opacity-0', 'translate-y-2');
-        setTimeout(() => toast.remove(), 300);
-      }, 3000);
-    }
-
-    function showConfirmModal(title, message, onConfirm) {
-      const modal = document.getElementById('confirmModal');
-      const titleEl = document.getElementById('confirmTitle');
-      const msgEl = document.getElementById('confirmMessage');
-      const okBtn = document.getElementById('confirmOkBtn');
-      const cancelBtn = document.getElementById('confirmCancelBtn');
-
-      if (!modal) return;
-
-      titleEl.innerText = title;
-      msgEl.innerText = message;
-
-      modal.classList.remove('hidden');
-
-      const handleOk = () => {
-        modal.classList.add('hidden');
-        okBtn.removeEventListener('click', handleOk);
-        cancelBtn.removeEventListener('click', handleCancel);
-        if (onConfirm) onConfirm();
-      };
-
-      const handleCancel = () => {
-        modal.classList.add('hidden');
-        okBtn.removeEventListener('click', handleOk);
-        cancelBtn.removeEventListener('click', handleCancel);
-      };
-
-      okBtn.addEventListener('click', handleOk);
-      cancelBtn.addEventListener('click', handleCancel);
-    }
-
-    function openQuoteModal() {
-      document.getElementById('quoteModal').classList.remove('hidden');
-      calculateQuote();
-    }
-
-    function closeQuoteModal() {
-      document.getElementById('quoteModal').classList.add('hidden');
-    }
-
-    function calculateQuote() {
-      // 1. Inputs
-      const pieceW = parseFloat(document.getElementById('quoteWidth').value) || 1;
-      const pieceH = parseFloat(document.getElementById('quoteHeight').value) || 1;
-      const targetQty = parseInt(document.getElementById('quoteQty').value) || 1;
-      const margin = (parseFloat(document.getElementById('quoteMargin').value) || 0) / 10; // convert mm to cm
-
-      const formatSelect = document.getElementById('quoteFormat').value;
-      const customDimGroup = document.getElementById('quoteCustomDimGroup');
-
-      let sheetW = 33;
-      let sheetH = 48.3;
-
-      if (formatSelect === 'custom') {
-        if (customDimGroup) customDimGroup.classList.remove('hidden');
-        sheetW = parseFloat(document.getElementById('quoteSheetWidth').value) || 30;
-        sheetH = parseFloat(document.getElementById('quoteSheetHeight').value) || 40;
-      } else {
-        if (customDimGroup) customDimGroup.classList.add('hidden');
-        switch(formatSelect) {
-          case 'tabloide_super': sheetW = 33; sheetH = 48.3; break;
-          case 'tabloide': sheetW = 28; sheetH = 43; break;
-          case 'carta': sheetW = 21.6; sheetH = 27.9; break;
-          case 'a4': sheetW = 21; sheetH = 29.7; break;
-          case 'vinil_60': sheetW = 60; sheetH = 100; break;
-          case 'vinil_120': sheetW = 120; sheetH = 100; break;
+        function nuevaCotizacion() {
+            limpiarFormulario();
+            document.getElementById('seccion-resumen').classList.add('hidden');
+            document.getElementById('seccion-vista-previa').classList.add('hidden');
+            ocultarError();
         }
-      }
 
-      // 2. Piece Effective Dimensions including margin
-      const effW = pieceW + margin;
-      const effH = pieceH + margin;
-
-      // Regular Acomodo
-      const colsReg = Math.floor(sheetW / effW);
-      const rowsReg = Math.floor(sheetH / effH);
-      const yieldRegular = Math.max(0, colsReg * rowsReg);
-
-      // Rotated 90° Acomodo
-      const colsRot = Math.floor(sheetW / effH);
-      const rowsRot = Math.floor(sheetH / effW);
-      const yieldRotated = Math.max(0, colsRot * rowsRot);
-
-      let bestYield = yieldRegular;
-      let useRotation = false;
-      let colsUsed = colsReg;
-      let rowsUsed = rowsReg;
-      let effItemW = effW;
-      let effItemH = effH;
-
-      if (yieldRotated > yieldRegular) {
-        bestYield = yieldRotated;
-        useRotation = true;
-        colsUsed = colsRot;
-        rowsUsed = rowsRot;
-        effItemW = effH;
-        effItemH = effW;
-      }
-
-      if (bestYield <= 0) bestYield = 1;
-
-      const sheetsNeeded = Math.ceil(targetQty / bestYield);
-
-      // 3. Costs Inputs
-      const cMaterial = parseFloat(document.getElementById('costMaterial').value) || 0;
-      const cBaseProduct = parseFloat(document.getElementById('costBaseProduct').value) || 0;
-      const cPrint = parseFloat(document.getElementById('costPrint').value) || 0;
-      const cLamination = parseFloat(document.getElementById('costLamination').value) || 0;
-      const cDieCut = parseFloat(document.getElementById('costDieCut').value) || 0;
-      const cWeeding = parseFloat(document.getElementById('costWeeding').value) || 0;
-      const cPressing = parseFloat(document.getElementById('costPressing').value) || 0;
-      const cDesign = parseFloat(document.getElementById('costDesign').value) || 0;
-      const cPackaging = parseFloat(document.getElementById('costPackaging').value) || 0;
-      const cLaborRate = parseFloat(document.getElementById('costLaborRate').value) || 0;
-      const estHours = parseFloat(document.getElementById('quoteEstHours').value) || 0;
-      const indirectPct = (parseFloat(document.getElementById('indirectOverheadPct').value) || 0) / 100;
-
-      // 4. Calculate Subtotals
-      const totalSheetCosts = (cMaterial + cPrint + cLamination + cDieCut) * sheetsNeeded;
-      const totalPerPieceCosts = (cBaseProduct + cWeeding + cPressing) * targetQty;
-      const totalLaborCost = cLaborRate * estHours;
-      const totalFixedCosts = cDesign + cPackaging;
-
-      const directCost = totalSheetCosts + totalPerPieceCosts + totalLaborCost + totalFixedCosts;
-      const indirectCost = directCost * indirectPct;
-      const totalRealCost = directCost + indirectCost;
-
-      // 5. Margin and Price
-      const marginPct = (parseFloat(document.getElementById('quoteProfitMargin').value) || 100) / 100;
-      const netProfit = totalRealCost * marginPct;
-      const sellingPrice = totalRealCost + netProfit;
-      const pricePerUnit = sellingPrice / targetQty;
-
-      const advance60 = sellingPrice * 0.60;
-      const balance40 = sellingPrice * 0.40;
-
-      // Store in global state for order transfer
-      currentQuoteResult = {
-        pieceW, pieceH, targetQty, formatSelect, sheetW, sheetH,
-        bestYield, sheetsNeeded, useRotation,
-        totalRealCost, netProfit, sellingPrice, pricePerUnit,
-        advance60, balance40, estHours
-      };
-
-      // 6. Update UI Labels
-      document.getElementById('quoteRegularYield').innerText = `${yieldRegular} pzas`;
-      document.getElementById('quoteRotatedYield').innerText = `${yieldRotated} pzas`;
-      document.getElementById('quoteBestYield').innerText = `${bestYield} pzas/pliego`;
-
-      const unitLabel = (formatSelect === 'vinil_60' || formatSelect === 'vinil_120') ? 'metros' : 'planillas';
-      document.getElementById('quoteTotalSheets').innerText = `${sheetsNeeded} ${unitLabel}`;
-
-      const rotationBadge = document.getElementById('quoteRotationUsedBadge');
-      if (rotationBadge) {
-        if (useRotation) {
-          rotationBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-200';
-          rotationBadge.innerText = '↺ Rotado 90° (Óptimo)';
-        } else {
-          rotationBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200';
-          rotationBadge.innerText = '↕ Estándar (Sin rotar)';
+        function limpiarFormulario() {
+            document.getElementById('form-cotizador').reset();
+            document.getElementById('margen').value = "50";
+            document.getElementById('anticipo_pct').value = "50";
+            manejarCambioProducto();
         }
-      }
 
-      document.getElementById('quoteCalculatedCost').innerText = formatCurrency(totalRealCost);
-      document.getElementById('quoteCostPerUnit').innerText = `${formatCurrency(totalRealCost / targetQty)} / pza`;
-
-      document.getElementById('quoteCalculatedProfit').innerText = formatCurrency(netProfit);
-      document.getElementById('quoteProfitPct').innerText = `+${Math.round(marginPct * 100)}% de margen`;
-
-      document.getElementById('quoteSellingPrice').innerText = formatCurrency(sellingPrice);
-      document.getElementById('quotePricePerUnit').innerText = `${formatCurrency(pricePerUnit)} / pza`;
-
-      document.getElementById('quoteProductionTime').innerText = `${estHours} hrs`;
-
-      document.getElementById('quoteAdvance60').innerText = formatCurrency(advance60);
-      document.getElementById('quoteBalance40').innerText = formatCurrency(balance40);
-
-      document.getElementById('quoteLayoutInfoText').innerText =
-        `Rendimiento máximo: ${bestYield} piezas por ${unitLabel.slice(0, -1)}. Total requerido: ${sheetsNeeded} ${unitLabel}.`;
-
-      // 7. Render Preview Canvas
-      drawSheetCanvas(sheetW, sheetH, effItemW, effItemH, colsUsed, rowsUsed);
-    }
-
-    function drawSheetCanvas(sheetW, sheetH, effItemW, effItemH, cols, rows) {
-      const canvas = document.getElementById('quoteSheetCanvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const padding = 12;
-      const maxW = canvas.width - (padding * 2);
-      const maxH = canvas.height - (padding * 2);
-
-      const scale = Math.min(maxW / sheetW, maxH / sheetH);
-      const drawSheetW = sheetW * scale;
-      const drawSheetH = sheetH * scale;
-
-      const startX = (canvas.width - drawSheetW) / 2;
-      const startY = (canvas.height - drawSheetH) / 2;
-
-      // Draw Sheet Background
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(startX, startY, drawSheetW, drawSheetH);
-      ctx.strokeStyle = '#6366f1';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(startX, startY, drawSheetW, drawSheetH);
-
-      // Draw Grid Items
-      const drawItemW = effItemW * scale;
-      const drawItemH = effItemH * scale;
-
-      ctx.fillStyle = 'rgba(99, 102, 241, 0.15)';
-      ctx.strokeStyle = '#4f46e5';
-      ctx.lineWidth = 1;
-
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          const x = startX + (c * drawItemW);
-          const y = startY + (r * drawItemH);
-
-          if (x + drawItemW <= startX + drawSheetW + 0.1 && y + drawItemH <= startY + drawSheetH + 0.1) {
-            ctx.fillRect(x + 1, y + 1, drawItemW - 2, drawItemH - 2);
-            ctx.strokeRect(x + 1, y + 1, drawItemW - 2, drawItemH - 2);
-          }
+        function mostrarError(mensaje) {
+            document.getElementById('alerta-mensaje').innerText = mensaje;
+            document.getElementById('alerta-error').classList.remove('hidden');
+            document.getElementById('seccion-resumen').classList.add('hidden');
+            document.getElementById('seccion-vista-previa').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-      }
 
-      // Draw Dimension Labels on Canvas
-      ctx.fillStyle = '#475569';
-      ctx.font = '9px Inter, sans-serif';
-      ctx.fillText(`${sheetW} cm`, startX + (drawSheetW / 2) - 12, startY - 3);
-      ctx.fillText(`${sheetH} cm`, startX + drawSheetW + 3, startY + (drawSheetH / 2));
-    }
+        function ocultarError() { document.getElementById('alerta-error').classList.add('hidden'); }
+        function formatoMoneda(valor) { return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(valor); }
 
-    function transferQuoteToOrder() {
-      if (!currentQuoteResult) {
-        calculateQuote();
-      }
-      closeQuoteModal();
+        // Botón toggle de vista previa
+        function toggleVistaPrevia() {
+            const contenido = document.getElementById('contenido-vista-previa');
+            const icon = document.querySelector('#btn-toggle-vista i');
+            if (contenido.classList.contains('hidden')) {
+                contenido.classList.remove('hidden');
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                contenido.classList.add('hidden');
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
 
-      // Category map inference
-      const pieceW = currentQuoteResult.pieceW;
-      const pieceH = currentQuoteResult.pieceH;
-      const qty = currentQuoteResult.targetQty;
-      const price = currentQuoteResult.sellingPrice;
-      const advance = currentQuoteResult.advance60;
+        // ------------------ NÚCLEO DE CÁLCULO Y FUENTE ÚNICA DE VERDAD ------------------
+        
+        function calcularCotizacion() {
+            ocultarError();
 
-      openOrderModal();
+            const productoId = document.getElementById('producto').value;
+            const cantidad = parseInt(document.getElementById('cantidad').value);
+            const margenPct = parseFloat(document.getElementById('margen').value) || 0;
+            const anticipoPct = parseFloat(document.getElementById('anticipo_pct').value) || 0;
 
-      document.getElementById('productName').value = `${qty} pzas Personalizadas (${pieceW}x${pieceH} cm) - Cotizador`;
-      document.getElementById('totalCost').value = Math.round(price * 100) / 100;
-      document.getElementById('advancePayment').value = Math.round(advance * 100) / 100;
-      document.getElementById('orderNotes').value = `• Cotizado automáticamente con el Cotizador Inteligente\n• Rendimiento: ${currentQuoteResult.bestYield} pzas/pliego\n• Material requerido: ${currentQuoteResult.sheetsNeeded} planillas\n• Saldo restante: ${formatCurrency(currentQuoteResult.balance40)}`;
+            if (!productoId) return mostrarError("Debes seleccionar un producto.");
+            if (isNaN(cantidad) || cantidad <= 0) return mostrarError("La cantidad debe ser mayor a 0.");
 
-      calculateBalance();
-      showToast('Cotización precargada en el Nuevo Pedido');
-    }
-  </script>
+            const producto = productos[productoId];
+            let costoTotalProduccion = 0;
+            let labelDetails = null;
+            
+            // Objeto que guardará datos para la Vista Previa Visual
+            let acomodoVisual = null; 
+
+            if (producto.tipo === 'fijo') {
+                costoTotalProduccion = producto.costo * cantidad;
+            } else {
+                const materialId = document.getElementById('material').value;
+                const ancho = parseFloat(document.getElementById('ancho').value);
+                const alto = parseFloat(document.getElementById('alto').value);
+
+                if (!materialId) return mostrarError("Selecciona el papel/material para las etiquetas.");
+                if (isNaN(ancho) || ancho <= 0 || isNaN(alto) || alto <= 0) return mostrarError("Ingresa medidas válidas mayores a 0 para la etiqueta.");
+
+                const material = materiales[materialId];
+                
+                // 1. CÁLCULO DE RENDIMIENTOS (Acomodo Real Matemático)
+                const columnasNormal = Math.floor(material.anchoUtil / ancho);
+                const filasNormal = material.unidad === 'planilla' ? Math.floor(material.altoUtil / alto) : 0; 
+                const rendimientoNormal = columnasNormal * filasNormal;
+
+                const columnasRotado = Math.floor(material.anchoUtil / alto);
+                const filasRotado = material.unidad === 'planilla' ? Math.floor(material.altoUtil / ancho) : 0;
+                const rendimientoRotado = columnasRotado * filasRotado;
+
+                if (columnasNormal === 0 && columnasRotado === 0) {
+                    return mostrarError(`La etiqueta es demasiado ancha para el área útil del material (${material.anchoUtil}cm).`);
+                }
+
+                if (material.unidad === 'planilla') {
+                    // --- LÓGICA PLANILLAS ---
+                    if (rendimientoNormal === 0 && rendimientoRotado === 0) {
+                        return mostrarError(`La etiqueta es demasiado grande para el área útil de la planilla (${material.anchoUtil}x${material.altoUtil}cm).`);
+                    }
+
+                    let mejorRendimiento = 0;
+                    let esRotado = false;
+
+                    // Decisión de orientación
+                    if (rendimientoNormal >= rendimientoRotado) {
+                        mejorRendimiento = rendimientoNormal;
+                    } else {
+                        mejorRendimiento = rendimientoRotado;
+                        esRotado = true;
+                    }
+
+                    const planillasNecesarias = Math.ceil(cantidad / mejorRendimiento);
+                    costoTotalProduccion = planillasNecesarias * material.costo;
+                    
+                    labelDetails = {
+                        material: material.nombre,
+                        medida: `${ancho} × ${alto} cm`,
+                        orientacion: esRotado ? "Rotada" : "Normal",
+                        rendimiento: `${mejorRendimiento} piezas por planilla`,
+                        necesario: `${planillasNecesarias} planilla(s)`
+                    };
+
+                    // Extraer variables exactas para la gráfica
+                    acomodoVisual = {
+                        tipo: 'planilla',
+                        cantidadRequerida: cantidad,
+                        cols: esRotado ? columnasRotado : columnasNormal,
+                        rows: esRotado ? filasRotado : filasNormal,
+                        etqW: esRotado ? alto : ancho, // ancho visual invertido si rotado
+                        etqH: esRotado ? ancho : alto, // alto visual invertido si rotado
+                        planillaW: material.ancho,
+                        planillaH: material.alto,
+                        utilW: material.anchoUtil,
+                        utilH: material.altoUtil,
+                        totalPlanillas: planillasNecesarias,
+                        rendimientoUnitario: mejorRendimiento,
+                        orientacionTexto: esRotado ? "Rotada" : "Normal"
+                    };
+
+                } else {
+                    // --- LÓGICA METROS (Rollos) ---
+                    let longitudNormalCm = Infinity;
+                    if (columnasNormal > 0) {
+                        const filasNecesarias = Math.ceil(cantidad / columnasNormal);
+                        longitudNormalCm = filasNecesarias * alto;
+                    }
+
+                    let longitudRotadoCm = Infinity;
+                    if (columnasRotado > 0) {
+                        const filasNecesarias = Math.ceil(cantidad / columnasRotado);
+                        longitudRotadoCm = filasNecesarias * ancho;
+                    }
+
+                    let mejorLongitudCm = 0;
+                    let esRotado = false;
+                    let piezasPorFila = 0;
+                    let filasTotales = 0;
+
+                    if (longitudNormalCm <= longitudRotadoCm) {
+                        mejorLongitudCm = longitudNormalCm;
+                        piezasPorFila = columnasNormal;
+                        filasTotales = Math.ceil(cantidad / piezasPorFila);
+                    } else {
+                        mejorLongitudCm = longitudRotadoCm;
+                        esRotado = true;
+                        piezasPorFila = columnasRotado;
+                        filasTotales = Math.ceil(cantidad / piezasPorFila);
+                    }
+
+                    const metrosNecesarios = mejorLongitudCm / 100;
+                    costoTotalProduccion = metrosNecesarios * material.costo;
+
+                    labelDetails = {
+                        material: material.nombre,
+                        medida: `${ancho} × ${alto} cm`,
+                        orientacion: esRotado ? "Rotada" : "Normal",
+                        rendimiento: `${piezasPorFila} piezas a lo ancho`,
+                        necesario: `${metrosNecesarios.toFixed(2)} metro(s)`
+                    };
+
+                    acomodoVisual = {
+                        tipo: 'rollo',
+                        cantidadRequerida: cantidad,
+                        cols: piezasPorFila,
+                        rows: filasTotales,
+                        etqW: esRotado ? alto : ancho,
+                        etqH: esRotado ? ancho : alto,
+                        rolloW: material.anchoUtil,
+                        longitudCm: mejorLongitudCm,
+                        orientacionTexto: esRotado ? "Rotada" : "Normal",
+                        metrosStr: metrosNecesarios.toFixed(2)
+                    };
+                }
+            } // Fin lógica cotización principal
+
+            // Cálculos financieros
+            const montoGanancia = costoTotalProduccion * (margenPct / 100);
+            const precioDeVenta = costoTotalProduccion + montoGanancia;
+            const montoAnticipo = precioDeVenta * (anticipoPct / 100);
+            const saldoPendiente = precioDeVenta - montoAnticipo;
+
+            // --- ACTUALIZACIÓN DE UI: RESUMEN TEXTUAL ---
+            document.getElementById('res-producto').innerText = producto.nombre;
+            document.getElementById('res-cantidad').innerText = `${cantidad} pieza(s)`;
+            
+            const seccionDetallesEtq = document.getElementById('res-detalles-etiquetas');
+            if (producto.tipo === 'variable' && labelDetails) {
+                seccionDetallesEtq.classList.remove('hidden');
+                document.getElementById('res-material').innerText = labelDetails.material;
+                document.getElementById('res-medidas').innerText = labelDetails.medida;
+                document.getElementById('res-orientacion').innerText = labelDetails.orientacion;
+                document.getElementById('res-rendimiento').innerText = labelDetails.rendimiento;
+                document.getElementById('res-necesario').innerText = labelDetails.necesario;
+            } else {
+                seccionDetallesEtq.classList.add('hidden');
+            }
+
+            document.getElementById('res-costo').innerText = formatoMoneda(costoTotalProduccion);
+            document.getElementById('res-margen-pct').innerText = margenPct;
+            document.getElementById('res-ganancia').innerText = `+${formatoMoneda(montoGanancia)}`;
+            document.getElementById('res-precio-venta').innerText = formatoMoneda(precioDeVenta);
+            document.getElementById('res-anticipo-pct-label').innerText = anticipoPct;
+            document.getElementById('res-anticipo').innerText = formatoMoneda(montoAnticipo);
+            document.getElementById('res-saldo').innerText = formatoMoneda(saldoPendiente);
+            
+            document.getElementById('seccion-resumen').classList.remove('hidden');
+
+            // --- ACTUALIZACIÓN DE UI: PLANILLA VIRTUAL ---
+            if (acomodoVisual) {
+                renderizarAcomodoGrafico(acomodoVisual, ancho, alto);
+                document.getElementById('seccion-vista-previa').classList.remove('hidden');
+                
+                // Asegurar que el acordeón empiece abierto al cotizar de nuevo
+                document.getElementById('contenido-vista-previa').classList.remove('hidden');
+                document.querySelector('#btn-toggle-vista i').className = 'fa-solid fa-chevron-up';
+            } else {
+                document.getElementById('seccion-vista-previa').classList.add('hidden');
+            }
+
+            if(window.innerWidth < 1024) {
+                setTimeout(() => { document.getElementById('seccion-resumen').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
+            }
+        }
+
+        // ------------------ DIBUJO DE PLANILLAS Y ROLLOS (SVG) ------------------
+        function renderizarAcomodoGrafico(data, origW, origH) {
+            const infoContainer = document.getElementById('info-acomodo');
+            const svgContainer = document.getElementById('contenedor-planillas');
+            
+            svgContainer.innerHTML = ''; // Limpiar anteriores
+
+            if (data.tipo === 'planilla') {
+                // Info técnica Planilla
+                infoContainer.innerHTML = `
+                    <div><strong class="text-brand-purple">Planilla Real:</strong> <span class="text-brand-textDark">${data.planillaW} × ${data.planillaH} cm</span></div>
+                    <div><strong class="text-brand-purple">Área Útil:</strong> <span class="text-brand-textDark">${data.utilW} × ${data.utilH} cm</span></div>
+                    <div><strong class="text-brand-purple">Medida Etiqueta:</strong> <span class="text-brand-textDark">${origW} × ${origH} cm</span></div>
+                    <div><strong class="text-brand-purple">Acomodo (FilxCol):</strong> <span class="text-brand-textDark">${data.rows} × ${data.cols}</span></div>
+                    <div><strong class="text-brand-purple">Orientación:</strong> <span class="text-brand-textDark">${data.orientacionTexto}</span></div>
+                    <div><strong class="text-brand-purple">Planillas Totales:</strong> <span class="text-brand-textDark">${data.totalPlanillas}</span></div>
+                `;
+
+                // Calcular márgenes (Centrado)
+                const marginX = (data.planillaW - data.utilW) / 2;
+                const marginY = (data.planillaH - data.utilH) / 2;
+                let etiquetasRestantes = data.cantidadRequerida;
+
+                // Generar planillas necesarias
+                for (let p = 1; p <= data.totalPlanillas; p++) {
+                    const idPlanilla = `Planilla ${p}`;
+                    let etiquetasEnEstaPlanilla = Math.min(etiquetasRestantes, data.rendimientoUnitario);
+                    
+                    let svgStr = `
+                    <div class="flex flex-col items-center mb-4">
+                        <span class="font-bold text-brand-purple text-sm mb-1">${idPlanilla}</span>
+                        <span class="text-xs text-gray-500 mb-2">${etiquetasEnEstaPlanilla} piezas</span>
+                        <!-- El ViewBox mágico para que escale exacto en proporciones CM -->
+                        <svg viewBox="0 0 ${data.planillaW} ${data.planillaH}" class="w-full max-w-[220px] bg-brand-bg rounded-sm">
+                            <!-- Planilla Blanca Completa (Borde Morado) -->
+                            <rect x="0" y="0" width="${data.planillaW}" height="${data.planillaH}" fill="#ffffff" stroke="#957AD0" stroke-width="0.4" rx="0.5" />
+                            
+                            <!-- Área Útil Marcada (Punteado Morado) -->
+                            <rect x="${marginX}" y="${marginY}" width="${data.utilW}" height="${data.utilH}" fill="none" stroke="#957AD0" stroke-width="0.3" stroke-dasharray="0.5" />
+                    `;
+
+                    // Dibujar etiquetas de esta planilla
+                    let contDibujadas = 0;
+                    for (let r = 0; r < data.rows; r++) {
+                        for (let c = 0; c < data.cols; c++) {
+                            if (contDibujadas >= etiquetasEnEstaPlanilla) break;
+                            
+                            // X/Y posicionadas relativas al área útil
+                            const x = marginX + (c * data.etqW);
+                            const y = marginY + (r * data.etqH);
+                            
+                            // Rectángulos de etiqueta: Relleno Cian (#92DDEA), Borde Azul (#7EB8DC)
+                            svgStr += `<rect x="${x}" y="${y}" width="${data.etqW}" height="${data.etqH}" fill="#92DDEA" fill-opacity="0.8" stroke="#7EB8DC" stroke-width="0.2" />`;
+                            contDibujadas++;
+                        }
+                    }
+
+                    svgStr += `</svg></div>`;
+                    svgContainer.innerHTML += svgStr;
+                    etiquetasRestantes -= etiquetasEnEstaPlanilla;
+                }
+            } 
+            else if (data.tipo === 'rollo') {
+                // Info técnica Rollo
+                infoContainer.innerHTML = `
+                    <div><strong class="text-brand-purple">Ancho de Rollo:</strong> <span class="text-brand-textDark">${data.rolloW} cm</span></div>
+                    <div><strong class="text-brand-purple">Medida Etiqueta:</strong> <span class="text-brand-textDark">${origW} × ${origH} cm</span></div>
+                    <div><strong class="text-brand-purple">Columnas Múltiples:</strong> <span class="text-brand-textDark">${data.cols} etiquetas</span></div>
+                    <div><strong class="text-brand-purple">Orientación:</strong> <span class="text-brand-textDark">${data.orientacionTexto}</span></div>
+                    <div><strong class="text-brand-purple">Metros Necesarios:</strong> <span class="text-brand-textDark">${data.metrosStr} m</span></div>
+                    <div><strong class="text-brand-purple">Largo total ocupado:</strong> <span class="text-brand-textDark">${data.longitudCm} cm</span></div>
+                `;
+
+                // Para visualización, si el largo es inmenso limitamos a algo razonable
+                const mostrarLargoCm = Math.max(data.longitudCm, data.rolloW * 0.5); 
+                
+                let svgStr = `
+                    <div class="flex flex-col items-center col-span-1 sm:col-span-2">
+                        <span class="font-bold text-brand-purple text-sm mb-1">Corte de Rollo</span>
+                        <span class="text-xs text-gray-500 mb-2">${data.cantidadRequerida} piezas</span>
+                        
+                        <!-- Contenedor con height máximo para rollos muy largos -->
+                        <div class="w-full max-h-[50vh] overflow-y-auto border border-brand-lilac rounded custom-scroll flex justify-center bg-brand-bg">
+                            <svg viewBox="0 0 ${data.rolloW} ${mostrarLargoCm}" class="w-full max-w-[300px]">
+                                <!-- Fondo Material -->
+                                <rect x="0" y="0" width="${data.rolloW}" height="${mostrarLargoCm}" fill="#ffffff" />
+                `;
+
+                let dibujadas = 0;
+                for (let r = 0; r < data.rows; r++) {
+                    for (let c = 0; c < data.cols; c++) {
+                        if (dibujadas >= data.cantidadRequerida) break;
+                        
+                        const x = c * data.etqW;
+                        const y = r * data.etqH;
+                        
+                        svgStr += `<rect x="${x}" y="${y}" width="${data.etqW}" height="${data.etqH}" fill="#92DDEA" fill-opacity="0.8" stroke="#7EB8DC" stroke-width="0.2" />`;
+                        dibujadas++;
+                    }
+                }
+
+                svgStr += `</svg></div></div>`;
+                svgContainer.innerHTML += svgStr;
+            }
+        }
+    </script>
 </body>
 </html>
