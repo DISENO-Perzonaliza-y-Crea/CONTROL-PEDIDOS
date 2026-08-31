@@ -24,7 +24,7 @@
                             pink: '#FFA5D8',
                             lilac: '#BF9DDF',
                             purple: '#957AD0',
-                            textDark: '#1E293B', /* Gris oscuro neutro para textos */
+                            textDark: '#1E293B',
                             white: '#FFFFFF',
                             bg: '#F8F9FA'
                         }
@@ -59,20 +59,18 @@
         }
         .receipt-card {
             background: #fff;
-            border-top: 6px solid #957AD0; /* Actualizado al nuevo Morado */
+            border-top: 6px solid #957AD0;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             border-radius: 0 0 0.5rem 0.5rem;
         }
         .border-dashed-brand {
-            border-bottom: 1px dashed #BF9DDF; /* Actualizado al nuevo Lila */
+            border-bottom: 1px dashed #BF9DDF;
         }
-        /* Scroll personalizado adaptado a la nueva paleta */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #F8F9FA; border-radius: 4px; }
         ::-webkit-scrollbar-thumb { background: #957AD0; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #BF9DDF; }
         
-        /* Contenedor SVG */
         .svg-container svg {
             filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
         }
@@ -164,11 +162,11 @@
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Producto</label>
                             <select id="producto" onchange="manejarCambioProducto()" class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-brand-cyan focus:border-brand-cyan block p-3 transition" required>
                                 <option value="" disabled selected>Selecciona un producto...</option>
-                                <option value="playera">👕 Playera ($180)</option>
-                                <option value="sudadera">🧥 Sudadera ($260)</option>
-                                <option value="bolsa">👜 Bolsa ($100)</option>
-                                <option value="gorra">🧢 Gorra ($100)</option>
-                                <option value="taza">🥤 Taza de 11 oz ($80)</option>
+                                <option value="playera">👕 Playera ($180 - Diseño incl.)</option>
+                                <option value="sudadera">🧥 Sudadera ($360 - Diseño incl.)</option>
+                                <option value="bolsa">👜 Bolsa ($100 - Diseño incl.)</option>
+                                <option value="gorra">🧢 Gorra ($100 - Diseño incl.)</option>
+                                <option value="taza">🥤 Taza de 11 oz ($80 - Diseño incl.)</option>
                                 <option value="etiquetas">🏷️ Etiquetas (Cálculo dinámico)</option>
                             </select>
                         </div>
@@ -192,15 +190,15 @@
                                 <label class="block text-sm font-semibold text-brand-purple mb-2">Papel / Material</label>
                                 <select id="material" class="w-full bg-white border border-gray-300 text-gray-900 rounded-lg focus:ring-brand-cyan focus:border-brand-cyan block p-3 transition">
                                     <option value="" disabled selected>Selecciona material...</option>
-                                    <optgroup label="Por Planilla ($11)">
-                                        <option value="couche">📄 Papel couché (33x48cm)</option>
-                                        <option value="adhesivo">🏷️ Papel adhesivo (33x48cm)</option>
-                                        <option value="opalina">📄 Opalina (33x48cm)</option>
+                                    <optgroup label="Por Planilla (Con Suaje y Diseño)">
+                                        <option value="couche">📄 Papel couché ($11 | Suaje $40)</option>
+                                        <option value="adhesivo">🏷️ Papel adhesivo ($11 | Suaje $25)</option>
+                                        <option value="opalina">📄 Opalina ($11 | Suaje $40)</option>
                                     </optgroup>
-                                    <optgroup label="Por Metro">
-                                        <option value="vinil">🔵 Vinil adhesivo (55cm ancho)</option>
-                                        <option value="dtfTextil">🔥 DTF Textil (55cm ancho)</option>
-                                        <option value="dtfUV">🔥 DTF UV (55cm ancho)</option>
+                                    <optgroup label="Por Metro (Con Diseño)">
+                                        <option value="vinil">🔵 Vinil adhesivo ($400/m)</option>
+                                        <option value="dtfTextil">🔥 DTF Textil ($250/m)</option>
+                                        <option value="dtfUV">🔥 DTF UV ($600/m)</option>
                                     </optgroup>
                                 </select>
                             </div>
@@ -276,8 +274,15 @@
                                     <span id="res-cantidad" class="font-bold text-brand-textDark">---</span>
                                 </div>
 
+                                <!-- Desglose de Costos de Producción -->
+                                <div id="res-desglose-costos" class="bg-brand-lilac/10 border border-brand-lilac/30 p-3 rounded text-xs space-y-1.5 mt-2">
+                                    <div class="flex justify-between text-gray-600"><span id="lbl-item-principal">Costo Producto/Material:</span><span id="val-costo-principal" class="font-semibold text-brand-textDark">$0.00</span></div>
+                                    <div id="fila-suaje" class="flex justify-between text-gray-600 hidden"><span>Costo Suaje:</span><span id="val-costo-suaje" class="font-semibold text-brand-textDark">$0.00</span></div>
+                                    <div class="flex justify-between text-gray-600"><span id="lbl-diseno-txt">Costo Diseño:</span><span id="val-costo-diseno" class="font-semibold text-brand-textDark">$50.00</span></div>
+                                </div>
+
                                 <!-- Contenedor dinámico Etiquetas Resumen -->
-                                <div id="res-detalles-etiquetas" class="hidden bg-brand-lilac/10 border border-brand-lilac/30 p-3 rounded text-xs space-y-2 mt-2 mb-4">
+                                <div id="res-detalles-etiquetas" class="hidden bg-brand-lilac/10 border border-brand-lilac/30 p-3 rounded text-xs space-y-2 mb-4">
                                     <div class="flex justify-between"><span class="text-gray-600">Material:</span><span id="res-material" class="font-semibold text-brand-textDark">---</span></div>
                                     <div class="flex justify-between"><span class="text-gray-600">Medida Original:</span><span id="res-medidas" class="font-semibold text-brand-textDark">---</span></div>
                                     <div class="flex justify-between"><span class="text-gray-600">Acomodo:</span><span id="res-orientacion" class="font-semibold text-brand-purple">---</span></div>
@@ -287,8 +292,8 @@
 
                                 <div class="pt-2">
                                     <div class="flex justify-between py-1">
-                                        <span class="text-gray-500">Costo Producción:</span>
-                                        <span id="res-costo" class="font-semibold text-brand-textDark">$0.00</span>
+                                        <span class="text-gray-500 font-medium">Costo Total Producción:</span>
+                                        <span id="res-costo" class="font-bold text-brand-textDark">$0.00</span>
                                     </div>
                                     <div class="flex justify-between py-1">
                                         <span class="text-gray-500">Ganancia (<span id="res-margen-pct">0</span>%):</span>
@@ -315,9 +320,8 @@
                         </div>
                     </div>
 
-                    <!-- NUEVA SECCIÓN: VISTA PREVIA DE PLANILLA (Acomodo Virtual) -->
+                    <!-- VISTA PREVIA DE PLANILLA -->
                     <div id="seccion-vista-previa" class="hidden bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden transition-all duration-300">
-                        <!-- Cabecera y Botón Toggle -->
                         <div class="bg-gray-50 p-4 border-b flex justify-between items-center cursor-pointer hover:bg-gray-100 transition" onclick="toggleVistaPrevia()">
                             <h4 class="font-bold text-brand-purple text-lg"><i class="fa-solid fa-ruler-combined mr-2"></i> Vista Previa de Planilla</h4>
                             <button id="btn-toggle-vista" class="text-brand-purple hover:text-brand-pink transition">
@@ -325,21 +329,15 @@
                             </button>
                         </div>
                         
-                        <!-- Contenido Desplegable -->
                         <div id="contenido-vista-previa" class="p-4">
-                            <!-- Info Técnica del Acomodo -->
                             <div id="info-acomodo" class="bg-brand-lilac/20 border border-brand-lilac/50 p-3 rounded-lg text-xs text-gray-700 mb-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                <!-- Llenado por JS -->
                             </div>
                             
-                            <!-- Contenedor Visual (SVGs) -->
                             <div class="bg-brand-blue/5 p-4 rounded-lg shadow-inner border border-gray-100">
                                 <div id="contenedor-planillas" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 max-h-[60vh] overflow-y-auto svg-container p-2">
-                                    <!-- SVGs inyectados por JS -->
                                 </div>
                             </div>
                             
-                            <!-- Leyenda de colores -->
                             <div class="flex justify-center flex-wrap gap-4 mt-4 text-xs text-brand-purple font-medium">
                                 <div class="flex items-center"><div class="w-3 h-3 bg-white border border-brand-purple mr-1"></div> Planilla Real</div>
                                 <div class="flex items-center"><div class="w-3 h-3 border border-brand-purple border-dashed mr-1"></div> Área Útil</div>
@@ -367,23 +365,120 @@
 
     <!-- JAVASCRIPT -->
     <script>
-        // ------------------ BASE DE DATOS LOCAL ------------------
-        const productos = {
-            playera: { nombre: "👕 Playera", costo: 180, tipo: "fijo" },
-            sudadera: { nombre: "🧥 Sudadera", costo: 260, tipo: "fijo" },
-            bolsa: { nombre: "👜 Bolsa", costo: 100, tipo: "fijo" },
-            gorra: { nombre: "🧢 Gorra", costo: 100, tipo: "fijo" },
-            taza: { nombre: "🥤 Taza de 11 oz", costo: 80, tipo: "fijo" },
-            etiquetas: { nombre: "🏷️ Etiquetas", costo: 0, tipo: "variable" }
-        };
-
-        const materiales = {
-            couche: { nombre: "📄 Papel couché", costo: 11, unidad: "planilla", ancho: 33, alto: 48, anchoUtil: 31, altoUtil: 47 },
-            adhesivo: { nombre: "🏷️ Papel adhesivo", costo: 11, unidad: "planilla", ancho: 33, alto: 48, anchoUtil: 31, altoUtil: 47 },
-            opalina: { nombre: "📄 Opalina", costo: 11, unidad: "planilla", ancho: 33, alto: 48, anchoUtil: 31, altoUtil: 47 },
-            vinil: { nombre: "🔵 Vinil adhesivo", costo: 400, unidad: "metro", anchoUtil: 55 },
-            dtfTextil: { nombre: "🔥 DTF Textil", costo: 250, unidad: "metro", anchoUtil: 55 },
-            dtfUV: { nombre: "🔥 DTF UV", costo: 600, unidad: "metro", anchoUtil: 55 }
+        // ------------------ TABLA MAESTRA DE COSTOS (CENTRALIZADA) ------------------
+        const CONFIG_COSTOS = {
+            productos: {
+                playera: {
+                    nombre: "👕 Playera",
+                    costo: 180,
+                    unidad: "pieza",
+                    suaje: 0,
+                    diseno: 50,
+                    disenoIncluido: true,
+                    tipo: "fijo"
+                },
+                sudadera: {
+                    nombre: "🧥 Sudadera",
+                    costo: 360,
+                    unidad: "pieza",
+                    suaje: 0,
+                    diseno: 50,
+                    disenoIncluido: true,
+                    tipo: "fijo"
+                },
+                bolsa: {
+                    nombre: "👜 Bolsa",
+                    costo: 100,
+                    unidad: "pieza",
+                    suaje: 0,
+                    diseno: 50,
+                    disenoIncluido: true,
+                    tipo: "fijo"
+                },
+                gorra: {
+                    nombre: "🧢 Gorra",
+                    costo: 100,
+                    unidad: "pieza",
+                    suaje: 0,
+                    diseno: 50,
+                    disenoIncluido: true,
+                    tipo: "fijo"
+                },
+                taza: {
+                    nombre: "🥤 Taza de 11 oz",
+                    costo: 80,
+                    unidad: "pieza",
+                    suaje: 0,
+                    diseno: 50,
+                    disenoIncluido: true,
+                    tipo: "fijo"
+                },
+                etiquetas: {
+                    nombre: "🏷️ Etiquetas",
+                    costo: 0,
+                    unidad: "variable",
+                    tipo: "variable"
+                }
+            },
+            materiales: {
+                couche: {
+                    nombre: "📄 Papel couché",
+                    costo: 11,
+                    unidad: "planilla",
+                    suaje: 40,
+                    diseno: 50,
+                    ancho: 33,
+                    alto: 48,
+                    anchoUtil: 31,
+                    altoUtil: 47
+                },
+                adhesivo: {
+                    nombre: "🏷️ Papel adhesivo",
+                    costo: 11,
+                    unidad: "planilla",
+                    suaje: 25,
+                    diseno: 50,
+                    ancho: 33,
+                    alto: 48,
+                    anchoUtil: 31,
+                    altoUtil: 47
+                },
+                opalina: {
+                    nombre: "📄 Opalina",
+                    costo: 11,
+                    unidad: "planilla",
+                    suaje: 40,
+                    diseno: 50,
+                    ancho: 33,
+                    alto: 48,
+                    anchoUtil: 31,
+                    altoUtil: 47
+                },
+                vinil: {
+                    nombre: "🔵 Vinil adhesivo",
+                    costo: 400,
+                    unidad: "metro",
+                    suaje: 0,
+                    diseno: 50,
+                    anchoUtil: 55
+                },
+                dtfTextil: {
+                    nombre: "🔥 DTF Textil",
+                    costo: 250,
+                    unidad: "metro",
+                    suaje: 0,
+                    diseno: 50,
+                    anchoUtil: 55
+                },
+                dtfUV: {
+                    nombre: "🔥 DTF UV",
+                    costo: 600,
+                    unidad: "metro",
+                    suaje: 0,
+                    diseno: 50,
+                    anchoUtil: 55
+                }
+            }
         };
 
         // ------------------ NAVEGACIÓN Y VISTAS ------------------
@@ -404,7 +499,7 @@
         function manejarCambioProducto() {
             const productoId = document.getElementById('producto').value;
             const seccionEtiquetas = document.getElementById('seccion-etiquetas');
-            const esEtiqueta = productos[productoId]?.tipo === 'variable';
+            const esEtiqueta = productoId === 'etiquetas';
 
             if (esEtiqueta) {
                 seccionEtiquetas.classList.remove('hidden');
@@ -421,7 +516,6 @@
                 document.getElementById('alto').value = "";
             }
             
-            // Ocultar resultados al cambiar parámetros clave
             document.getElementById('seccion-resumen').classList.add('hidden');
             document.getElementById('seccion-vista-previa').classList.add('hidden');
             ocultarError();
@@ -452,7 +546,6 @@
         function ocultarError() { document.getElementById('alerta-error').classList.add('hidden'); }
         function formatoMoneda(valor) { return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(valor); }
 
-        // Botón toggle de vista previa
         function toggleVistaPrevia() {
             const contenido = document.getElementById('contenido-vista-previa');
             const icon = document.querySelector('#btn-toggle-vista i');
@@ -467,8 +560,7 @@
             }
         }
 
-        // ------------------ NÚCLEO DE CÁLCULO Y FUENTE ÚNICA DE VERDAD ------------------
-        
+        // ------------------ NÚCLEO DE CÁLCULO CENTRALIZADO ------------------
         function calcularCotizacion() {
             ocultarError();
 
@@ -480,16 +572,22 @@
             if (!productoId) return mostrarError("Debes seleccionar un producto.");
             if (isNaN(cantidad) || cantidad <= 0) return mostrarError("La cantidad debe ser mayor a 0.");
 
-            const producto = productos[productoId];
+            const prodConfig = CONFIG_COSTOS.productos[productoId];
+            let costoMaterialOPaneles = 0;
+            let costoSuajeTotal = 0;
+            let costoDisenoTotal = 0;
             let costoTotalProduccion = 0;
             let labelDetails = null;
-            
-            // Objeto que guardará datos para la Vista Previa Visual
             let acomodoVisual = null; 
+            let esMaterialPorPlanilla = false;
 
-            if (producto.tipo === 'fijo') {
-                costoTotalProduccion = producto.costo * cantidad;
+            if (prodConfig.tipo === 'fijo') {
+                // Productos fijos: El diseño ya está incluido en el costo base unitario. No se suma doble.
+                costoMaterialOPaneles = prodConfig.costo * cantidad;
+                costoDisenoTotal = prodConfig.diseno; // Mostramos $50 pero está incluido (no se acumula en producción)
+                costoTotalProduccion = costoMaterialOPaneles; 
             } else {
+                // Producto Variable (Etiquetas)
                 const materialId = document.getElementById('material').value;
                 const ancho = parseFloat(document.getElementById('ancho').value);
                 const alto = parseFloat(document.getElementById('alto').value);
@@ -497,101 +595,83 @@
                 if (!materialId) return mostrarError("Selecciona el papel/material para las etiquetas.");
                 if (isNaN(ancho) || ancho <= 0 || isNaN(alto) || alto <= 0) return mostrarError("Ingresa medidas válidas mayores a 0 para la etiqueta.");
 
-                const material = materiales[materialId];
-                
-                // 1. CÁLCULO DE RENDIMIENTOS (Acomodo Real Matemático)
-                const columnasNormal = Math.floor(material.anchoUtil / ancho);
-                const filasNormal = material.unidad === 'planilla' ? Math.floor(material.altoUtil / alto) : 0; 
+                const matConfig = CONFIG_COSTOS.materiales[materialId];
+                costoDisenoTotal = matConfig.diseno;
+
+                // Algoritmo de Acomodo
+                const columnasNormal = Math.floor(matConfig.anchoUtil / ancho);
+                const filasNormal = matConfig.unidad === 'planilla' ? Math.floor(matConfig.altoUtil / alto) : 0; 
                 const rendimientoNormal = columnasNormal * filasNormal;
 
-                const columnasRotado = Math.floor(material.anchoUtil / alto);
-                const filasRotado = material.unidad === 'planilla' ? Math.floor(material.altoUtil / ancho) : 0;
+                const columnasRotado = Math.floor(matConfig.anchoUtil / alto);
+                const filasRotado = matConfig.unidad === 'planilla' ? Math.floor(matConfig.altoUtil / ancho) : 0;
                 const rendimientoRotado = columnasRotado * filasRotado;
 
                 if (columnasNormal === 0 && columnasRotado === 0) {
-                    return mostrarError(`La etiqueta es demasiado ancha para el área útil del material (${material.anchoUtil}cm).`);
+                    return mostrarError(`La etiqueta es demasiado ancha para el área útil del material (${matConfig.anchoUtil}cm).`);
                 }
 
-                if (material.unidad === 'planilla') {
-                    // --- LÓGICA PLANILLAS ---
+                if (matConfig.unidad === 'planilla') {
                     if (rendimientoNormal === 0 && rendimientoRotado === 0) {
-                        return mostrarError(`La etiqueta es demasiado grande para el área útil de la planilla (${material.anchoUtil}x${material.altoUtil}cm).`);
+                        return mostrarError(`La etiqueta es demasiado grande para el área útil de la planilla.`);
                     }
 
-                    let mejorRendimiento = 0;
-                    let esRotado = false;
-
-                    // Decisión de orientación
-                    if (rendimientoNormal >= rendimientoRotado) {
-                        mejorRendimiento = rendimientoNormal;
-                    } else {
-                        mejorRendimiento = rendimientoRotado;
-                        esRotado = true;
-                    }
+                    let mejorRendimiento = rendimientoNormal >= rendimientoRotado ? rendimientoNormal : rendimientoRotado;
+                    let esRotado = rendimientoNormal < rendimientoRotado;
 
                     const planillasNecesarias = Math.ceil(cantidad / mejorRendimiento);
-                    costoTotalProduccion = planillasNecesarias * material.costo;
+                    costoMaterialOPaneles = planillasNecesarias * matConfig.costo;
+                    
+                    // Suaje específico por planilla
+                    costoSuajeTotal = planillasNecesarias * matConfig.suaje;
+                    esMaterialPorPlanilla = true;
+
+                    // Costo de producción total para etiquetas: Material + Suaje + Diseño único ($50)
+                    costoTotalProduccion = costoMaterialOPaneles + costoSuajeTotal + costoDisenoTotal;
                     
                     labelDetails = {
-                        material: material.nombre,
+                        material: matConfig.nombre,
                         medida: `${ancho} × ${alto} cm`,
                         orientacion: esRotado ? "Rotada" : "Normal",
                         rendimiento: `${mejorRendimiento} piezas por planilla`,
                         necesario: `${planillasNecesarias} planilla(s)`
                     };
 
-                    // Extraer variables exactas para la gráfica
                     acomodoVisual = {
                         tipo: 'planilla',
                         cantidadRequerida: cantidad,
                         cols: esRotado ? columnasRotado : columnasNormal,
                         rows: esRotado ? filasRotado : filasNormal,
-                        etqW: esRotado ? alto : ancho, // ancho visual invertido si rotado
-                        etqH: esRotado ? ancho : alto, // alto visual invertido si rotado
-                        planillaW: material.ancho,
-                        planillaH: material.alto,
-                        utilW: material.anchoUtil,
-                        utilH: material.altoUtil,
+                        etqW: esRotado ? alto : ancho,
+                        etqH: esRotado ? ancho : alto,
+                        planillaW: matConfig.ancho,
+                        planillaH: matConfig.alto,
+                        utilW: matConfig.anchoUtil,
+                        utilH: matConfig.altoUtil,
                         totalPlanillas: planillasNecesarias,
                         rendimientoUnitario: mejorRendimiento,
                         orientacionTexto: esRotado ? "Rotada" : "Normal"
                     };
 
                 } else {
-                    // --- LÓGICA METROS (Rollos) ---
-                    let longitudNormalCm = Infinity;
-                    if (columnasNormal > 0) {
-                        const filasNecesarias = Math.ceil(cantidad / columnasNormal);
-                        longitudNormalCm = filasNecesarias * alto;
-                    }
+                    // Materiales por metro (Vinil, DTF Textil, DTF UV)
+                    let longitudNormalCm = columnasNormal > 0 ? Math.ceil(cantidad / columnasNormal) * alto : Infinity;
+                    let longitudRotadoCm = columnasRotado > 0 ? Math.ceil(cantidad / columnasRotado) * ancho : Infinity;
 
-                    let longitudRotadoCm = Infinity;
-                    if (columnasRotado > 0) {
-                        const filasNecesarias = Math.ceil(cantidad / columnasRotado);
-                        longitudRotadoCm = filasNecesarias * ancho;
-                    }
-
-                    let mejorLongitudCm = 0;
-                    let esRotado = false;
-                    let piezasPorFila = 0;
-                    let filasTotales = 0;
-
-                    if (longitudNormalCm <= longitudRotadoCm) {
-                        mejorLongitudCm = longitudNormalCm;
-                        piezasPorFila = columnasNormal;
-                        filasTotales = Math.ceil(cantidad / piezasPorFila);
-                    } else {
-                        mejorLongitudCm = longitudRotadoCm;
-                        esRotado = true;
-                        piezasPorFila = columnasRotado;
-                        filasTotales = Math.ceil(cantidad / piezasPorFila);
-                    }
+                    let mejorLongitudCm = Math.min(longitudNormalCm, longitudRotadoCm);
+                    let esRotado = longitudNormalCm > longitudRotadoCm;
+                    let piezasPorFila = esRotado ? columnasRotado : columnasNormal;
 
                     const metrosNecesarios = mejorLongitudCm / 100;
-                    costoTotalProduccion = metrosNecesarios * material.costo;
+                    costoMaterialOPaneles = metrosNecesarios * matConfig.costo;
+                    costoSuajeTotal = 0;
+                    esMaterialPorPlanilla = false;
+
+                    // Costo total para rollos: Material por metros + Diseño ($50)
+                    costoTotalProduccion = costoMaterialOPaneles + costoDisenoTotal;
 
                     labelDetails = {
-                        material: material.nombre,
+                        material: matConfig.nombre,
                         medida: `${ancho} × ${alto} cm`,
                         orientacion: esRotado ? "Rotada" : "Normal",
                         rendimiento: `${piezasPorFila} piezas a lo ancho`,
@@ -602,29 +682,42 @@
                         tipo: 'rollo',
                         cantidadRequerida: cantidad,
                         cols: piezasPorFila,
-                        rows: filasTotales,
+                        rows: Math.ceil(cantidad / piezasPorFila),
                         etqW: esRotado ? alto : ancho,
                         etqH: esRotado ? ancho : alto,
-                        rolloW: material.anchoUtil,
+                        rolloW: matConfig.anchoUtil,
                         longitudCm: mejorLongitudCm,
                         orientacionTexto: esRotado ? "Rotada" : "Normal",
                         metrosStr: metrosNecesarios.toFixed(2)
                     };
                 }
-            } // Fin lógica cotización principal
+            }
 
-            // Cálculos financieros
+            // Finanzas y Márgenes
             const montoGanancia = costoTotalProduccion * (margenPct / 100);
             const precioDeVenta = costoTotalProduccion + montoGanancia;
             const montoAnticipo = precioDeVenta * (anticipoPct / 100);
             const saldoPendiente = precioDeVenta - montoAnticipo;
 
-            // --- ACTUALIZACIÓN DE UI: RESUMEN TEXTUAL ---
-            document.getElementById('res-producto').innerText = producto.nombre;
+            // --- ACTUALIZACIÓN DE UI: RESUMEN Y DESGLOSE ---
+            document.getElementById('res-producto').innerText = prodConfig.nombre;
             document.getElementById('res-cantidad').innerText = `${cantidad} pieza(s)`;
             
+            document.getElementById('lbl-item-principal').innerText = prodConfig.tipo === 'fijo' ? "Costo Producto:" : "Costo Material:";
+            document.getElementById('val-costo-principal').innerText = formatoMoneda(costoMaterialOPaneles);
+            
+            const filaSuaje = document.getElementById('fila-suaje');
+            if (prodConfig.tipo === 'variable' && esMaterialPorPlanilla) {
+                filaSuaje.classList.remove('hidden');
+                document.getElementById('val-costo-suaje').innerText = formatoMoneda(costoSuajeTotal);
+            } else {
+                filaSuaje.classList.add('hidden');
+            }
+
+            document.getElementById('val-costo-diseno').innerText = prodConfig.tipo === 'fijo' ? "$50.00 (Incluido)" : formatoMoneda(costoDisenoTotal);
+
             const seccionDetallesEtq = document.getElementById('res-detalles-etiquetas');
-            if (producto.tipo === 'variable' && labelDetails) {
+            if (prodConfig.tipo === 'variable' && labelDetails) {
                 seccionDetallesEtq.classList.remove('hidden');
                 document.getElementById('res-material').innerText = labelDetails.material;
                 document.getElementById('res-medidas').innerText = labelDetails.medida;
@@ -645,12 +738,10 @@
             
             document.getElementById('seccion-resumen').classList.remove('hidden');
 
-            // --- ACTUALIZACIÓN DE UI: PLANILLA VIRTUAL ---
+            // --- VISTA PREVIA SVG ---
             if (acomodoVisual) {
                 renderizarAcomodoGrafico(acomodoVisual, ancho, alto);
                 document.getElementById('seccion-vista-previa').classList.remove('hidden');
-                
-                // Asegurar que el acordeón empiece abierto al cotizar de nuevo
                 document.getElementById('contenido-vista-previa').classList.remove('hidden');
                 document.querySelector('#btn-toggle-vista i').className = 'fa-solid fa-chevron-up';
             } else {
@@ -667,10 +758,9 @@
             const infoContainer = document.getElementById('info-acomodo');
             const svgContainer = document.getElementById('contenedor-planillas');
             
-            svgContainer.innerHTML = ''; // Limpiar anteriores
+            svgContainer.innerHTML = '';
 
             if (data.tipo === 'planilla') {
-                // Info técnica Planilla
                 infoContainer.innerHTML = `
                     <div><strong class="text-brand-purple">Planilla Real:</strong> <span class="text-brand-textDark">${data.planillaW} × ${data.planillaH} cm</span></div>
                     <div><strong class="text-brand-purple">Área Útil:</strong> <span class="text-brand-textDark">${data.utilW} × ${data.utilH} cm</span></div>
@@ -680,12 +770,10 @@
                     <div><strong class="text-brand-purple">Planillas Totales:</strong> <span class="text-brand-textDark">${data.totalPlanillas}</span></div>
                 `;
 
-                // Calcular márgenes (Centrado)
                 const marginX = (data.planillaW - data.utilW) / 2;
                 const marginY = (data.planillaH - data.utilH) / 2;
                 let etiquetasRestantes = data.cantidadRequerida;
 
-                // Generar planillas necesarias
                 for (let p = 1; p <= data.totalPlanillas; p++) {
                     const idPlanilla = `Planilla ${p}`;
                     let etiquetasEnEstaPlanilla = Math.min(etiquetasRestantes, data.rendimientoUnitario);
@@ -694,26 +782,17 @@
                     <div class="flex flex-col items-center mb-4">
                         <span class="font-bold text-brand-purple text-sm mb-1">${idPlanilla}</span>
                         <span class="text-xs text-gray-500 mb-2">${etiquetasEnEstaPlanilla} piezas</span>
-                        <!-- El ViewBox mágico para que escale exacto en proporciones CM -->
                         <svg viewBox="0 0 ${data.planillaW} ${data.planillaH}" class="w-full max-w-[220px] bg-brand-bg rounded-sm">
-                            <!-- Planilla Blanca Completa (Borde Morado) -->
                             <rect x="0" y="0" width="${data.planillaW}" height="${data.planillaH}" fill="#ffffff" stroke="#957AD0" stroke-width="0.4" rx="0.5" />
-                            
-                            <!-- Área Útil Marcada (Punteado Morado) -->
                             <rect x="${marginX}" y="${marginY}" width="${data.utilW}" height="${data.utilH}" fill="none" stroke="#957AD0" stroke-width="0.3" stroke-dasharray="0.5" />
                     `;
 
-                    // Dibujar etiquetas de esta planilla
                     let contDibujadas = 0;
                     for (let r = 0; r < data.rows; r++) {
                         for (let c = 0; c < data.cols; c++) {
                             if (contDibujadas >= etiquetasEnEstaPlanilla) break;
-                            
-                            // X/Y posicionadas relativas al área útil
                             const x = marginX + (c * data.etqW);
                             const y = marginY + (r * data.etqH);
-                            
-                            // Rectángulos de etiqueta: Relleno Cian (#92DDEA), Borde Azul (#7EB8DC)
                             svgStr += `<rect x="${x}" y="${y}" width="${data.etqW}" height="${data.etqH}" fill="#92DDEA" fill-opacity="0.8" stroke="#7EB8DC" stroke-width="0.2" />`;
                             contDibujadas++;
                         }
@@ -725,7 +804,6 @@
                 }
             } 
             else if (data.tipo === 'rollo') {
-                // Info técnica Rollo
                 infoContainer.innerHTML = `
                     <div><strong class="text-brand-purple">Ancho de Rollo:</strong> <span class="text-brand-textDark">${data.rolloW} cm</span></div>
                     <div><strong class="text-brand-purple">Medida Etiqueta:</strong> <span class="text-brand-textDark">${origW} × ${origH} cm</span></div>
@@ -735,18 +813,14 @@
                     <div><strong class="text-brand-purple">Largo total ocupado:</strong> <span class="text-brand-textDark">${data.longitudCm} cm</span></div>
                 `;
 
-                // Para visualización, si el largo es inmenso limitamos a algo razonable
                 const mostrarLargoCm = Math.max(data.longitudCm, data.rolloW * 0.5); 
                 
                 let svgStr = `
                     <div class="flex flex-col items-center col-span-1 sm:col-span-2">
                         <span class="font-bold text-brand-purple text-sm mb-1">Corte de Rollo</span>
                         <span class="text-xs text-gray-500 mb-2">${data.cantidadRequerida} piezas</span>
-                        
-                        <!-- Contenedor con height máximo para rollos muy largos -->
                         <div class="w-full max-h-[50vh] overflow-y-auto border border-brand-lilac rounded custom-scroll flex justify-center bg-brand-bg">
                             <svg viewBox="0 0 ${data.rolloW} ${mostrarLargoCm}" class="w-full max-w-[300px]">
-                                <!-- Fondo Material -->
                                 <rect x="0" y="0" width="${data.rolloW}" height="${mostrarLargoCm}" fill="#ffffff" />
                 `;
 
@@ -754,10 +828,8 @@
                 for (let r = 0; r < data.rows; r++) {
                     for (let c = 0; c < data.cols; c++) {
                         if (dibujadas >= data.cantidadRequerida) break;
-                        
                         const x = c * data.etqW;
                         const y = r * data.etqH;
-                        
                         svgStr += `<rect x="${x}" y="${y}" width="${data.etqW}" height="${data.etqH}" fill="#92DDEA" fill-opacity="0.8" stroke="#7EB8DC" stroke-width="0.2" />`;
                         dibujadas++;
                     }
