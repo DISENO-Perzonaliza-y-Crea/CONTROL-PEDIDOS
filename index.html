@@ -88,9 +88,12 @@
                 <h1 class="text-xl font-bold tracking-wide">Personaliza <span class="text-brand-pink">Studio</span></h1>
             </div>
             
-            <nav class="hidden md:flex gap-6">
-                <button onclick="navegarA('inicio')" class="hover:text-brand-pink transition font-medium"><i class="fa-solid fa-house mr-2"></i> Inicio</button>
-                <button onclick="navegarA('cotizador')" class="bg-brand-blue hover:opacity-90 text-white px-5 py-2 rounded-lg transition font-medium shadow-md"><i class="fa-solid fa-calculator mr-2"></i> Cotizador</button>
+            <nav class="hidden md:flex gap-4 lg:gap-6 text-sm font-medium">
+                <button onclick="navegarA('inicio')" class="hover:text-brand-pink transition"><i class="fa-solid fa-house mr-1"></i> Inicio</button>
+                <button onclick="navegarA('cotizador')" class="hover:text-brand-pink transition"><i class="fa-solid fa-calculator mr-1"></i> Cotizador</button>
+                <button onclick="navegarA('pedidos')" class="hover:text-brand-pink transition"><i class="fa-solid fa-clipboard-list mr-1"></i> Pedidos</button>
+                <button onclick="navegarA('gastos')" class="hover:text-brand-pink transition"><i class="fa-solid fa-wallet mr-1"></i> Gastos</button>
+                <button onclick="navegarA('ventas')" class="hover:text-brand-pink transition"><i class="fa-solid fa-chart-pie mr-1"></i> Ventas</button>
             </nav>
         </div>
     </header>
@@ -106,26 +109,27 @@
                     </div>
                     <h2 class="text-3xl md:text-5xl font-bold mb-4 text-brand-textDark drop-shadow-sm">Bienvenido a<br><span class="text-white mt-2 inline-block">Personaliza Studio</span></h2>
                     <p class="text-lg md:text-xl font-medium max-w-2xl mx-auto text-brand-textDark opacity-90">
-                        Tu herramienta profesional para calcular precios, materiales y ganancias de manera rápida y precisa.
+                        Tu herramienta profesional para cotizar, administrar pedidos, gastos y ventas de manera centralizada.
                     </p>
                 </div>
                 
                 <div class="p-8 md:p-12 text-center">
+                    <!-- Tarjetas de Acceso Rápido Reemplazadas -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                        <div class="p-6 bg-brand-lilac/20 rounded-xl border border-brand-lilac/30 hover:bg-brand-lilac/30 transition">
-                            <i class="fa-solid fa-bolt text-3xl text-brand-purple mb-3"></i>
-                            <h3 class="font-bold text-lg text-brand-purple">Rápido</h3>
-                            <p class="text-sm text-gray-600 mt-2">Cálculos automáticos en segundos.</p>
+                        <div onclick="navegarA('pedidos')" class="p-6 bg-brand-lilac/20 rounded-xl border border-brand-lilac/30 hover:bg-brand-lilac/30 transition cursor-pointer">
+                            <i class="fa-solid fa-clipboard-list text-3xl text-brand-purple mb-3"></i>
+                            <h3 class="font-bold text-lg text-brand-purple">Pedidos</h3>
+                            <p class="text-sm text-gray-600 mt-2">Gestiona el estatus y entrega de tus clientes.</p>
                         </div>
-                        <div class="p-6 bg-brand-lilac/20 rounded-xl border border-brand-lilac/30 hover:bg-brand-lilac/30 transition">
-                            <i class="fa-solid fa-bullseye text-3xl text-brand-purple mb-3"></i>
-                            <h3 class="font-bold text-lg text-brand-purple">Preciso</h3>
-                            <p class="text-sm text-gray-600 mt-2">Algoritmos inteligentes para ahorrar material.</p>
+                        <div onclick="navegarA('gastos')" class="p-6 bg-brand-lilac/20 rounded-xl border border-brand-lilac/30 hover:bg-brand-lilac/30 transition cursor-pointer">
+                            <i class="fa-solid fa-wallet text-3xl text-brand-purple mb-3"></i>
+                            <h3 class="font-bold text-lg text-brand-purple">Gastos</h3>
+                            <p class="text-sm text-gray-600 mt-2">Lleva el control exacto de tus salidas de dinero.</p>
                         </div>
-                        <div class="p-6 bg-brand-lilac/20 rounded-xl border border-brand-lilac/30 hover:bg-brand-lilac/30 transition">
-                            <i class="fa-solid fa-chart-line text-3xl text-brand-purple mb-3"></i>
-                            <h3 class="font-bold text-lg text-brand-purple">Rentable</h3>
-                            <p class="text-sm text-gray-600 mt-2">Control total de tus ganancias.</p>
+                        <div onclick="navegarA('ventas')" class="p-6 bg-brand-lilac/20 rounded-xl border border-brand-lilac/30 hover:bg-brand-lilac/30 transition cursor-pointer">
+                            <i class="fa-solid fa-chart-pie text-3xl text-brand-purple mb-3"></i>
+                            <h3 class="font-bold text-lg text-brand-purple">Ventas & Utilidad</h3>
+                            <p class="text-sm text-gray-600 mt-2">Revisa tus ingresos y ganancias netas.</p>
                         </div>
                     </div>
                     
@@ -167,6 +171,7 @@
                                 <option value="bolsa">👜 Bolsa ($100 - Diseño incl.)</option>
                                 <option value="gorra">🧢 Gorra ($100 - Diseño incl.)</option>
                                 <option value="taza">🥤 Taza de 11 oz ($80 - Diseño incl.)</option>
+                                <option value="tatuajes">🩹 Tatuajes personalizados (Planilla 20x28.5cm)</option>
                                 <option value="etiquetas">🏷️ Etiquetas (Cálculo dinámico)</option>
                             </select>
                         </div>
@@ -182,11 +187,11 @@
                             </div>
                         </div>
 
-                        <!-- 3. Etiquetas (Dinámico) -->
+                        <!-- 3. Configuración Dinámica (Etiquetas o Tatuajes) -->
                         <div id="seccion-etiquetas" class="hidden bg-brand-lilac/20 p-4 rounded-lg mb-6 border border-brand-lilac/50">
-                            <h3 class="font-bold text-brand-purple mb-4"><i class="fa-solid fa-tags mr-2"></i> Configuración de Etiqueta</h3>
+                            <h3 id="titulo-seccion-dinamica" class="font-bold text-brand-purple mb-4"><i class="fa-solid fa-tags mr-2"></i> Configuración</h3>
                             
-                            <div class="mb-4">
+                            <div id="wrapper-material" class="mb-4">
                                 <label class="block text-sm font-semibold text-brand-purple mb-2">Papel / Material</label>
                                 <select id="material" class="w-full bg-white border border-gray-300 text-gray-900 rounded-lg focus:ring-brand-cyan focus:border-brand-cyan block p-3 transition">
                                     <option value="" disabled selected>Selecciona material...</option>
@@ -281,13 +286,13 @@
                                     <div class="flex justify-between text-gray-600"><span id="lbl-diseno-txt">Costo Diseño:</span><span id="val-costo-diseno" class="font-semibold text-brand-textDark">$50.00</span></div>
                                 </div>
 
-                                <!-- Contenedor dinámico Etiquetas Resumen -->
+                                <!-- Contenedor dinámico Etiquetas/Tatuajes Resumen -->
                                 <div id="res-detalles-etiquetas" class="hidden bg-brand-lilac/10 border border-brand-lilac/30 p-3 rounded text-xs space-y-2 mb-4">
-                                    <div class="flex justify-between"><span class="text-gray-600">Material:</span><span id="res-material" class="font-semibold text-brand-textDark">---</span></div>
+                                    <div class="flex justify-between"><span class="text-gray-600">Material/Soporte:</span><span id="res-material" class="font-semibold text-brand-textDark">---</span></div>
                                     <div class="flex justify-between"><span class="text-gray-600">Medida Original:</span><span id="res-medidas" class="font-semibold text-brand-textDark">---</span></div>
                                     <div class="flex justify-between"><span class="text-gray-600">Acomodo:</span><span id="res-orientacion" class="font-semibold text-brand-purple">---</span></div>
                                     <div class="flex justify-between"><span class="text-gray-600">Rendimiento:</span><span id="res-rendimiento" class="font-semibold text-brand-textDark">---</span></div>
-                                    <div class="flex justify-between"><span class="text-gray-600">Material Total:</span><span id="res-necesario" class="font-bold text-brand-purple bg-brand-cyan/30 px-2 py-0.5 rounded">---</span></div>
+                                    <div class="flex justify-between"><span class="text-gray-600">Soporte Total:</span><span id="res-necesario" class="font-bold text-brand-purple bg-brand-cyan/30 px-2 py-0.5 rounded">---</span></div>
                                 </div>
 
                                 <div class="pt-2">
@@ -316,6 +321,11 @@
                                     <span class="font-bold text-brand-textDark">Saldo Pendiente:</span>
                                     <span id="res-saldo" class="font-bold text-brand-textDark">$0.00</span>
                                 </div>
+
+                                <!-- Botón de Enlace a Pedidos -->
+                                <button onclick="registrarCotizacionComoPedido()" class="w-full mt-4 bg-brand-cyan hover:bg-brand-blue text-brand-textDark font-bold py-3 px-4 rounded-lg shadow transition flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-clipboard-check"></i> Registrar como Pedido
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -341,7 +351,7 @@
                             <div class="flex justify-center flex-wrap gap-4 mt-4 text-xs text-brand-purple font-medium">
                                 <div class="flex items-center"><div class="w-3 h-3 bg-white border border-brand-purple mr-1"></div> Planilla Real</div>
                                 <div class="flex items-center"><div class="w-3 h-3 border border-brand-purple border-dashed mr-1"></div> Área Útil</div>
-                                <div class="flex items-center"><div class="w-3 h-3 bg-brand-cyan border border-brand-blue mr-1"></div> Etiqueta</div>
+                                <div class="flex items-center"><div class="w-3 h-3 bg-brand-cyan border border-brand-blue mr-1"></div> Pieza</div>
                             </div>
                         </div>
                     </div>
@@ -349,161 +359,414 @@
                 </div>
             </div>
         </section>
+
+        <!-- VISTA: PEDIDOS -->
+        <section id="vista-pedidos" class="view-section">
+            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8 border border-gray-100">
+                <h2 class="text-2xl font-bold text-brand-purple mb-6"><i class="fa-solid fa-clipboard-list mr-2"></i> Registro de Pedidos</h2>
+                
+                <form id="form-pedido" onsubmit="guardarPedido(event)" class="space-y-4">
+                    <input type="hidden" id="pedido-edit-id">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Cliente *</label>
+                            <input type="text" id="ped-cliente" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Teléfono</label>
+                            <input type="text" id="ped-telefono" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Producto *</label>
+                            <input type="text" id="ped-producto" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Cantidad *</label>
+                            <input type="number" id="ped-cantidad" min="1" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Medidas / Material</label>
+                            <input type="text" id="ped-detalles" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" placeholder="Ej: 7x7 cm, Couche">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Fecha de Pedido *</label>
+                            <input type="date" id="ped-fecha" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Fecha de Entrega *</label>
+                            <input type="date" id="ped-entrega" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Precio Venta ($) *</label>
+                            <input type="number" step="0.01" id="ped-precio" oninput="calcularSaldoPedido()" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Anticipo ($) *</label>
+                            <input type="number" step="0.01" id="ped-anticipo" oninput="calcularSaldoPedido()" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" value="0" required>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Saldo Pendiente ($)</label>
+                            <input type="number" step="0.01" id="ped-saldo" class="w-full bg-gray-200 border border-gray-300 rounded-lg p-3 text-sm font-bold" readonly>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Estado</label>
+                            <select id="ped-estado" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm">
+                                <option value="🟡 Pendiente">🟡 Pendiente</option>
+                                <option value="🔵 En producción">🔵 En producción</option>
+                                <option value="🟣 Listo">🟣 Listo</option>
+                                <option value="🟢 Entregado">🟢 Entregado</option>
+                                <option value="🔴 Cancelado">🔴 Cancelado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Descripción / Observaciones</label>
+                        <textarea id="ped-descripcion" rows="2" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm"></textarea>
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-2">
+                        <button type="button" onclick="resetFormPedido()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2.5 rounded-lg text-sm font-semibold transition">Cancelar</button>
+                        <button type="submit" class="bg-brand-purple hover:opacity-90 text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow transition"><i class="fa-solid fa-save mr-1"></i> Guardar Pedido</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Historial de Pedidos -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+                    <h3 class="text-xl font-bold text-brand-purple"><i class="fa-solid fa-box-archive mr-2"></i> Mis Pedidos</h3>
+                    <div class="flex gap-2 w-full md:w-auto">
+                        <input type="text" id="filtro-pedido" oninput="renderizarPedidos()" placeholder="Buscar cliente, producto, estado..." class="bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 text-sm w-full md:w-64">
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-600">
+                        <thead class="bg-brand-lilac/20 text-brand-purple uppercase text-xs">
+                            <tr>
+                                <th class="p-3">Cliente / Tel</th>
+                                <th class="p-3">Producto / Cant.</th>
+                                <th class="p-3">Fechas</th>
+                                <th class="p-3">Finanzas</th>
+                                <th class="p-3">Estado</th>
+                                <th class="p-3 text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-pedidos-body" class="divide-y divide-gray-100">
+                            <!-- Inyectado por JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA: GASTOS -->
+        <section id="vista-gastos" class="view-section">
+            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8 border border-gray-100">
+                <h2 class="text-2xl font-bold text-brand-purple mb-6"><i class="fa-solid fa-wallet mr-2"></i> Control de Gastos</h2>
+                
+                <form id="form-gasto" onsubmit="guardarGasto(event)" class="space-y-4">
+                    <input type="hidden" id="gasto-edit-id">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Fecha *</label>
+                            <input type="date" id="gas-fecha" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Categoría *</label>
+                            <select id="gas-categoria" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" required>
+                                <option value="🖨️ Materiales">🖨️ Materiales</option>
+                                <option value="🎨 Diseño">🎨 Diseño</option>
+                                <option value="🖨️ Impresión">🖨️ Impresión</option>
+                                <option value="📦 Empaque">📦 Empaque</option>
+                                <option value="🚚 Envíos">🚚 Envíos</option>
+                                <option value="🛠️ Herramientas">🛠️ Herramientas</option>
+                                <option value="💡 Servicios">💡 Servicios</option>
+                                <option value="📢 Publicidad">📢 Publicidad</option>
+                                <option value="🏪 Compras">🏪 Compras</option>
+                                <option value="📌 Otros">📌 Otros</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Monto ($) *</label>
+                            <input type="number" step="0.01" id="gas-monto" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Descripción *</label>
+                        <input type="text" id="gas-descripcion" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" placeholder="Ej: Compra de rollos de vinil" required>
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-2">
+                        <button type="button" onclick="resetFormGasto()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2.5 rounded-lg text-sm font-semibold transition">Cancelar</button>
+                        <button type="submit" class="bg-brand-purple hover:opacity-90 text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow transition"><i class="fa-solid fa-save mr-1"></i> Registrar Gasto</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Historial de Gastos y Total -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+                    <h3 class="text-xl font-bold text-brand-purple"><i class="fa-solid fa-receipt mr-2"></i> Historial de Gastos</h3>
+                    <div class="flex gap-2 flex-wrap items-center">
+                        <select id="filtro-gasto-cat" onchange="renderizarGastos()" class="bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                            <option value="">Todas las categorías</option>
+                            <option value="🖨️ Materiales">🖨️ Materiales</option>
+                            <option value="🎨 Diseño">🎨 Diseño</option>
+                            <option value="🖨️ Impresión">🖨️ Impresión</option>
+                            <option value="📦 Empaque">📦 Empaque</option>
+                            <option value="🚚 Envíos">🚚 Envíos</option>
+                            <option value="🛠️ Herramientas">🛠️ Herramientas</option>
+                            <option value="💡 Servicios">💡 Servicios</option>
+                            <option value="📢 Publicidad">📢 Publicidad</option>
+                            <option value="🏪 Compras">🏪 Compras</option>
+                            <option value="📌 Otros">📌 Otros</option>
+                        </select>
+                        <div class="bg-brand-pink/20 border border-brand-pink text-brand-textDark px-4 py-2 rounded-lg text-sm font-bold">
+                            Gastos Totales: <span id="lbl-gastos-totales" class="text-brand-purple">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-600">
+                        <thead class="bg-brand-lilac/20 text-brand-purple uppercase text-xs">
+                            <tr>
+                                <th class="p-3">Fecha</th>
+                                <th class="p-3">Categoría</th>
+                                <th class="p-3">Descripción</th>
+                                <th class="p-3">Monto</th>
+                                <th class="p-3 text-center">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-gastos-body" class="divide-y divide-gray-100">
+                            <!-- Inyectado por JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA: VENTAS Y RESUMEN -->
+        <section id="vista-ventas" class="view-section">
+            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8 border border-gray-100">
+                <h2 class="text-2xl font-bold text-brand-purple mb-6"><i class="fa-solid fa-chart-pie mr-2"></i> Registro de Ventas & Resumen del Negocio</h2>
+                
+                <!-- Dashboard Resumen -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <div class="bg-brand-lilac/20 p-4 rounded-xl border border-brand-lilac/40 text-center">
+                        <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Pedidos</span>
+                        <h4 id="dash-pedidos" class="text-2xl font-bold text-brand-purple mt-1">0</h4>
+                    </div>
+                    <div class="bg-brand-blue/20 p-4 rounded-xl border border-brand-blue/40 text-center">
+                        <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Ventas Totales</span>
+                        <h4 id="dash-ventas" class="text-2xl font-bold text-brand-purple mt-1">$0.00</h4>
+                    </div>
+                    <div class="bg-brand-pink/20 p-4 rounded-xl border border-brand-pink/40 text-center">
+                        <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Gastos Totales</span>
+                        <h4 id="dash-gastos" class="text-2xl font-bold text-brand-purple mt-1">$0.00</h4>
+                    </div>
+                    <div class="bg-brand-cyan/30 p-4 rounded-xl border border-brand-cyan text-center">
+                        <span class="text-xs font-semibold text-gray-700 uppercase tracking-wider">Utilidad Neta</span>
+                        <h4 id="dash-utilidad" class="text-2xl font-bold text-brand-purple mt-1">$0.00</h4>
+                    </div>
+                </div>
+
+                <div class="flex justify-end mb-4">
+                    <select id="filtro-tiempo" onchange="actualizarDashboard()" class="bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 text-sm font-medium">
+                        <option value="todo">Todo el tiempo</option>
+                        <option value="hoy">Hoy</option>
+                        <option value="semana">Esta semana</option>
+                        <option value="mes">Este mes</option>
+                        <option value="anio">Este año</option>
+                    </select>
+                </div>
+                
+                <form id="form-venta" onsubmit="guardarVenta(event)" class="space-y-4 pt-4 border-t border-gray-100">
+                    <input type="hidden" id="venta-edit-id">
+                    <h3 class="text-lg font-bold text-brand-purple mb-2"><i class="fa-solid fa-cash-register mr-1"></i> Registrar Venta Manual</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Fecha *</label>
+                            <input type="date" id="ven-fecha" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Cliente *</label>
+                            <input type="text" id="ven-cliente" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Producto *</label>
+                            <input type="text" id="ven-producto" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Cantidad *</label>
+                            <input type="number" id="ven-cantidad" min="1" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Precio de Venta ($) *</label>
+                            <input type="number" step="0.01" id="ven-precio" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Forma de Pago *</label>
+                            <select id="ven-pago" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm">
+                                <option value="💵 Efectivo">💵 Efectivo</option>
+                                <option value="💳 Tarjeta">💳 Tarjeta</option>
+                                <option value="🏦 Transferencia">🏦 Transferencia</option>
+                                <option value="📱 Otro">📱 Otro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Observaciones</label>
+                        <input type="text" id="ven-obs" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm">
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-2">
+                        <button type="button" onclick="resetFormVenta()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2.5 rounded-lg text-sm font-semibold transition">Cancelar</button>
+                        <button type="submit" class="bg-brand-purple hover:opacity-90 text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow transition"><i class="fa-solid fa-save mr-1"></i> Registrar Venta</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Historial de Ventas -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-brand-purple"><i class="fa-solid fa-file-invoice-dollar mr-2"></i> Historial de Ventas</h3>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-600">
+                        <thead class="bg-brand-lilac/20 text-brand-purple uppercase text-xs">
+                            <tr>
+                                <th class="p-3">Fecha</th>
+                                <th class="p-3">Cliente</th>
+                                <th class="p-3">Producto / Cant.</th>
+                                <th class="p-3">Venta Total</th>
+                                <th class="p-3">Forma Pago</th>
+                                <th class="p-3 text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-ventas-body" class="divide-y divide-gray-100">
+                            <!-- Inyectado por JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- Navegación Móvil -->
+    <!-- Modal personalizado para elegir forma de pago al convertir Pedido Entregado en Venta -->
+    <div id="modal-pago" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 max-w-md w-full animate-fadeIn">
+            <h3 class="text-lg font-bold text-brand-purple mb-3"><i class="fa-solid fa-cash-register mr-2"></i> Registrar Venta desde Pedido</h3>
+            <p class="text-sm text-gray-600 mb-4">Selecciona la forma de pago para registrar esta venta oficialmente:</p>
+            
+            <input type="hidden" id="modal-pedido-id">
+            <div class="mb-4">
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Forma de Pago</label>
+                <select id="modal-forma-pago" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm">
+                    <option value="💵 Efectivo">💵 Efectivo</option>
+                    <option value="💳 Tarjeta">💳 Tarjeta</option>
+                    <option value="🏦 Transferencia">🏦 Transferencia</option>
+                    <option value="📱 Otro">📱 Otro</option>
+                </select>
+            </div>
+
+            <div class="flex justify-end gap-2">
+                <button onclick="cerrarModalPago()" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg text-sm font-semibold">Cancelar</button>
+                <button onclick="confirmarRegistroVenta()" class="bg-brand-purple text-white px-5 py-2 rounded-lg text-sm font-bold shadow">Confirmar Venta</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Móvil Inferior -->
     <nav class="fixed bottom-0 w-full bg-brand-purple text-white flex md:hidden z-50 border-t border-brand-dark shadow-[0_-4px_10px_rgba(0,0,0,0.15)]">
-        <button onclick="navegarA('inicio')" class="flex-1 py-4 text-center hover:bg-black/10 transition">
-            <i class="fa-solid fa-house text-xl mb-1" id="nav-icon-inicio"></i><br>
-            <span class="text-xs font-medium">Inicio</span>
+        <button onclick="navegarA('inicio')" class="flex-1 py-3 text-center hover:bg-black/10 transition">
+            <i class="fa-solid fa-house text-lg mb-0.5"></i><br><span class="text-[10px] font-medium">Inicio</span>
         </button>
-        <button onclick="navegarA('cotizador')" class="flex-1 py-4 text-center hover:bg-black/10 transition">
-            <i class="fa-solid fa-calculator text-xl mb-1 text-brand-pink" id="nav-icon-cotizador"></i><br>
-            <span class="text-xs font-medium text-brand-pink" id="nav-text-cotizador">Cotizador</span>
+        <button onclick="navegarA('cotizador')" class="flex-1 py-3 text-center hover:bg-black/10 transition">
+            <i class="fa-solid fa-calculator text-lg mb-0.5 text-brand-pink"></i><br><span class="text-[10px] font-medium text-brand-pink">Cotizador</span>
+        </button>
+        <button onclick="navegarA('pedidos')" class="flex-1 py-3 text-center hover:bg-black/10 transition">
+            <i class="fa-solid fa-clipboard-list text-lg mb-0.5"></i><br><span class="text-[10px] font-medium">Pedidos</span>
+        </button>
+        <button onclick="navegarA('gastos')" class="flex-1 py-3 text-center hover:bg-black/10 transition">
+            <i class="fa-solid fa-wallet text-lg mb-0.5"></i><br><span class="text-[10px] font-medium">Gastos</span>
+        </button>
+        <button onclick="navegarA('ventas')" class="flex-1 py-3 text-center hover:bg-black/10 transition">
+            <i class="fa-solid fa-chart-pie text-lg mb-0.5"></i><br><span class="text-[10px] font-medium">Ventas</span>
         </button>
     </nav>
 
     <!-- JAVASCRIPT -->
     <script>
-        // ------------------ TABLA MAESTRA DE COSTOS (CENTRALIZADA) ------------------
+        // ------------------ TABLA MAESTRA DE COSTOS ------------------
         const CONFIG_COSTOS = {
             productos: {
-                playera: {
-                    nombre: "👕 Playera",
-                    costo: 180,
-                    unidad: "pieza",
-                    suaje: 0,
-                    diseno: 50,
-                    disenoIncluido: true,
-                    tipo: "fijo"
-                },
-                sudadera: {
-                    nombre: "🧥 Sudadera",
-                    costo: 360,
-                    unidad: "pieza",
-                    suaje: 0,
-                    diseno: 50,
-                    disenoIncluido: true,
-                    tipo: "fijo"
-                },
-                bolsa: {
-                    nombre: "👜 Bolsa",
-                    costo: 100,
-                    unidad: "pieza",
-                    suaje: 0,
-                    diseno: 50,
-                    disenoIncluido: true,
-                    tipo: "fijo"
-                },
-                gorra: {
-                    nombre: "🧢 Gorra",
-                    costo: 100,
-                    unidad: "pieza",
-                    suaje: 0,
-                    diseno: 50,
-                    disenoIncluido: true,
-                    tipo: "fijo"
-                },
-                taza: {
-                    nombre: "🥤 Taza de 11 oz",
-                    costo: 80,
-                    unidad: "pieza",
-                    suaje: 0,
-                    diseno: 50,
-                    disenoIncluido: true,
-                    tipo: "fijo"
-                },
-                etiquetas: {
-                    nombre: "🏷️ Etiquetas",
-                    costo: 0,
-                    unidad: "variable",
-                    tipo: "variable"
-                }
+                playera: { nombre: "👕 Playera", costo: 180, tipo: "fijo", diseno: 50 },
+                sudadera: { nombre: "🧥 Sudadera", costo: 360, tipo: "fijo", diseno: 50 },
+                bolsa: { nombre: "👜 Bolsa", costo: 100, tipo: "fijo", diseno: 50 },
+                gorra: { nombre: "🧢 Gorra", costo: 100, tipo: "fijo", diseno: 50 },
+                taza: { nombre: "🥤 Taza de 11 oz", costo: 80, tipo: "fijo", diseno: 50 },
+                tatuajes: { nombre: "🩹 Tatuajes personalizados", costo: 50, tipo: "tatuaje", diseno: 50, suaje: 0, anchoUtil: 20, altoUtil: 28.5 },
+                etiquetas: { nombre: "🏷️ Etiquetas", costo: 0, tipo: "variable" }
             },
             materiales: {
-                couche: {
-                    nombre: "📄 Papel couché",
-                    costo: 11,
-                    unidad: "planilla",
-                    suaje: 40,
-                    diseno: 50,
-                    ancho: 33,
-                    alto: 48,
-                    anchoUtil: 31,
-                    altoUtil: 47
-                },
-                adhesivo: {
-                    nombre: "🏷️ Papel adhesivo",
-                    costo: 11,
-                    unidad: "planilla",
-                    suaje: 25,
-                    diseno: 50,
-                    ancho: 33,
-                    alto: 48,
-                    anchoUtil: 31,
-                    altoUtil: 47
-                },
-                opalina: {
-                    nombre: "📄 Opalina",
-                    costo: 11,
-                    unidad: "planilla",
-                    suaje: 40,
-                    diseno: 50,
-                    ancho: 33,
-                    alto: 48,
-                    anchoUtil: 31,
-                    altoUtil: 47
-                },
-                vinil: {
-                    nombre: "🔵 Vinil adhesivo",
-                    costo: 400,
-                    unidad: "metro",
-                    suaje: 0,
-                    diseno: 50,
-                    anchoUtil: 55
-                },
-                dtfTextil: {
-                    nombre: "🔥 DTF Textil",
-                    costo: 250,
-                    unidad: "metro",
-                    suaje: 0,
-                    diseno: 50,
-                    anchoUtil: 55
-                },
-                dtfUV: {
-                    nombre: "🔥 DTF UV",
-                    costo: 600,
-                    unidad: "metro",
-                    suaje: 0,
-                    diseno: 50,
-                    anchoUtil: 55
-                }
+                couche: { nombre: "📄 Papel couché", costo: 11, unidad: "planilla", suaje: 40, diseno: 50, ancho: 33, alto: 48, anchoUtil: 31, altoUtil: 47 },
+                adhesivo: { nombre: "🏷️ Papel adhesivo", costo: 11, unidad: "planilla", suaje: 25, diseno: 50, ancho: 33, alto: 48, anchoUtil: 31, altoUtil: 47 },
+                opalina: { nombre: "📄 Opalina", costo: 11, unidad: "planilla", suaje: 40, diseno: 50, ancho: 33, alto: 48, anchoUtil: 31, altoUtil: 47 },
+                vinil: { nombre: "🔵 Vinil adhesivo", costo: 400, unidad: "metro", suaje: 0, diseno: 50, anchoUtil: 55 },
+                dtfTextil: { nombre: "🔥 DTF Textil", costo: 250, unidad: "metro", suaje: 0, diseno: 50, anchoUtil: 55 },
+                dtfUV: { nombre: "🔥 DTF UV", costo: 600, unidad: "metro", suaje: 0, diseno: 50, anchoUtil: 55 }
             }
         };
+
+        // Variable global para almacenar el resultado actual de cotización y pasarlo a pedidos
+        let ultimaCotizacionCalculada = null;
 
         // ------------------ NAVEGACIÓN Y VISTAS ------------------
         function navegarA(vista) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById(`vista-${vista}`).classList.add('active');
-            
-            if(window.innerWidth < 768) {
-                const isInicio = vista === 'inicio';
-                document.getElementById('nav-icon-inicio').className = `fa-solid fa-house text-xl mb-1 ${isInicio ? 'text-brand-pink' : ''}`;
-                document.getElementById('nav-icon-cotizador').className = `fa-solid fa-calculator text-xl mb-1 ${!isInicio ? 'text-brand-pink' : ''}`;
-                document.querySelector('#nav-icon-inicio + br + span').className = `text-xs font-medium ${isInicio ? 'text-brand-pink' : ''}`;
-                document.getElementById('nav-text-cotizador').className = `text-xs font-medium ${!isInicio ? 'text-brand-pink' : ''}`;
-            }
             window.scrollTo(0, 0);
+
+            // Cargar datos al entrar en secciones específicas
+            if (vista === 'pedidos') {
+                document.getElementById('ped-fecha').valueAsDate = new Date();
+                renderizarPedidos();
+            } else if (vista === 'gastos') {
+                document.getElementById('gas-fecha').valueAsDate = new Date();
+                renderizarGastos();
+            } else if (vista === 'ventas') {
+                document.getElementById('ven-fecha').valueAsDate = new Date();
+                renderizarVentas();
+                actualizarDashboard();
+            }
         }
 
         function manejarCambioProducto() {
             const productoId = document.getElementById('producto').value;
             const seccionEtiquetas = document.getElementById('seccion-etiquetas');
-            const esEtiqueta = productoId === 'etiquetas';
+            const tituloSeccion = document.getElementById('titulo-seccion-dinamica');
+            const wrapperMaterial = document.getElementById('wrapper-material');
 
-            if (esEtiqueta) {
+            if (productoId === 'etiquetas') {
                 seccionEtiquetas.classList.remove('hidden');
+                wrapperMaterial.classList.remove('hidden');
+                tituloSeccion.innerHTML = '<i class="fa-solid fa-tags mr-2"></i> Configuración de Etiqueta';
                 document.getElementById('material').setAttribute('required', 'true');
+                document.getElementById('ancho').setAttribute('required', 'true');
+                document.getElementById('alto').setAttribute('required', 'true');
+            } else if (productoId === 'tatuajes') {
+                seccionEtiquetas.classList.remove('hidden');
+                wrapperMaterial.classList.add('hidden'); // Tatuajes usa planilla fija 20x28.5 sin selector de material
+                tituloSeccion.innerHTML = '<i class="fa-solid fa-band-aid mr-2"></i> Medida de Tatuaje';
+                document.getElementById('material').removeAttribute('required');
                 document.getElementById('ancho').setAttribute('required', 'true');
                 document.getElementById('alto').setAttribute('required', 'true');
             } else {
@@ -582,12 +845,68 @@
             let esMaterialPorPlanilla = false;
 
             if (prodConfig.tipo === 'fijo') {
-                // Productos fijos: El diseño ya está incluido en el costo base unitario. No se suma doble.
                 costoMaterialOPaneles = prodConfig.costo * cantidad;
-                costoDisenoTotal = prodConfig.diseno; // Mostramos $50 pero está incluido (no se acumula en producción)
+                costoDisenoTotal = prodConfig.diseno; 
                 costoTotalProduccion = costoMaterialOPaneles; 
+            } else if (productoId === 'tatuajes') {
+                const ancho = parseFloat(document.getElementById('ancho').value);
+                const alto = parseFloat(document.getElementById('alto').value);
+
+                if (isNaN(ancho) || ancho <= 0 || isNaN(alto) || alto <= 0) return mostrarError("Ingresa medidas válidas mayores a 0 para el tatuaje.");
+                
+                const anchoPl = 20;
+                const altoPl = 28.5;
+                if (ancho > anchoPl || alto > altoPl) return mostrarError(`El tatuaje excede el tamaño de la planilla (${anchoPl}x${altoPl} cm).`);
+
+                costoDisenoTotal = prodConfig.diseno;
+
+                // Acomodo Tatuajes
+                const colN = Math.floor(anchoPl / ancho);
+                const filN = Math.floor(altoPl / alto);
+                const rendN = colN * filN;
+
+                const colR = Math.floor(anchoPl / alto);
+                const filR = Math.floor(altoPl / ancho);
+                const rendR = colR * filR;
+
+                if (rendN === 0 && rendR === 0) return mostrarError("El tatuaje es demasiado grande para la planilla de tatuajes.");
+
+                let mejorRend = rendN >= rendR ? rendN : rendR;
+                let esRotado = rendN < rendR;
+
+                const planillasNec = Math.ceil(cantidad / mejorRend);
+                costoMaterialOPaneles = planillasNec * prodConfig.costo; // $50 por planilla de impresión
+                costoSuajeTotal = 0; // Tatuajes no llevan suaje
+                esMaterialPorPlanilla = true;
+
+                costoTotalProduccion = costoMaterialOPaneles + costoDisenoTotal;
+
+                labelDetails = {
+                    material: "Planilla Tatuaje (20×28.5 cm)",
+                    medida: `${ancho} × ${alto} cm`,
+                    orientacion: esRotado ? "Rotada" : "Normal",
+                    rendimiento: `${mejorRend} piezas por planilla`,
+                    necesario: `${planillasNec} planilla(s)`
+                };
+
+                acomodoVisual = {
+                    tipo: 'planilla',
+                    cantidadRequerida: cantidad,
+                    cols: esRotado ? colR : colN,
+                    rows: esRotado ? filR : filN,
+                    etqW: esRotado ? alto : ancho,
+                    etqH: esRotado ? ancho : alto,
+                    planillaW: anchoPl,
+                    planillaH: altoPl,
+                    utilW: anchoPl,
+                    utilH: altoPl,
+                    totalPlanillas: planillasNec,
+                    rendimientoUnitario: mejorRend,
+                    orientacionTexto: esRotado ? "Rotada" : "Normal"
+                };
+
             } else {
-                // Producto Variable (Etiquetas)
+                // Etiquetas (Variable con selector de material)
                 const materialId = document.getElementById('material').value;
                 const ancho = parseFloat(document.getElementById('ancho').value);
                 const alto = parseFloat(document.getElementById('alto').value);
@@ -598,7 +917,6 @@
                 const matConfig = CONFIG_COSTOS.materiales[materialId];
                 costoDisenoTotal = matConfig.diseno;
 
-                // Algoritmo de Acomodo
                 const columnasNormal = Math.floor(matConfig.anchoUtil / ancho);
                 const filasNormal = matConfig.unidad === 'planilla' ? Math.floor(matConfig.altoUtil / alto) : 0; 
                 const rendimientoNormal = columnasNormal * filasNormal;
@@ -621,12 +939,9 @@
 
                     const planillasNecesarias = Math.ceil(cantidad / mejorRendimiento);
                     costoMaterialOPaneles = planillasNecesarias * matConfig.costo;
-                    
-                    // Suaje específico por planilla
                     costoSuajeTotal = planillasNecesarias * matConfig.suaje;
                     esMaterialPorPlanilla = true;
 
-                    // Costo de producción total para etiquetas: Material + Suaje + Diseño único ($50)
                     costoTotalProduccion = costoMaterialOPaneles + costoSuajeTotal + costoDisenoTotal;
                     
                     labelDetails = {
@@ -654,7 +969,6 @@
                     };
 
                 } else {
-                    // Materiales por metro (Vinil, DTF Textil, DTF UV)
                     let longitudNormalCm = columnasNormal > 0 ? Math.ceil(cantidad / columnasNormal) * alto : Infinity;
                     let longitudRotadoCm = columnasRotado > 0 ? Math.ceil(cantidad / columnasRotado) * ancho : Infinity;
 
@@ -667,7 +981,6 @@
                     costoSuajeTotal = 0;
                     esMaterialPorPlanilla = false;
 
-                    // Costo total para rollos: Material por metros + Diseño ($50)
                     costoTotalProduccion = costoMaterialOPaneles + costoDisenoTotal;
 
                     labelDetails = {
@@ -699,15 +1012,25 @@
             const montoAnticipo = precioDeVenta * (anticipoPct / 100);
             const saldoPendiente = precioDeVenta - montoAnticipo;
 
+            // Guardar en variable global para transferir a Pedidos
+            ultimaCotizacionCalculada = {
+                producto: prodConfig.nombre,
+                cantidad: cantidad,
+                detalles: labelDetails ? `${labelDetails.material} (${labelDetails.medida})` : "Piezas estándar",
+                precioVenta: precioDeVenta.toFixed(2),
+                anticipo: montoAnticipo.toFixed(2),
+                saldo: saldoPendiente.toFixed(2)
+            };
+
             // --- ACTUALIZACIÓN DE UI: RESUMEN Y DESGLOSE ---
             document.getElementById('res-producto').innerText = prodConfig.nombre;
             document.getElementById('res-cantidad').innerText = `${cantidad} pieza(s)`;
             
-            document.getElementById('lbl-item-principal').innerText = prodConfig.tipo === 'fijo' ? "Costo Producto:" : "Costo Material:";
+            document.getElementById('lbl-item-principal').innerText = prodConfig.tipo === 'fijo' ? "Costo Producto:" : "Costo Material/Impresión:";
             document.getElementById('val-costo-principal').innerText = formatoMoneda(costoMaterialOPaneles);
             
             const filaSuaje = document.getElementById('fila-suaje');
-            if (prodConfig.tipo === 'variable' && esMaterialPorPlanilla) {
+            if (prodConfig.tipo === 'variable' && esMaterialPorPlanilla && costoSuajeTotal > 0) {
                 filaSuaje.classList.remove('hidden');
                 document.getElementById('val-costo-suaje').innerText = formatoMoneda(costoSuajeTotal);
             } else {
@@ -717,7 +1040,7 @@
             document.getElementById('val-costo-diseno').innerText = prodConfig.tipo === 'fijo' ? "$50.00 (Incluido)" : formatoMoneda(costoDisenoTotal);
 
             const seccionDetallesEtq = document.getElementById('res-detalles-etiquetas');
-            if (prodConfig.tipo === 'variable' && labelDetails) {
+            if ((prodConfig.tipo === 'variable' || productoId === 'tatuajes') && labelDetails) {
                 seccionDetallesEtq.classList.remove('hidden');
                 document.getElementById('res-material').innerText = labelDetails.material;
                 document.getElementById('res-medidas').innerText = labelDetails.medida;
@@ -740,7 +1063,7 @@
 
             // --- VISTA PREVIA SVG ---
             if (acomodoVisual) {
-                renderizarAcomodoGrafico(acomodoVisual, ancho, alto);
+                renderizarAcomodoGrafico(acomodoVisual, parseFloat(document.getElementById('ancho').value), parseFloat(document.getElementById('alto').value));
                 document.getElementById('seccion-vista-previa').classList.remove('hidden');
                 document.getElementById('contenido-vista-previa').classList.remove('hidden');
                 document.querySelector('#btn-toggle-vista i').className = 'fa-solid fa-chevron-up';
@@ -757,64 +1080,56 @@
         function renderizarAcomodoGrafico(data, origW, origH) {
             const infoContainer = document.getElementById('info-acomodo');
             const svgContainer = document.getElementById('contenedor-planillas');
-            
             svgContainer.innerHTML = '';
 
             if (data.tipo === 'planilla') {
                 infoContainer.innerHTML = `
-                    <div><strong class="text-brand-purple">Planilla Real:</strong> <span class="text-brand-textDark">${data.planillaW} × ${data.planillaH} cm</span></div>
+                    <div><strong class="text-brand-purple">Soporte Real:</strong> <span class="text-brand-textDark">${data.planillaW} × ${data.planillaH} cm</span></div>
                     <div><strong class="text-brand-purple">Área Útil:</strong> <span class="text-brand-textDark">${data.utilW} × ${data.utilH} cm</span></div>
-                    <div><strong class="text-brand-purple">Medida Etiqueta:</strong> <span class="text-brand-textDark">${origW} × ${origH} cm</span></div>
+                    <div><strong class="text-brand-purple">Medida Pieza:</strong> <span class="text-brand-textDark">${origW} × ${origH} cm</span></div>
                     <div><strong class="text-brand-purple">Acomodo (FilxCol):</strong> <span class="text-brand-textDark">${data.rows} × ${data.cols}</span></div>
                     <div><strong class="text-brand-purple">Orientación:</strong> <span class="text-brand-textDark">${data.orientacionTexto}</span></div>
-                    <div><strong class="text-brand-purple">Planillas Totales:</strong> <span class="text-brand-textDark">${data.totalPlanillas}</span></div>
+                    <div><strong class="text-brand-purple">Soportes Totales:</strong> <span class="text-brand-textDark">${data.totalPlanillas}</span></div>
                 `;
 
                 const marginX = (data.planillaW - data.utilW) / 2;
                 const marginY = (data.planillaH - data.utilH) / 2;
-                let etiquetasRestantes = data.cantidadRequerida;
+                let piezasRestantes = data.cantidadRequerida;
 
                 for (let p = 1; p <= data.totalPlanillas; p++) {
-                    const idPlanilla = `Planilla ${p}`;
-                    let etiquetasEnEstaPlanilla = Math.min(etiquetasRestantes, data.rendimientoUnitario);
-                    
+                    let enEsta = Math.min(piezasRestantes, data.rendimientoUnitario);
                     let svgStr = `
                     <div class="flex flex-col items-center mb-4">
-                        <span class="font-bold text-brand-purple text-sm mb-1">${idPlanilla}</span>
-                        <span class="text-xs text-gray-500 mb-2">${etiquetasEnEstaPlanilla} piezas</span>
+                        <span class="font-bold text-brand-purple text-sm mb-1">Planilla ${p}</span>
+                        <span class="text-xs text-gray-500 mb-2">${enEsta} piezas</span>
                         <svg viewBox="0 0 ${data.planillaW} ${data.planillaH}" class="w-full max-w-[220px] bg-brand-bg rounded-sm">
                             <rect x="0" y="0" width="${data.planillaW}" height="${data.planillaH}" fill="#ffffff" stroke="#957AD0" stroke-width="0.4" rx="0.5" />
                             <rect x="${marginX}" y="${marginY}" width="${data.utilW}" height="${data.utilH}" fill="none" stroke="#957AD0" stroke-width="0.3" stroke-dasharray="0.5" />
                     `;
 
-                    let contDibujadas = 0;
+                    let cont = 0;
                     for (let r = 0; r < data.rows; r++) {
                         for (let c = 0; c < data.cols; c++) {
-                            if (contDibujadas >= etiquetasEnEstaPlanilla) break;
+                            if (cont >= enEsta) break;
                             const x = marginX + (c * data.etqW);
                             const y = marginY + (r * data.etqH);
                             svgStr += `<rect x="${x}" y="${y}" width="${data.etqW}" height="${data.etqH}" fill="#92DDEA" fill-opacity="0.8" stroke="#7EB8DC" stroke-width="0.2" />`;
-                            contDibujadas++;
+                            cont++;
                         }
                     }
-
                     svgStr += `</svg></div>`;
                     svgContainer.innerHTML += svgStr;
-                    etiquetasRestantes -= etiquetasEnEstaPlanilla;
+                    piezasRestantes -= enEsta;
                 }
-            } 
-            else if (data.tipo === 'rollo') {
+            } else if (data.tipo === 'rollo') {
                 infoContainer.innerHTML = `
                     <div><strong class="text-brand-purple">Ancho de Rollo:</strong> <span class="text-brand-textDark">${data.rolloW} cm</span></div>
-                    <div><strong class="text-brand-purple">Medida Etiqueta:</strong> <span class="text-brand-textDark">${origW} × ${origH} cm</span></div>
-                    <div><strong class="text-brand-purple">Columnas Múltiples:</strong> <span class="text-brand-textDark">${data.cols} etiquetas</span></div>
+                    <div><strong class="text-brand-purple">Medida Pieza:</strong> <span class="text-brand-textDark">${origW} × ${origH} cm</span></div>
+                    <div><strong class="text-brand-purple">Columnas:</strong> <span class="text-brand-textDark">${data.cols}</span></div>
                     <div><strong class="text-brand-purple">Orientación:</strong> <span class="text-brand-textDark">${data.orientacionTexto}</span></div>
-                    <div><strong class="text-brand-purple">Metros Necesarios:</strong> <span class="text-brand-textDark">${data.metrosStr} m</span></div>
-                    <div><strong class="text-brand-purple">Largo total ocupado:</strong> <span class="text-brand-textDark">${data.longitudCm} cm</span></div>
+                    <div><strong class="text-brand-purple">Metros:</strong> <span class="text-brand-textDark">${data.metrosStr} m</span></div>
                 `;
-
                 const mostrarLargoCm = Math.max(data.longitudCm, data.rolloW * 0.5); 
-                
                 let svgStr = `
                     <div class="flex flex-col items-center col-span-1 sm:col-span-2">
                         <span class="font-bold text-brand-purple text-sm mb-1">Corte de Rollo</span>
@@ -823,7 +1138,6 @@
                             <svg viewBox="0 0 ${data.rolloW} ${mostrarLargoCm}" class="w-full max-w-[300px]">
                                 <rect x="0" y="0" width="${data.rolloW}" height="${mostrarLargoCm}" fill="#ffffff" />
                 `;
-
                 let dibujadas = 0;
                 for (let r = 0; r < data.rows; r++) {
                     for (let c = 0; c < data.cols; c++) {
@@ -834,10 +1148,398 @@
                         dibujadas++;
                     }
                 }
-
                 svgStr += `</svg></div></div>`;
                 svgContainer.innerHTML += svgStr;
             }
+        }
+
+        // ------------------ MÓDULO DE PEDIDOS (LOCALSTORAGE) ------------------
+        const STORAGE_KEY_PEDIDOS = 'personalizaStudio_pedidos';
+
+        function obtenerPedidos() {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY_PEDIDOS)) || [];
+        }
+
+        function guardarPedidos(pedidos) {
+            localStorage.setItem(STORAGE_KEY_PEDIDOS, JSON.stringify(pedidos));
+        }
+
+        function registrarCotizacionComoPedido() {
+            if (!ultimaCotizacionCalculada) return;
+            navegarA('pedidos');
+            document.getElementById('pedido-edit-id').value = '';
+            document.getElementById('ped-producto').value = ultimaCotizacionCalculada.producto;
+            document.getElementById('ped-cantidad').value = ultimaCotizacionCalculada.cantidad;
+            document.getElementById('ped-detalles').value = ultimaCotizacionCalculada.detalles;
+            document.getElementById('ped-precio').value = ultimaCotizacionCalculada.precioVenta;
+            document.getElementById('ped-anticipo').value = ultimaCotizacionCalculada.anticipo;
+            document.getElementById('ped-saldo').value = ultimaCotizacionCalculada.saldo;
+            document.getElementById('ped-fecha').valueAsDate = new Date();
+            // Default 3 días entrega
+            let entrega = new Date();
+            entrega.setDate(entrega.getDate() + 3);
+            document.getElementById('ped-entrega').valueAsDate = entrega;
+            document.getElementById('ped-estado').value = "🟡 Pendiente";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function calcularSaldoPedido() {
+            const precio = parseFloat(document.getElementById('ped-precio').value) || 0;
+            const anticipo = parseFloat(document.getElementById('ped-anticipo').value) || 0;
+            const saldo = Math.max(0, precio - anticipo);
+            document.getElementById('ped-saldo').value = saldo.toFixed(2);
+        }
+
+        function guardarPedido(e) {
+            e.preventDefault();
+            const editId = document.getElementById('pedido-edit-id').value;
+            const pedidos = obtenerPedidos();
+
+            const nuevoPedido = {
+                id: editId ? parseInt(editId) : Date.now(),
+                cliente: document.getElementById('ped-cliente').value,
+                telefono: document.getElementById('ped-telefono').value,
+                producto: document.getElementById('ped-producto').value,
+                cantidad: document.getElementById('ped-cantidad').value,
+                detalles: document.getElementById('ped-detalles').value,
+                fecha: document.getElementById('ped-fecha').value,
+                entrega: document.getElementById('ped-entrega').value,
+                precio: document.getElementById('ped-precio').value,
+                anticipo: document.getElementById('ped-anticipo').value,
+                saldo: document.getElementById('ped-saldo').value,
+                estado: document.getElementById('ped-estado').value,
+                descripcion: document.getElementById('ped-descripcion').value
+            };
+
+            if (editId) {
+                const idx = pedidos.findIndex(p => p.id === parseInt(editId));
+                if (idx !== -1) pedidos[idx] = nuevoPedido;
+            } else {
+                pedidos.unshift(nuevoPedido);
+            }
+
+            guardarPedidos(pedidos);
+            resetFormPedido();
+            renderizarPedidos();
+        }
+
+        function resetFormPedido() {
+            document.getElementById('form-pedido').reset();
+            document.getElementById('pedido-edit-id').value = '';
+            document.getElementById('ped-fecha').valueAsDate = new Date();
+        }
+
+        function renderizarPedidos() {
+            const tbody = document.getElementById('tabla-pedidos-body');
+            const filtro = document.getElementById('filtro-pedido').value.toLowerCase();
+            const pedidos = obtenerPedidos();
+            tbody.innerHTML = '';
+
+            const filtrados = pedidos.filter(p => 
+                p.cliente.toLowerCase().includes(filtro) || 
+                p.producto.toLowerCase().includes(filtro) || 
+                p.estado.toLowerCase().includes(filtro)
+            );
+
+            if (filtrados.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-400">No hay pedidos registrados.</td></tr>`;
+                return;
+            }
+
+            filtrados.forEach(p => {
+                let btnVentaExtra = '';
+                if (p.estado === '🟢 Entregado') {
+                    btnVentaExtra = `<button onclick="abrirModalPagoVenta(${p.id})" title="Registrar como Venta" class="bg-brand-cyan hover:bg-brand-blue text-brand-textDark px-2 py-1 rounded text-xs font-bold transition"><i class="fa-solid fa-cash-register"></i> Venta</button>`;
+                }
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="p-3">
+                            <span class="font-bold text-brand-textDark">${p.cliente}</span><br>
+                            <span class="text-xs text-gray-400">${p.telefono || 'Sin teléfono'}</span>
+                        </td>
+                        <td class="p-3">
+                            <span class="font-semibold text-brand-purple">${p.producto}</span> (${p.cantidad} pz)<br>
+                            <span class="text-xs text-gray-500">${p.detalles || ''}</span>
+                        </td>
+                        <td class="p-3 text-xs">
+                            Pedido: ${p.fecha}<br>
+                            <strong class="text-brand-purple">Entrega: ${p.entrega}</strong>
+                        </td>
+                        <td class="p-3 text-xs">
+                            Total: $${p.precio}<br>
+                            Anticipo: $${p.anticipo}<br>
+                            <strong class="text-red-500">Saldo: $${p.saldo}</strong>
+                        </td>
+                        <td class="p-3"><span class="px-2 py-1 rounded text-xs font-semibold bg-brand-lilac/20 text-brand-purple">${p.estado}</span></td>
+                        <td class="p-3 text-center space-x-1">
+                            ${btnVentaExtra}
+                            <button onclick="editarPedido(${p.id})" class="text-blue-500 hover:text-blue-700 p-1"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="eliminarPedido(${p.id})" class="text-red-500 hover:text-red-700 p-1"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function editarPedido(id) {
+            const pedidos = obtenerPedidos();
+            const p = pedidos.find(item => item.id === id);
+            if (!p) return;
+
+            document.getElementById('pedido-edit-id').value = p.id;
+            document.getElementById('ped-cliente').value = p.cliente;
+            document.getElementById('ped-telefono').value = p.telefono;
+            document.getElementById('ped-producto').value = p.producto;
+            document.getElementById('ped-cantidad').value = p.cantidad;
+            document.getElementById('ped-detalles').value = p.detalles;
+            document.getElementById('ped-fecha').value = p.fecha;
+            document.getElementById('ped-entrega').value = p.entrega;
+            document.getElementById('ped-precio').value = p.precio;
+            document.getElementById('ped-anticipo').value = p.anticipo;
+            document.getElementById('ped-saldo').value = p.saldo;
+            document.getElementById('ped-estado').value = p.estado;
+            document.getElementById('ped-descripcion').value = p.descripcion;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function eliminarPedido(id) {
+            if (!confirm("¿Seguro que deseas eliminar este pedido?")) return;
+            let pedidos = obtenerPedidos();
+            pedidos = pedidos.filter(p => p.id !== id);
+            guardarPedidos(pedidos);
+            renderizarPedidos();
+        }
+
+        // ------------------ MÓDULO DE GASTOS (LOCALSTORAGE) ------------------
+        const STORAGE_KEY_GASTOS = 'personalizaStudio_gastos';
+
+        function obtenerGastos() {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY_GASTOS)) || [];
+        }
+
+        function guardarGastos(gastos) {
+            localStorage.setItem(STORAGE_KEY_GASTOS, JSON.stringify(gastos));
+        }
+
+        function guardarGasto(e) {
+            e.preventDefault();
+            const gastos = obtenerGastos();
+
+            const nuevoGasto = {
+                id: Date.now(),
+                fecha: document.getElementById('gas-fecha').value,
+                categoria: document.getElementById('gas-categoria').value,
+                descripcion: document.getElementById('gas-descripcion').value,
+                monto: parseFloat(document.getElementById('gas-monto').value) || 0
+            };
+
+            gastos.unshift(nuevoGasto);
+            guardarGastos(gastos);
+            resetFormGasto();
+            renderizarGastos();
+        }
+
+        function resetFormGasto() {
+            document.getElementById('form-gasto').reset();
+            document.getElementById('gas-fecha').valueAsDate = new Date();
+        }
+
+        function renderizarGastos() {
+            const tbody = document.getElementById('tabla-gastos-body');
+            const filtroCat = document.getElementById('filtro-gasto-cat').value;
+            const gastos = obtenerGastos();
+            tbody.innerHTML = '';
+
+            const filtrados = gastos.filter(g => filtroCat === '' || g.categoria === filtroCat);
+            let sumaTotal = 0;
+
+            if (filtrados.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-400">No hay gastos registrados.</td></tr>`;
+                document.getElementById('lbl-gastos-totales').innerText = formatoMoneda(0);
+                return;
+            }
+
+            filtrados.forEach(g => {
+                sumaTotal += g.monto;
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="p-3 text-xs font-semibold">${g.fecha}</td>
+                        <td class="p-3"><span class="bg-brand-blue/20 text-brand-textDark px-2 py-1 rounded text-xs font-semibold">${g.categoria}</span></td>
+                        <td class="p-3">${g.descripcion}</td>
+                        <td class="p-3 font-bold text-red-500">-$${g.monto.toFixed(2)}</td>
+                        <td class="p-3 text-center">
+                            <button onclick="eliminarGasto(${g.id})" class="text-red-500 hover:text-red-700 p-1"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('lbl-gastos-totales').innerText = formatoMoneda(sumaTotal);
+        }
+
+        function eliminarGasto(id) {
+            if (!confirm("¿Seguro que deseas eliminar este gasto?")) return;
+            let gastos = obtenerGastos();
+            gastos = gastos.filter(g => g.id !== id);
+            guardarGastos(gastos);
+            renderizarGastos();
+        }
+
+        // ------------------ MÓDULO DE VENTAS Y DASHBOARD (LOCALSTORAGE) ------------------
+        const STORAGE_KEY_VENTAS = 'personalizaStudio_ventas';
+
+        function obtenerVentas() {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY_VENTAS)) || [];
+        }
+
+        function guardarVentas(ventas) {
+            localStorage.setItem(STORAGE_KEY_VENTAS, JSON.stringify(ventas));
+        }
+
+        function guardarVenta(e) {
+            e.preventDefault();
+            const ventas = obtenerVentas();
+
+            const nuevaVenta = {
+                id: Date.now(),
+                fecha: document.getElementById('ven-fecha').value,
+                cliente: document.getElementById('ven-cliente').value,
+                producto: document.getElementById('ven-producto').value,
+                cantidad: document.getElementById('ven-cantidad').value,
+                precio: parseFloat(document.getElementById('ven-precio').value) || 0,
+                pago: document.getElementById('ven-pago').value,
+                observaciones: document.getElementById('ven-obs').value
+            };
+
+            ventas.unshift(nuevaVenta);
+            guardarVentas(ventas);
+            resetFormVenta();
+            renderizarVentas();
+            actualizarDashboard();
+        }
+
+        function resetFormVenta() {
+            document.getElementById('form-venta').reset();
+            document.getElementById('ven-fecha').valueAsDate = new Date();
+        }
+
+        function abrirModalPagoVenta(pedidoId) {
+            const pedidos = obtenerPedidos();
+            const p = pedidos.find(item => item.id === pedidoId);
+            if (!p) return;
+
+            document.getElementById('modal-pedido-id').value = p.id;
+            document.getElementById('modal-pago').classList.remove('hidden');
+        }
+
+        function cerrarModalPago() {
+            document.getElementById('modal-pago').classList.add('hidden');
+        }
+
+        function confirmarRegistroVenta() {
+            const pedidoId = parseInt(document.getElementById('modal-pedido-id').value);
+            const formaPago = document.getElementById('modal-forma-pago').value;
+            const pedidos = obtenerPedidos();
+            const p = pedidos.find(item => item.id === pedidoId);
+
+            if (p) {
+                const ventas = obtenerVentas();
+                ventas.unshift({
+                    id: Date.now(),
+                    fecha: new Date().toISOString().split('T')[0],
+                    cliente: p.cliente,
+                    producto: p.producto,
+                    cantidad: p.cantidad,
+                    precio: parseFloat(p.precio) || 0,
+                    pago: formaPago,
+                    observaciones: `Convertido desde pedido #${p.id}`
+                });
+                guardarVentas(ventas);
+                cerrarModalPago();
+                alert("¡Venta registrada con éxito a partir del pedido!");
+                renderizarVentas();
+                actualizarDashboard();
+            }
+        }
+
+        function renderizarVentas() {
+            const tbody = document.getElementById('tabla-ventas-body');
+            const ventas = obtenerVentas();
+            tbody.innerHTML = '';
+
+            if (ventas.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-400">No hay ventas registradas.</td></tr>`;
+                return;
+            }
+
+            ventas.forEach(v => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="p-3 text-xs">${v.fecha}</td>
+                        <td class="p-3 font-semibold text-brand-textDark">${v.cliente}</td>
+                        <td class="p-3">${v.producto} (${v.cantidad} pz)</td>
+                        <td class="p-3 font-bold text-green-600">+$${v.precio.toFixed(2)}</td>
+                        <td class="p-3"><span class="bg-brand-cyan/30 text-brand-textDark px-2 py-1 rounded text-xs font-semibold">${v.pago}</span></td>
+                        <td class="p-3 text-center">
+                            <button onclick="eliminarVenta(${v.id})" class="text-red-500 hover:text-red-700 p-1"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function eliminarVenta(id) {
+            if (!confirm("¿Seguro que deseas eliminar esta venta?")) return;
+            let ventas = obtenerVentas();
+            ventas = ventas.filter(v => v.id !== id);
+            guardarVentas(ventas);
+            renderizarVentas();
+            actualizarDashboard();
+        }
+
+        function actualizarDashboard() {
+            const filtroTiempo = document.getElementById('filtro-tiempo').value;
+            const pedidos = obtenerPedidos();
+            const ventas = obtenerVentas();
+            const gastos = obtenerGastos();
+
+            const hoyStr = new Date().toISOString().split('T')[0];
+
+            // Filtrado según selección
+            const filtrarPorFecha = (itemFecha) => {
+                if (filtroTiempo === 'todo') return true;
+                if (filtroTiempo === 'hoy') return itemFecha === hoyStr;
+                
+                const fechaItem = new Date(itemFecha);
+                const ahora = new Date();
+                
+                if (filtroTiempo === 'semana') {
+                    const inicioSemana = new Date(ahora.setDate(ahora.getDate() - ahora.getDay()));
+                    return fechaItem >= inicioSemana;
+                }
+                if (filtroTiempo === 'mes') {
+                    return fechaItem.getMonth() === ahora.getMonth() && fechaItem.getFullYear() === ahora.getFullYear();
+                }
+                if (filtroTiempo === 'anio') {
+                    return fechaItem.getFullYear() === ahora.getFullYear();
+                }
+                return true;
+            };
+
+            const ventasFiltradas = ventas.filter(v => filtrarPorFecha(v.fecha));
+            const gastosFiltrados = gastos.filter(g => filtrarPorFecha(g.fecha));
+            const pedidosFiltrados = pedidos.filter(p => filtrarPorFecha(p.fecha));
+
+            const totalVentas = ventasFiltradas.reduce((acc, v) => acc + v.precio, 0);
+            const totalGastos = gastosFiltrados.reduce((acc, g) => acc + g.monto, 0);
+            const utilidad = totalVentas - totalGastos;
+
+            document.getElementById('dash-pedidos').innerText = pedidosFiltrados.length;
+            document.getElementById('dash-ventas').innerText = formatoMoneda(totalVentas);
+            document.getElementById('dash-gastos').innerText = formatoMoneda(totalGastos);
+            document.getElementById('dash-utilidad').innerText = formatoMoneda(utilidad);
         }
     </script>
 </body>
