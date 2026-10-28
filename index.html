@@ -177,14 +177,11 @@
                                 <input type="number" id="cantidad" min="1" oninput="calcularCotizacion()" class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block p-3" placeholder="Ej: 30">
                             </div>
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Anticipo (%)</label>
-                                <input type="number" id="anticipo_pct" min="0" max="100" value="50" oninput="calcularCotizacion()" class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block p-3">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Anticipo (%) <i class="fa-solid fa-lock text-xs text-gray-400 ml-1" title="Fijo"></i></label>
+                                <input type="number" id="anticipo_pct" value="60" readonly tabindex="-1" title="Anticipo fijo al 60%" class="w-full bg-gray-200 border border-gray-300 text-gray-700 font-bold rounded-lg block p-3 cursor-not-allowed select-none">
                             </div>
                         </div>
                         <div id="cot-escalas-mini" class="hidden bg-brand-lilac/10 border border-brand-lilac/40 rounded-lg p-3 text-xs"></div>
-                        <button type="button" onclick="limpiarFormulario()" class="w-full mt-5 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg text-sm py-3 transition">
-                            <i class="fa-solid fa-rotate-left mr-1"></i> Nueva cotización
-                        </button>
                     </div>
 
                     <div class="space-y-6">
@@ -248,6 +245,11 @@
                                 </div>
                             </div>
                         </div>
+                    <div id="cot-nueva-wrap" class="hidden">
+                            <button type="button" onclick="limpiarFormulario(); window.scrollTo({ top: 0, behavior: 'smooth' });" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg text-sm py-3 transition">
+                                <i class="fa-solid fa-rotate-left mr-1"></i> Nueva cotización
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -282,6 +284,29 @@
                 
                 <form id="form-pedido" onsubmit="guardarPedido(event)" class="space-y-4">
                     <input type="hidden" id="pedido-edit-id">
+                    <div id="carrito-pedido" class="rounded-xl border border-brand-lilac/50 bg-brand-lilac/10 p-4 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-brand-purple"><i class="fa-solid fa-cart-shopping mr-2"></i> Productos del pedido</h3>
+                            <span id="car-contador" class="text-xs font-semibold bg-brand-purple text-white px-2 py-0.5 rounded-full">0</span>
+                        </div>
+                        <p class="text-xs text-gray-500">Elige productos del catálogo y agrégalos al carrito. El total y el costo de producción se calculan solos.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div class="sm:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Producto del catálogo</label>
+                                <select id="car-producto" onchange="carritoCambiaProducto()" class="w-full bg-white border border-gray-300 rounded-lg p-2.5 text-sm"></select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Cantidad</label>
+                                <input type="number" id="car-cantidad" min="1" value="1" oninput="carritoVistaPrevia()" class="w-full bg-white border border-gray-300 rounded-lg p-2.5 text-sm">
+                            </div>
+                        </div>
+                        <div id="car-opciones" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+                        <div id="car-error" class="hidden text-sm text-red-600 font-semibold"></div>
+                        <div id="car-preview" class="hidden rounded-lg bg-white border border-brand-lilac/40 p-3 text-sm"></div>
+                        <button type="button" onclick="carritoAgregar()" class="bg-brand-pink hover:opacity-90 text-brand-textDark font-bold px-5 py-2.5 rounded-lg text-sm shadow transition"><i class="fa-solid fa-cart-plus mr-1"></i> Agregar al carrito</button>
+                        <div id="car-lista" class="space-y-2"></div>
+                        <div id="car-totales" class="hidden rounded-lg bg-white border border-brand-purple/30 p-3 text-sm space-y-1"></div>
+                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-1">Cliente *</label>
@@ -636,7 +661,19 @@
             </div>
             <div class="p-4 md:p-5 space-y-4">
                 <p id="mp-descripcion" class="text-sm text-gray-600"></p>
-                <p id="mp-precio" class="hidden text-lg font-bold text-brand-purple"></p>
+                <div id="mp-precios" class="hidden">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="rounded-xl bg-gray-50 border border-gray-200 p-3">
+                            <p class="text-[11px] font-semibold text-gray-500 uppercase">Costo de producción</p>
+                            <p id="mp-costo" class="text-lg font-bold text-gray-700"></p>
+                        </div>
+                        <div class="rounded-xl bg-brand-pink/20 border border-brand-pink/40 p-3">
+                            <p class="text-[11px] font-semibold text-brand-purple uppercase">Precio al público</p>
+                            <p id="mp-precio" class="text-lg font-bold text-brand-purple"></p>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-gray-400 mt-1">Desde, por pieza. El costo incluye material y tu tiempo de trabajo.</p>
+                </div>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     <button id="mp-btn-cotizar" class="bg-brand-purple hover:opacity-90 text-white font-semibold py-3 rounded-lg text-sm transition"><i class="fa-solid fa-calculator mr-1"></i> Cotizar</button>
                     <button id="mp-btn-pedido" class="bg-brand-cyan hover:bg-brand-blue text-brand-textDark font-semibold py-3 rounded-lg text-sm transition"><i class="fa-solid fa-clipboard-check mr-1"></i> Registrar pedido</button>
@@ -678,7 +715,7 @@
             <i class="fa-solid fa-book-open text-lg mb-0.5"></i><br><span class="text-[10px] font-medium">Catálogo</span>
         </button>
         <button onclick="navegarA('cotizador')" class="flex-1 py-3 text-center hover:bg-black/10 transition">
-            <i class="fa-solid fa-calculator text-lg mb-0.5 text-brand-pink"></i><br><span class="text-[10px] font-medium text-brand-pink">Cotizador</span>
+            <i class="fa-solid fa-calculator text-lg mb-0.5"></i><br><span class="text-[10px] font-medium">Cotizador</span>
         </button>
         <button onclick="navegarA('pedidos')" class="flex-1 py-3 text-center hover:bg-black/10 transition">
             <i class="fa-solid fa-clipboard-list text-lg mb-0.5"></i><br><span class="text-[10px] font-medium">Pedidos</span>
@@ -762,6 +799,7 @@
             ['Regalos', 'minCarrito', 'Tu tiempo por carrito', 10, 'min'],
         ];
         const AJUSTES_BASE = Object.fromEntries(AJUSTES_DEF.map(d => [d[1], d[3]]));
+        const ANTICIPO_FIJO_PCT = 60;
         const KEY_AJUSTES = 'personalizaStudio_ajustesCostos';
         const KEY_COSTOS_LIBRES = 'personalizaStudio_costosLibres';
 
@@ -950,6 +988,18 @@
             });
             return combos;
         }
+        function desdeProducto(id, preset) {
+            const prod = productoCot(id);
+            if (!prod || prod.libre) return null;
+            let mejor = null;
+            combinaciones(prod).forEach(o => {
+                const r = cotizar(prod, { ...o, ...(preset || {}) }, 1);
+                if (r && !r.error && (mejor === null || r.escalas[0].precio < mejor.precio)) {
+                    mejor = { precio: r.escalas[0].precio, costo: r.costoUnit };
+                }
+            });
+            return mejor;
+        }
         function precioDesdeProducto(id, preset) {
             const prod = productoCot(id);
             if (!prod || prod.libre) return null;
@@ -968,8 +1018,10 @@
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById(`vista-${vista}`).classList.add('active');
             window.scrollTo(0, 0);
+            actualizarNavActivo(vista);
 
             if (vista === 'pedidos') {
+                iniciarCarrito();
                 document.getElementById('ped-fecha').valueAsDate = new Date();
                 renderizarPedidos();
             } else if (vista === 'gastos') {
@@ -985,6 +1037,17 @@
                 actualizarDashboard();
             }
         }
+
+        // Menú: el apartado actual en rosa, los demás en blanco
+        function actualizarNavActivo(vista) {
+            document.querySelectorAll('header nav button, body > nav button').forEach(b => {
+                const m = (b.getAttribute('onclick') || '').match(/navegarA\('(\w+)'\)/);
+                if (!m) return;
+                b.style.color = m[1] === vista ? '#FFA5D8' : '#FFFFFF';
+                b.style.fontWeight = m[1] === vista ? '700' : '';
+            });
+        }
+        actualizarNavActivo('inicio');
 
         // ---------- Interfaz del cotizador ----------
         let tabCotizadorActual = 'cotizar';
@@ -1061,8 +1124,9 @@
             ocultarError();
             const prod = productoCot(document.getElementById('producto').value);
             const cantidad = parseInt(document.getElementById('cantidad').value);
-            const anticipoPct = parseFloat(document.getElementById('anticipo_pct').value) || 0;
+            const anticipoPct = ANTICIPO_FIJO_PCT; // anticipo congelado al 60%
             const mostrar = ok => {
+                document.getElementById('cot-nueva-wrap').classList.toggle('hidden', !ok);
                 document.getElementById('seccion-resumen').classList.toggle('hidden', !ok);
                 document.getElementById('cot-placeholder').classList.toggle('hidden', ok);
                 if (!ok) document.getElementById('seccion-vista-previa').classList.add('hidden');
@@ -1127,7 +1191,8 @@
                 precioVenta: r.total.toFixed(2),
                 anticipo: anticipo.toFixed(2),
                 saldo: saldo.toFixed(2),
-                precioUnit: r.total / cantidad
+                precioUnit: r.total / cantidad,
+                pid: prod.id, opts: o, total: r.total, costoTotal: r.costoTotal
             };
 
             if (r.info && (r.info.modo === 'planilla' || r.info.modo === 'rollo')) {
@@ -1154,7 +1219,7 @@
         function limpiarFormulario() {
             document.getElementById('producto').value = '';
             document.getElementById('cantidad').value = '';
-            document.getElementById('anticipo_pct').value = '50';
+            document.getElementById('anticipo_pct').value = ANTICIPO_FIJO_PCT;
             ultimaCotizacionCalculada = null;
             alCambiarProducto();
         }
@@ -1349,6 +1414,10 @@
             entrega.setDate(entrega.getDate() + 3);
             document.getElementById('ped-entrega').valueAsDate = entrega;
             document.getElementById('ped-estado').value = "🟡 Pendiente";
+            const q = ultimaCotizacionCalculada;
+            carritoPedido = q.pid ? [{ id: Date.now(), pid: q.pid, nombre: q.producto, opts: { ...q.opts }, detalle: q.detalles, cantidad: q.cantidad, total: q.total, costo: q.costoTotal }] : [];
+            carritoAutollenado = carritoPedido.length > 0;
+            renderizarCarrito(false);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1377,7 +1446,9 @@
                 anticipo: document.getElementById('ped-anticipo').value,
                 saldo: document.getElementById('ped-saldo').value,
                 estado: document.getElementById('ped-estado').value,
-                descripcion: document.getElementById('ped-descripcion').value
+                descripcion: document.getElementById('ped-descripcion').value,
+                items: carritoPedido.map(x => ({ ...x, opts: { ...x.opts } })),
+                costoTotal: carritoTotales().costo.toFixed(2)
             };
 
             if (editId) {
@@ -1394,6 +1465,9 @@
 
         function resetFormPedido() {
             document.getElementById('form-pedido').reset();
+            carritoPedido = []; carritoAutollenado = false;
+            carritoCambiaProducto();
+            renderizarCarrito(false);
             document.getElementById('pedido-edit-id').value = '';
             document.getElementById('ped-fecha').valueAsDate = new Date();
         }
@@ -1428,7 +1502,7 @@
                             <span class="text-xs text-gray-400">${p.telefono || 'Sin teléfono'}</span>
                         </td>
                         <td class="p-3">
-                            <span class="font-semibold text-brand-purple">${p.producto}</span> (${p.cantidad} pz)<br>
+                            ${p.items && p.items.length ? p.items.map(i => `<span class="font-semibold text-brand-purple">${i.nombre}</span> (${i.cantidad} pz)`).join("<br>") + "<br>" : `<span class="font-semibold text-brand-purple">${p.producto}</span> (${p.cantidad} pz)<br>`}
                             <span class="text-xs text-gray-500">${p.detalles || ''}</span>
                         </td>
                         <td class="p-3 text-xs">
@@ -1437,6 +1511,7 @@
                         </td>
                         <td class="p-3 text-xs">
                             Total: $${p.precio}<br>
+                            ${p.costoTotal && parseFloat(p.costoTotal) > 0 ? `<span class="text-gray-400">Costo prod.: $${p.costoTotal}</span><br>` : ''}
                             Anticipo: $${p.anticipo}<br>
                             <strong class="text-red-500">Saldo: $${p.saldo}</strong>
                         </td>
@@ -1469,6 +1544,9 @@
             document.getElementById('ped-saldo').value = p.saldo;
             document.getElementById('ped-estado').value = p.estado;
             document.getElementById('ped-descripcion').value = p.descripcion;
+            carritoPedido = (p.items || []).map(x => ({ ...x, opts: { ...x.opts } }));
+            carritoAutollenado = carritoPedido.length > 0;
+            renderizarCarrito(false);
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -1609,6 +1687,7 @@
                     cantidad: p.cantidad,
                     precio: parseFloat(p.precio) || 0,
                     pago: formaPago,
+                    costo: parseFloat(p.costoTotal) || 0,
                     observaciones: `Convertido desde pedido #${p.id}`
                 });
                 guardarVentas(ventas);
@@ -1895,7 +1974,7 @@
         let catalogoCategoria = 'Todos';
 
         function renderizarCatalogo() {
-            CATALOGO_PRODUCTOS.forEach(p => p.precio = precioDesdeProducto(p.cotizador, p.preset));
+            CATALOGO_PRODUCTOS.forEach(p => { const d = desdeProducto(p.cotizador, p.preset); p.precio = d ? d.precio : null; p.costo = d ? d.costo : null; });
             const cats = ['Todos', ...new Set(CATALOGO_PRODUCTOS.map(p => p.categoria))];
             document.getElementById('cat-filtros').innerHTML = cats.map(c => {
                 const activo = c === catalogoCategoria;
@@ -1919,7 +1998,11 @@
                         <p class="text-[10px] font-semibold text-pink-500 uppercase tracking-wider">${p.categoria}</p>
                         <h4 class="font-bold text-brand-textDark text-sm md:text-base leading-tight mt-0.5">${p.nombre}</h4>
                         <div class="flex justify-between items-center mt-2">
-                            <span class="text-xs font-semibold ${p.precio ? 'text-brand-purple' : 'text-gray-400'}">${p.precio ? 'Desde ' + formatoMoneda(p.precio) + ' c/u' : 'Cotiza tu pedido'}</span>
+                            ${p.precio ? `<div class="min-w-0">
+                                <p class="text-[9px] uppercase tracking-wide text-gray-400 leading-none">Desde, c/u</p>
+                                <p class="text-[11px] text-gray-500 leading-tight mt-1">Costo: <span class="font-bold text-gray-700">${formatoMoneda(p.costo)}</span></p>
+                                <p class="text-xs font-bold text-brand-purple leading-tight">Público: ${formatoMoneda(p.precio)}</p>
+                            </div>` : '<span class="text-xs font-semibold text-gray-400">Cotiza tu pedido</span>'}
                             ${p.ficha ? '<span class="text-[10px] bg-brand-lilac/20 text-brand-purple px-2 py-0.5 rounded-full font-semibold">Ficha</span>' : ''}
                         </div>
                     </div>
@@ -1938,9 +2021,12 @@
             img.src = p.ficha ? CATALOGO_FICHAS[p.ficha] : CATALOGO_FOTOS[p.id];
             img.alt = p.nombre;
             img.className = p.ficha ? 'w-full h-auto block' : 'max-w-full max-h-[60vh] mx-auto block p-4';
-            const precio = document.getElementById('mp-precio');
+            const precio = document.getElementById('mp-precios');
             precio.classList.toggle('hidden', !p.precio);
-            if (p.precio) precio.innerText = 'Desde ' + formatoMoneda(p.precio);
+            if (p.precio) {
+                document.getElementById('mp-precio').innerText = formatoMoneda(p.precio);
+                document.getElementById('mp-costo').innerText = formatoMoneda(p.costo);
+            }
 
             const btnCot = document.getElementById('mp-btn-cotizar');
             btnCot.classList.toggle('hidden', !p.cotizador);
@@ -1969,8 +2055,169 @@
             const p = CATALOGO_PRODUCTOS.find(x => x.id === id);
             cerrarProducto();
             navegarA('pedidos');
-            if (p) document.getElementById('ped-producto').value = p.nombre;
-            document.getElementById('ped-cliente').focus();
+            if (p) { document.getElementById('car-producto').value = p.id; carritoCambiaProducto(); document.getElementById('car-cantidad').focus(); }
+            
+        }
+
+        // ---------- Carrito del pedido ----------
+        let carritoPedido = [];
+        let carritoAutollenado = false;
+
+        function iniciarCarrito() {
+            const sel = document.getElementById('car-producto');
+            if (!sel.options.length) {
+                const cats = [...new Set(CATALOGO_PRODUCTOS.map(p => p.categoria))];
+                sel.innerHTML = '<option value="" disabled selected>Selecciona un producto del catálogo...</option>' + cats.map(c =>
+                    `<optgroup label="${c}">` + CATALOGO_PRODUCTOS.filter(p => p.categoria === c && p.cotizador).map(p => `<option value="${p.id}">${p.nombre}</option>`).join('') + '</optgroup>'
+                ).join('');
+            }
+            renderizarCarrito(false);
+        }
+
+        function carritoProductoActual() {
+            const id = document.getElementById('car-producto').value;
+            const cat = CATALOGO_PRODUCTOS.find(x => x.id === id);
+            const prod = cat ? productoCot(cat.cotizador) : null;
+            return cat && prod ? { cat, prod } : null;
+        }
+
+        function carritoCambiaProducto() {
+            const cur = carritoProductoActual();
+            const cont = document.getElementById('car-opciones');
+            if (!cur) { cont.innerHTML = ''; return carritoVistaPrevia(); }
+            const preset = cur.cat.preset || {};
+            const libres = leerJSON(KEY_COSTOS_LIBRES);
+            cont.innerHTML = cur.prod.opciones.map(op => {
+                if (op.tipo === 'numero') {
+                    const val = op.id === 'costoLibre' ? (libres[cur.prod.id] ?? '') : op.def;
+                    return `<div data-cwrap="${op.id}"><label class="block text-sm font-semibold text-gray-700 mb-1">${op.label}</label>
+                        <input type="number" step="any" min="0" id="copt-${op.id}" value="${val}" oninput="carritoVistaPrevia()" class="w-full bg-white border border-gray-300 rounded-lg p-2.5 text-sm"></div>`;
+                }
+                const def = preset[op.id] || op.def || op.choices[0];
+                return `<div data-cwrap="${op.id}"><label class="block text-sm font-semibold text-gray-700 mb-1">${op.label}</label>
+                    <select id="copt-${op.id}" onchange="carritoVistaPrevia()" class="w-full bg-white border border-gray-300 rounded-lg p-2.5 text-sm">${op.choices.map(ch => `<option value="${ch}" ${ch === def ? 'selected' : ''}>${ch}</option>`).join('')}</select></div>`;
+            }).join('');
+            carritoVistaPrevia();
+        }
+
+        function carritoLeerOpciones(prod) {
+            const o = {};
+            prod.opciones.forEach(op => {
+                const el = document.getElementById('copt-' + op.id);
+                o[op.id] = el ? el.value : (op.tipo === 'numero' ? op.def : op.choices[0]);
+            });
+            prod.opciones.forEach(op => {
+                const w = document.querySelector(`[data-cwrap="${op.id}"]`);
+                if (w && op.si) w.classList.toggle('hidden', !op.si(o));
+            });
+            return o;
+        }
+
+        function carritoVistaPrevia() {
+            const cur = carritoProductoActual();
+            const box = document.getElementById('car-preview');
+            const err = document.getElementById('car-error');
+            err.classList.add('hidden'); box.classList.add('hidden');
+            if (!cur) return null;
+            const o = carritoLeerOpciones(cur.prod);
+            const cant = parseInt(document.getElementById('car-cantidad').value);
+            if (!(cant > 0)) return null;
+            const r = cotizar(cur.prod, o, cant);
+            if (r && r.error) { err.textContent = r.error; err.classList.remove('hidden'); return null; }
+            if (!r) return null;
+            box.innerHTML = `Por pieza: <b>${formatoMoneda(r.total / cant)}</b> · Total: <b class="text-brand-purple">${formatoMoneda(r.total)}</b> · Costo de producción: <b>${formatoMoneda(r.costoTotal)}</b>`;
+            box.classList.remove('hidden');
+            return { cur, o, cant, r };
+        }
+
+        function carritoAgregar() {
+            const v = carritoVistaPrevia();
+            const err = document.getElementById('car-error');
+            if (!v) {
+                if (err.classList.contains('hidden')) {
+                    err.textContent = carritoProductoActual() ? 'Revisa la cantidad y las opciones del producto.' : 'Primero selecciona un producto del catálogo.';
+                    err.classList.remove('hidden');
+                }
+                return;
+            }
+            const { cur, o, cant, r } = v;
+            if (cur.prod.libre && o.costoLibre !== '') {
+                const libres = leerJSON(KEY_COSTOS_LIBRES); libres[cur.prod.id] = parseFloat(o.costoLibre); escribirJSON(KEY_COSTOS_LIBRES, libres);
+            }
+            const igual = carritoPedido.find(x => x.pid === cur.prod.id && JSON.stringify(x.opts) === JSON.stringify(o));
+            if (igual) {
+                igual.cantidad += cant;
+                carritoRecalcularLinea(igual);
+            } else {
+                carritoPedido.push({ id: Date.now() + Math.floor(Math.random() * 1000), pid: cur.prod.id, nombre: cur.cat.nombre, opts: o,
+                    detalle: (r.c && r.c.detalle) || '', cantidad: cant, total: r.total, costo: r.costoTotal });
+            }
+            renderizarCarrito();
+        }
+
+        function carritoRecalcularLinea(it) {
+            const prod = productoCot(it.pid);
+            if (!prod) return;
+            const r = cotizar(prod, it.opts, it.cantidad);
+            if (r && !r.error) { it.total = r.total; it.costo = r.costoTotal; it.detalle = (r.c && r.c.detalle) || it.detalle; }
+        }
+
+        function carritoCambiarCantidad(id, valor) {
+            const it = carritoPedido.find(x => x.id === id);
+            const n = parseInt(valor);
+            if (it && n > 0) { it.cantidad = n; carritoRecalcularLinea(it); }
+            renderizarCarrito();
+        }
+
+        function carritoQuitar(id) {
+            carritoPedido = carritoPedido.filter(x => x.id !== id);
+            renderizarCarrito();
+        }
+
+        function carritoTotales() {
+            const total = carritoPedido.reduce((a, i) => a + i.total, 0);
+            const costo = carritoPedido.reduce((a, i) => a + i.costo, 0);
+            return { total, costo, ganancia: total - costo, piezas: carritoPedido.reduce((a, i) => a + i.cantidad, 0) };
+        }
+
+        function renderizarCarrito(sincronizar = true) {
+            const T = carritoTotales();
+            document.getElementById('car-contador').textContent = carritoPedido.length;
+            document.getElementById('car-lista').innerHTML = carritoPedido.map(i => `
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-1 bg-white rounded-lg border border-gray-200 p-2.5 text-sm">
+                    <div class="flex-1 min-w-[150px]">
+                        <p class="font-bold text-brand-purple leading-tight">${i.nombre}</p>
+                        <p class="text-xs text-gray-500">${i.detalle || ''}</p>
+                    </div>
+                    <input type="number" min="1" value="${i.cantidad}" onchange="carritoCambiarCantidad(${i.id}, this.value)" class="w-20 bg-gray-50 border border-gray-300 rounded-lg p-1.5 text-sm text-center" title="Cantidad">
+                    <div class="text-right text-xs leading-tight">
+                        <p class="text-gray-500">${formatoMoneda(i.total / i.cantidad)} c/u</p>
+                        <p class="font-bold text-brand-purple text-sm">${formatoMoneda(i.total)}</p>
+                        <p class="text-gray-400">Costo: ${formatoMoneda(i.costo)}</p>
+                    </div>
+                    <button type="button" onclick="carritoQuitar(${i.id})" class="text-red-500 hover:text-red-700 p-1" title="Quitar"><i class="fa-solid fa-trash"></i></button>
+                </div>`).join('');
+
+            const tot = document.getElementById('car-totales');
+            tot.classList.toggle('hidden', carritoPedido.length === 0);
+            tot.innerHTML = `
+                <div class="flex justify-between"><span class="text-gray-600">Total del pedido (precio al cliente)</span><b class="text-brand-purple text-base">${formatoMoneda(T.total)}</b></div>
+                <div class="flex justify-between"><span class="text-gray-600">Costo de producción total</span><b class="text-gray-700">${formatoMoneda(T.costo)}</b></div>
+                <div class="flex justify-between"><span class="text-gray-600">Ganancia</span><b class="text-green-600">${formatoMoneda(T.ganancia)}${T.costo > 0 ? ' (' + Math.round(T.ganancia / T.costo * 100) + '%)' : ''}</b></div>`;
+
+            if (!sincronizar) return;
+            if (carritoPedido.length) {
+                carritoAutollenado = true;
+                document.getElementById('ped-producto').value = carritoPedido.map(i => i.nombre).join(', ');
+                document.getElementById('ped-cantidad').value = T.piezas;
+                document.getElementById('ped-detalles').value = carritoPedido.filter(i => i.detalle).map(i => `${i.nombre}: ${i.detalle}`).join(' | ');
+                document.getElementById('ped-precio').value = T.total.toFixed(2);
+                calcularSaldoPedido();
+            } else if (carritoAutollenado) {
+                carritoAutollenado = false;
+                ['ped-producto', 'ped-cantidad', 'ped-detalles', 'ped-precio'].forEach(id => document.getElementById(id).value = '');
+                calcularSaldoPedido();
+            }
         }
 
         document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrarProducto(); });
