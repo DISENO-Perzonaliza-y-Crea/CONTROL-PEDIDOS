@@ -70,6 +70,11 @@
     .sticker:nth-child(3n+2) { transform: rotate(5deg) translateY(6px); }
     .sticker:active { transform: scale(.95); }
     @media (min-width: 768px) { .sticker { width: 150px; height: 150px; } }
+    .event-btn { flex-shrink: 0; width: 82px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+    .event-btn .event-icon { width: 64px; height: 64px; border-radius: 999px; display: grid; place-items: center; font-size: 26px; color: #fff; box-shadow: 0 6px 14px -8px rgba(43,24,56,.6); transition: transform .15s; }
+    .event-btn:active .event-icon { transform: scale(.94); }
+    .event-btn span { font-size: 12px; font-weight: 600; line-height: 1.2; color: #2B1838; }
+    @media (min-width: 1024px) { .event-btn { width: 96px; } }
     .colorbar { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(5, 1fr); height: 8px; }
 
     /* Accesos rápidos: dibujo + texto + foto, sin encimarse */
@@ -81,6 +86,33 @@
     .tile-text small { display: block; font-size: 13px; opacity: .88; margin-top: 4px; line-height: 1.35; }
     .tile-img { margin-top: auto; align-self: flex-end; width: 92px; height: 92px; object-fit: cover; border-radius: 999px; border: 4px solid #fff; transform: rotate(-6deg); box-shadow: 0 8px 18px -8px rgba(0,0,0,.4); margin-right: -2px; margin-bottom: -2px; }
     @media (min-width: 768px) { .tile { padding: 22px; min-height: 270px; } .tile-text b { font-size: 25px; } .tile-img { width: 120px; height: 120px; } }
+
+    /* ===== Categorías por ocasión ===== */
+    .occ-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 640px) { .occ-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
+    @media (min-width: 1024px) { .occ-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+    .occ-card { container-type: inline-size; position: relative; overflow: hidden; isolation: isolate; aspect-ratio: 1.42; border-radius: 24px; text-align: left; color: #fff;
+      background: linear-gradient(135deg, var(--c1), var(--c2)); box-shadow: 0 12px 24px -14px var(--c2), 0 2px 6px -2px rgba(43,24,56,.18);
+      transition: transform .25s ease, box-shadow .25s ease; }
+    .occ-card::before { content: ''; position: absolute; z-index: -1; left: -20%; right: -20%; bottom: -46%; height: 80%;
+      background: radial-gradient(closest-side, rgba(255,255,255,.22), rgba(255,255,255,0)); border-radius: 50%; }
+    .occ-card::after { content: ''; position: absolute; z-index: -1; left: -10%; bottom: -30%; width: 75%; height: 55%;
+      background: var(--c2); opacity: .45; border-radius: 50% 50% 0 0 / 70% 70% 0 0; transform: rotate(-6deg); }
+    .occ-card:hover { transform: translateY(-4px); box-shadow: 0 20px 34px -16px var(--c2), 0 4px 10px -4px rgba(43,24,56,.2); }
+    .occ-card:focus-visible { outline: 3px solid #16B6C7; outline-offset: 3px; }
+    .occ-body { position: absolute; inset: 0; right: 49%; padding: 5.5cqw 0 5cqw 5.8cqw; display: flex; flex-direction: column; align-items: flex-start; z-index: 2; }
+    .occ-badge { width: clamp(36px, 12cqw, 46px); height: clamp(36px, 12cqw, 46px); border-radius: 14px; display: grid; place-items: center; font-size: 20px; background: rgba(255,255,255,.24); backdrop-filter: blur(2px); }
+    .occ-title { margin-top: 12px; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-variation-settings: 'SOFT' 60; font-size: clamp(17px, 6.6cqw, 29px); overflow-wrap: anywhere; line-height: 1.04; letter-spacing: -.01em; text-shadow: 0 1px 2px rgba(0,0,0,.12); }
+    .occ-count { margin-top: 10px; font-size: 12.5px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.26); white-space: nowrap; }
+    .occ-deco { margin-top: auto; font-size: clamp(28px, 11cqw, 42px); line-height: 1; color: transparent; -webkit-text-stroke: 1.6px rgba(255,255,255,.9); opacity: .9; }
+    .occ-photo { position: absolute; z-index: 1; top: 50%; right: -5%; width: 55%; aspect-ratio: 1; transform: translateY(-50%); border-radius: 50%;
+      background: #fff; box-shadow: 0 0 0 7px rgba(255,255,255,.35), 0 14px 26px -12px rgba(0,0,0,.45); overflow: hidden; transition: transform .35s ease; }
+    .occ-photo img { width: 100%; height: 100%; object-fit: contain; padding: 7%; mix-blend-mode: multiply; transition: transform .35s ease; }
+    .occ-card:hover .occ-photo img { transform: scale(1.07); }
+    .occ-card.occ-dark { color: #2B1838; }
+    .occ-card.occ-dark .occ-deco { -webkit-text-stroke-color: rgba(43,24,56,.7); }
+    .occ-card.occ-dark .occ-badge, .occ-card.occ-dark .occ-count { background: rgba(255,255,255,.4); }
+    @media (prefers-reduced-motion: reduce) { .occ-card, .occ-photo img { transition: none; } .occ-card:hover { transform: none; } }
 
     /* Galería deslizable */
     .snap-x-mandatory { scroll-snap-type: x mandatory; }
@@ -101,6 +133,10 @@
     .chip[aria-pressed="true"] { background: #2B1838; color: #fff; border-color: #2B1838; }
     .seg[aria-pressed="true"] { background: #fff; border-color: #783C99; box-shadow: 0 0 0 3px rgba(120,60,153,.15); }
     .swatch[aria-pressed="true"] { box-shadow: 0 0 0 3px #fff, 0 0 0 5px #783C99; }
+    .cup-swatch { position: relative; aspect-ratio: 1; border-radius: 12px; border: 1px solid rgba(43,24,56,.15); transition: transform .12s; }
+    .cup-swatch:active { transform: scale(.92); }
+    .cup-swatch[aria-checked="true"] { box-shadow: 0 0 0 2px #fff, 0 0 0 4px #E62C91; }
+    .cup-swatch[aria-checked="true"]::after { content: ''; position: absolute; left: 50%; top: 46%; width: 30%; height: 52%; border: solid var(--check, #fff); border-width: 0 3px 3px 0; transform: translate(-50%, -50%) rotate(45deg); }
     .tab[aria-current="page"] { color: #E62C91; }
     .tab[aria-current="page"] .tab-dot { opacity: 1; }
     .navlink[aria-current="page"] { color: #2B1838; box-shadow: inset 0 -2px 0 #E62C91; }
@@ -142,13 +178,13 @@
       </nav>
 
       <div class="ml-auto flex items-center gap-0.5 sm:gap-1 shrink-0">
-        <button onclick="toggleMobileSearch()" class="w-9 h-9 sm:w-10 sm:h-10 grid place-items-center rounded-full hover:bg-paper text-ink" aria-label="Buscar"><i class="fas fa-magnifying-glass"></i></button>
+        <button onclick="toggleMobileSearch()" class="w-9 h-9 sm:w-10 sm:h-10 grid place-items-center rounded-full hover:bg-paper text-ink" aria-label="Buscar"><svg class="w-[21px] h-[21px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
         <button onclick="showFavorites()" class="relative w-9 h-9 sm:w-10 sm:h-10 grid place-items-center rounded-full hover:bg-paper text-ink" aria-label="Favoritos">
-          <i class="far fa-heart"></i>
+          <svg class="w-[21px] h-[21px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 8 3.4 4.5 7 4.5c2 0 3.3 1.1 5 3 1.7-1.9 3-3 5-3 3.6 0 5.6 3.5 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2Z"/></svg>
           <span id="fav-count" class="hidden absolute top-1 right-1 bg-fucsia text-white text-[10px] min-w-[16px] h-4 px-1 rounded-full grid place-items-center font-bold">0</span>
         </button>
         <button onclick="openCart()" class="relative w-9 h-9 sm:w-10 sm:h-10 grid place-items-center rounded-full hover:bg-paper text-ink" aria-label="Carrito">
-          <i class="fas fa-bag-shopping"></i>
+          <svg class="w-[22px] h-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M2 3h3l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.9a1.5 1.5 0 0 0 1.5-1.1L21 7H6"/></svg>
           <span id="cart-count" class="absolute top-1 right-0.5 bg-fucsia text-white text-[10px] min-w-[16px] h-4 px-1 rounded-full grid place-items-center font-bold">0</span>
         </button>
         <span id="cart-total-header" class="hidden lg:inline text-sm font-bold ml-1">$0.00</span>
@@ -196,31 +232,8 @@
     <div class="bg-white">
       <div class="max-w-6xl mx-auto px-4 py-9">
         <h2 class="font-display font-semibold text-[28px] md:text-4xl">¿Qué estás buscando?</h2>
-        <div class="mt-5 grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-          <button onclick="goCatalog('Regalos & Termos')" class="tile bg-fucsia text-white">
-            <span class="tile-icon" aria-hidden="true"><i class="fas fa-gift"></i></span>
-            <span class="tile-text"><b>Regalos y termos</b><small>Vasos, tazas, joyeros</small></span>
-            <img data-img="VASO 770 ml MOÑO 1.png" alt="" class="tile-img"></button>
-          <button onclick="goCatalog('Eventos y Fiestas')" class="tile bg-turq text-white">
-            <span class="tile-icon" aria-hidden="true"><i class="fas fa-cake-candles"></i></span>
-            <span class="tile-text"><b>Fiestas y recuerdos</b><small>Burbujas, bolsitas, gorros</small></span>
-            <img data-img="BURBUJAS 1.png" alt="" class="tile-img"></button>
-          <button onclick="goCatalog('Ropa y Textiles')" class="tile bg-azul text-white">
-            <span class="tile-icon" aria-hidden="true"><i class="fas fa-shirt"></i></span>
-            <span class="tile-text"><b>Ropa</b><small>Playeras, sudaderas, gorras</small></span>
-            <img data-img="SUD 1.png" alt="" class="tile-img"></button>
-          <button onclick="goCatalog('Impresión y Papelería')" class="tile bg-plum text-white">
-            <span class="tile-icon" aria-hidden="true"><i class="fas fa-book-open"></i></span>
-            <span class="tile-text"><b>Papelería</b><small>Tarjetas, lonas, libros</small></span>
-            <img data-img="LIB COLOREAR 1.png" alt="" class="tile-img"></button>
-          <button onclick="switchView('materiales')" class="tile bg-oro text-ink on-light">
-            <span class="tile-icon" aria-hidden="true"><i class="fas fa-ruler-combined"></i></span>
-            <span class="tile-text"><b>DTF y vinil por metro</b><small>Calcula tu precio</small></span>
-            <img data-img="DTF UV 1.png" alt="" class="tile-img"></button>
-          <button onclick="openProductDetail('stickers-hoja')" class="tile bg-ink text-white">
-            <span class="tile-icon" aria-hidden="true"><i class="fas fa-tags"></i></span>
-            <span class="tile-text"><b>Stickers y etiquetas</b><small>Cotiza por hoja tabloide</small></span>
-            <img data-img="STICKERS MEDIDAS.png" alt="" class="tile-img"></button>
+        <p class="mt-1 text-soft">Elige tu evento o temporada y te mostramos los productos ideales.</p>
+        <div id="event-tiles" class="occ-grid mt-5">
         </div>
       </div>
     </div>
@@ -234,6 +247,7 @@
       <div class="max-w-6xl mx-auto px-4 pt-8">
         <h2 class="font-display font-semibold text-[28px] md:text-4xl" id="catalog-title">Catálogo</h2>
         <p class="text-sm text-soft mt-1" id="catalog-subtitle"></p>
+        <div id="event-pill" class="hidden mt-3"></div>
       </div>
       <div class="sticky top-14 md:top-16 z-30 bg-paper/95 backdrop-blur mt-3">
         <div id="category-chips" class="max-w-6xl mx-auto px-4 py-3 flex gap-2 overflow-x-auto no-scrollbar"></div>
@@ -365,6 +379,11 @@
               <h1 id="detail-title" class="font-display font-semibold text-[28px] md:text-4xl leading-tight mt-1">Producto</h1>
               <p id="detail-price" class="text-xl font-bold text-fucsia mt-2">$0.00</p>
               <p id="detail-description" class="text-[15px] text-soft mt-3 leading-relaxed"></p>
+            </div>
+
+            <div id="detail-colors-box" class="hidden bg-white rounded-3xl border border-line p-4 sm:p-5">
+              <h2 class="font-bold">Color: <span id="detail-color-name" class="font-semibold text-soft">elige uno</span></h2>
+              <div id="detail-colors" class="mt-3 grid grid-cols-8 gap-2.5 max-w-[420px]" role="radiogroup" aria-label="Color del vaso"></div>
             </div>
 
             <div class="bg-white rounded-3xl border border-line p-4 sm:p-5 space-y-4">
@@ -521,10 +540,10 @@
 
   <!-- ===================== BARRA DE PESTAÑAS (móvil) ===================== -->
   <nav class="tabbar md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-line grid grid-cols-4 text-[11px] font-semibold text-soft" aria-label="Navegación principal">
-    <a href="#" data-nav="catalog" onclick="goHome(); return false;" class="tab flex flex-col items-center justify-center gap-1"><i class="fas fa-house text-lg"></i>Inicio<span class="tab-dot w-1 h-1 rounded-full bg-fucsia opacity-0"></span></a>
-    <a href="#" data-nav="catalog-grid" onclick="goCatalog(); return false;" class="tab flex flex-col items-center justify-center gap-1"><i class="fas fa-table-cells-large text-lg"></i>Catálogo<span class="tab-dot w-1 h-1 rounded-full bg-fucsia opacity-0"></span></a>
-    <a href="#" data-nav="materiales" onclick="switchView('materiales'); return false;" class="tab flex flex-col items-center justify-center gap-1"><i class="fas fa-ruler-horizontal text-lg"></i>Por metro<span class="tab-dot w-1 h-1 rounded-full bg-fucsia opacity-0"></span></a>
-    <a href="#" onclick="openCart(); return false;" class="tab relative flex flex-col items-center justify-center gap-1"><i class="fas fa-bag-shopping text-lg"></i>Carrito<span id="cart-count-tab" class="absolute top-2 left-1/2 ml-2 bg-fucsia text-white text-[10px] min-w-[16px] h-4 px-1 rounded-full grid place-items-center">0</span><span class="tab-dot w-1 h-1 opacity-0"></span></a>
+    <a href="#" data-nav="catalog" onclick="goHome(); return false;" class="tab flex flex-col items-center justify-center gap-1"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>Inicio<span class="tab-dot w-1 h-1 rounded-full bg-fucsia opacity-0"></span></a>
+    <a href="#" data-nav="catalog-grid" onclick="goCatalog(); return false;" class="tab flex flex-col items-center justify-center gap-1"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>Catálogo<span class="tab-dot w-1 h-1 rounded-full bg-fucsia opacity-0"></span></a>
+    <a href="#" data-nav="materiales" onclick="switchView('materiales'); return false;" class="tab flex flex-col items-center justify-center gap-1"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M6 7v4M10 7v3M14 7v4M18 7v3"/></svg>Por metro<span class="tab-dot w-1 h-1 rounded-full bg-fucsia opacity-0"></span></a>
+    <a href="#" onclick="openCart(); return false;" class="tab relative flex flex-col items-center justify-center gap-1"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M2 3h3l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.9a1.5 1.5 0 0 0 1.5-1.1L21 7H6"/></svg>Carrito<span id="cart-count-tab" class="absolute top-2 left-1/2 ml-2 bg-fucsia text-white text-[10px] min-w-[16px] h-4 px-1 rounded-full grid place-items-center">0</span><span class="tab-dot w-1 h-1 opacity-0"></span></a>
   </nav>
 
   <!-- ===================== CARRITO ===================== -->
@@ -611,18 +630,18 @@
         description: 'Playeras blancas de poliéster o algodón personalizadas con sublimación o DTF textil.',
         variants: ['Chica', 'Mediana', 'Grande', 'Extra grande', 'Infantil'],
         views: ['Camisa blanca 1.png', 'Camisa blanca 2.png', 'Camisa blanca 3.png'] },
-      { id: 'vaso-500-popote', name: 'Vasos con Popote 500 ml', category: 'Regalos & Termos', price: 'Desde $140.00 MXN', basePrice: 140,
+      { id: 'vaso-500-popote', colors: true, name: 'Vasos con Popote 500 ml', category: 'Regalos & Termos', price: 'Desde $140.00 MXN', basePrice: 140,
         description: 'Vasos reutilizables de 500 ml con tapa y popote, personalizados con vinil de alta adherencia.',
-        views: ['Vaso 500 ml 1.png', 'VASOS POPOTE 500 ML 2.png', 'VASOS POPOTE 500 ML 3.png'] },
+        views: ['Vaso 500 ml 1.png', 'VASOS POPOTE 500 ML 2.png', 'VASOS POPOTE 500 ML 3.png', 'VASO XV 500 ml .png', 'VASO XV 500 ml amarillo.png', 'VASO XV 500 ml azul.png', 'VASO XV 500 ml dorado.png', 'VASO XV 500 ml naranja.png', 'VASO XV 500 ml plateado.png'] },
       { id: 'botellas-agua-mini', name: 'Botellas de Agua Mini', category: 'Eventos y Fiestas', price: 'Desde $15.00 MXN', basePrice: 15,
         description: 'Botellitas de agua personalizadas con etiqueta temática resistente a la humedad.',
         views: ['botellas agua mini 1.png', 'botellas agua mini 2.png', 'botellas agua mini 3.png'] },
-      { id: 'vaso-770-mono', name: 'Vaso 770 ml con Moño', category: 'Regalos & Termos', price: 'Desde $195.00 MXN', basePrice: 195,
+      { id: 'vaso-770-mono', colors: true, name: 'Vaso 770 ml con Moño', category: 'Regalos & Termos', price: 'Desde $195.00 MXN', basePrice: 195,
         description: 'Vaso de gran capacidad con moño y accesorios decorativos, personalizado para regalos y eventos.',
         views: ['VASO 770 ml MOÑO 1.png', 'VASO 770 ml MOÑO 2.png', 'VASO 770 ml MOÑO 3.png', 'VASO 770 ml MOÑO 4.png'] },
-      { id: 'vaso-770-std', name: 'Vaso 770 ml Estándar', category: 'Regalos & Termos', price: 'Desde $160.00 MXN', basePrice: 160,
+      { id: 'vaso-770-std', colors: true, name: 'Vaso 770 ml Estándar', category: 'Regalos & Termos', price: 'Desde $160.00 MXN', basePrice: 160,
         description: 'Vaso acrílico de 770 ml personalizado con vinil de alta resistencia o impresión UV.',
-        views: ['VASO 770 ML 1.png', 'VASO 770 ML 2.png'] },
+        views: ['VASO 770 ML 1.png', 'VASO 770 ML 2.png', 'VASO boda 770 ml 1.png', 'VASO boda 770 ml 3.png', 'VASO boda 3.png', 'VASO boda 4.png', 'VASO NAV 770 ml 1.png', 'VASO NAV 770 ml 2.png', 'VASO NAV 770 ml 3.png'] },
       { id: 'tazas', name: 'Tazas Personalizadas', category: 'Regalos & Termos', price: 'Desde $90.00 MXN', basePrice: 90,
         description: 'Tazas de cerámica de 11 oz impresas en sublimación a todo color con diseños exclusivos o corporativos.',
         variants: ['Taza blanca 11 oz'],
@@ -654,7 +673,7 @@
         views: ['LONA 1.png', 'LONA 2.png', 'LONA 3.png'] },
       { id: 'llaveros-rect', name: 'Llaveros Rectangulares Personalizados', category: 'Regalos & Termos', price: 'Desde $45.00 MXN', basePrice: 45,
         description: 'Llaveros rectangulares impresos por ambos lados con tu diseño.',
-        views: ['LLAVERO RECT 1.png', 'LLAVERO RECT 2.png', 'LLAVERO RECT 3.png'] },
+        views: ['LLAVERO RECT 1.png', 'LLAVERO RECT 2.png', 'LLAVERO RECT 3.png', 'LLAVEROS NAV 5.png', 'LLAVEROS NAV 6.png'] },
       { id: 'libros-colorear', name: 'Libros y Sets para Colorear', category: 'Impresión y Papelería', price: 'Desde $85.00 MXN', basePrice: 85,
         description: 'Libritos para colorear temáticos y personalizados, ideales como recuerdo de fiestas.',
         views: ['LIB COLOREAR 1.png', 'LIB COLOREAR 2.png', 'LIB COLOREAR 3.png'] },
@@ -672,8 +691,74 @@
         views: ['CAJA DULCE NAV 1.png', 'CAJA DULCE NAV 3.png', 'CAJA DULCE 4.png'] },
       { id: 'kit-navideno-pintar', name: 'Kit Navideño para Pintar', category: 'Eventos y Fiestas', price: 'Consultar precio', basePrice: null,
         description: 'Figura de madera para pintar con pinturas de colores y pincel, en bolsa con diseño navideño personalizado. Ideal para posadas, intercambios y actividades con niños.',
-        views: ['ESFERA PINTAR 1.png', 'ESFERA PINTAR 2.png', 'ESFERA PINTAR 3.png'] }
+        views: ['ESFERA PINTAR 1.png', 'ESFERA PINTAR 2.png', 'ESFERA PINTAR 3.png'] },
+      { id: 'esfera-acrilico', name: 'Esfera de Acrílico Personalizada', category: 'Regalos & Termos', price: 'Consultar precio', basePrice: null,
+        description: 'Esfera navideña de acrílico con moño y nombre o diseño personalizado. Ideal para el árbol o como regalo de Navidad.',
+        views: ['ESFERA ACRILICO 1.png', 'EFERA ARCRILICO 2.png'] },
+      { id: 'esfera-3d', name: 'Esfera Navideña 3D Personalizada', category: 'Regalos & Termos', price: 'Consultar precio', basePrice: null,
+        description: 'Esfera navideña con moño y nombre personalizado en relieve. Un detalle único para el árbol de cada integrante de la familia.',
+        views: ['ESFERA 3D 1.png', 'ESFERA 3D 2.png'] },
+      { id: 'carta-reyes', name: 'Carta a los Reyes Magos', category: 'Impresión y Papelería', price: 'Consultar precio', basePrice: null,
+        description: 'Carta impresa y personalizada para que los niños escriban sus deseos a los Reyes Magos.',
+        views: ['CARTA REYES.png'] },
+      { id: 'sobre-santa', name: 'Sobre para Carta a Santa', category: 'Impresión y Papelería', price: 'Consultar precio', basePrice: null,
+        description: 'Sobre navideño impreso y personalizado para enviar la carta a Santa Claus.',
+        views: ['SOBRE SANTA.png'] },
+      { id: 'papel-navideno', name: 'Papel de Baño Navideño', category: 'Regalos & Termos', price: 'Consultar precio', basePrice: null,
+        description: 'Rollo de papel de baño con diseño navideño divertido. Perfecto para intercambios y regalos de broma.',
+        views: ['PAPEL NAV.png'] },
+      { id: 'vaso-termico-grande', colors: true, name: 'Vaso Térmico Grande', category: 'Regalos & Termos', price: 'Consultar precio', basePrice: null,
+        description: 'Vaso térmico de acero inoxidable de 20 oz, personalizado con grabado o diseño. Mantiene tus bebidas frías o calientes.',
+        views: ['VASO TERM GRAND 1.JPG', 'VASO TER GRAND 2.png'] }
     ];
+    // ---------- EVENTOS Y TEMPORADAS ----------
+    const EVENTS = [
+      { id: 'xv', c1: '#F0479E', c2: '#C41672', deco: 'fa-gem', img: 'VASO XV 500 ml .png', name: 'XV años', icon: 'fa-crown', color: '#E62C91',
+        products: ['cojin-xv', 'vaso-770-mono', 'vaso-500-popote', 'carrito-personalizado', 'caja-dulcera', 'burbujas', 'botellas-agua-mini', 'stickers-hoja', 'lonas', 'joyero-grande', 'joyero-cuadrado'] },
+      { id: 'boda', c1: '#D9B65A', c2: '#A9842C', deco: 'fa-champagne-glasses', img: 'VASO boda 770 ml 1.png', dark: true, name: 'Boda', icon: 'fa-ring', color: '#C8A64B',
+        products: ['vaso-770-mono', 'vaso-770-std', 'tazas', 'botellas-agua-mini', 'bolsa-transparente', 'stickers-hoja', 'lonas', 'joyero-grande', 'joyero-cuadrado'] },
+      { id: 'bautizo', c1: '#2BA3E0', c2: '#1468B0', deco: 'fa-cross', img: 'TAZAS 1.png', name: 'Bautizo y Primera Comunión', icon: 'fa-dove', color: '#168FC7',
+        products: ['tazas', 'carrito-personalizado', 'caja-dulcera', 'burbujas', 'botellas-agua-mini', 'bolsa-transparente', 'stickers-hoja'] },
+      { id: 'cumple', c1: '#22C4D2', c2: '#0E8D9E', deco: 'fa-gift', img: 'GORRO CUMPLE 1.png', name: 'Cumpleaños infantil', icon: 'fa-cake-candles', color: '#16B6C7',
+        products: ['gorro-cumple', 'burbujas', 'burbujas-grandes', 'caja-dulcera', 'botella-chupon', 'libros-colorear', 'tatuajes', 'bolsa-transparente', 'botellas-agua-mini', 'lonas'] },
+      { id: 'baby', c1: '#B48AD8', c2: '#8457B5', deco: 'fa-baby', img: 'botellas agua mini 1.png', name: 'Baby shower', icon: 'fa-baby-carriage', color: '#9B6FC3',
+        products: ['botellas-agua-mini', 'bolsa-transparente', 'burbujas', 'caja-dulcera', 'tazas', 'stickers-hoja'] },
+      { id: 'graduacion', c1: '#6A3A9E', c2: '#3E1C64', deco: 'fa-scroll', img: 'Tatuajes 2.png', name: 'Graduación', icon: 'fa-graduation-cap', color: '#2B1838',
+        products: ['tazas', 'vaso-770-std', 'vaso-770-mono', 'vaso-500-popote', 'vaso-termico-grande', 'camisa-blanca', 'sudaderas', 'llaveros-rect', 'joyero-grande', 'joyero-cuadrado', 'lonas', 'tatuajes'] },
+      { id: 'navidad', c1: '#2DB067', c2: '#167A42', deco: 'fa-snowflake', img: 'ESFERA 3D 1.png', name: 'Navidad y posadas', icon: 'fa-tree', color: '#1F9D55',
+        products: ['caja-dulcera-navidad', 'kit-navideno-pintar', 'esfera-3d', 'esfera-acrilico', 'carta-reyes', 'sobre-santa', 'papel-navideno', 'llaveros-rect', 'tazas', 'sudaderas', 'vaso-770-std', 'vaso-770-mono', 'vaso-500-popote', 'vaso-termico-grande', 'stickers-hoja'] },
+      { id: 'escolar', c1: '#F6A92A', c2: '#E07A0B', deco: 'fa-book-open', img: 'Botella chupon 500 ml 1.png', dark: true, name: 'Escolar', icon: 'fa-pencil', color: '#F2A93B',
+        products: ['botella-chupon', 'vaso-500-popote', 'stickers-hoja', 'llaveros-rect', 'libros-colorear', 'camisa-blanca', 'gorras'] },
+      { id: 'valentin', c1: '#EE3B4E', c2: '#B5132A', deco: 'fa-envelope-open', img: 'LLAVERO RECT 1.png', name: 'San Valentín', icon: 'fa-heart', color: '#D7263D',
+        products: ['tazas', 'vaso-770-mono', 'cojin-xv', 'joyero-grande', 'joyero-cuadrado', 'llaveros-rect'] },
+      { id: 'mama', c1: '#F25DA4', c2: '#CC2F7E', deco: 'fa-heart', img: 'JOYERO CUADRADO 1.png', name: 'Día de las Madres', icon: 'fa-hand-holding-heart', color: '#E62C91',
+        products: ['tazas', 'joyero-grande', 'joyero-cuadrado', 'cojin-xv', 'vaso-770-mono', 'llaveros-rect'] },
+      { id: 'papa', c1: '#2D8FE0', c2: '#1B5EB3', deco: 'fa-glasses', img: 'VASO TERM GRAND 1.JPG', name: 'Día del Padre', icon: 'fa-user-tie', color: '#168FC7',
+        products: ['tazas', 'vaso-termico-grande', 'gorras', 'vaso-770-std', 'llaveros-rect', 'camisa-blanca'] },
+      { id: 'nino', c1: '#2CCBD3', c2: '#119AA8', deco: 'fa-star', img: 'BURBUJAS GRAN 1.png', name: 'Día del Niño', icon: 'fa-child-reaching', color: '#16B6C7',
+        products: ['burbujas', 'burbujas-grandes', 'botella-chupon', 'libros-colorear', 'tatuajes', 'gorro-cumple', 'bolsa-transparente', 'caja-dulcera', 'carrito-personalizado'] },
+      { id: 'maestro', c1: '#A055C9', c2: '#6F2E9A', deco: 'fa-apple-whole', img: 'VASO 770 ML 2.png', name: 'Día del Maestro', icon: 'fa-chalkboard-user', color: '#783C99',
+        products: ['tazas', 'vaso-770-std', 'vaso-770-mono', 'llaveros-rect', 'joyero-cuadrado', 'stickers-hoja'] },
+      { id: 'muertos', c1: '#FA8A5F', c2: '#E2573A', deco: 'fa-ghost', img: 'Bolsa transparente 1.png', name: 'Halloween y Día de Muertos', icon: 'fa-skull', color: '#F47E57',
+        products: ['caja-dulcera', 'bolsa-transparente', 'stickers-hoja', 'tatuajes', 'camisa-blanca', 'tazas'] },
+      { id: 'negocios', c1: '#5B2E7E', c2: '#2E1745', deco: 'fa-handshake', img: 'TARJ PRESEN 1.png', name: 'Empresas', icon: 'fa-store', color: '#2B1838',
+        products: ['tarjetas-presentacion', 'stickers-hoja', 'lonas', 'dtf-textil', 'dtf-uv', 'vinil-corte-colores', 'camisa-blanca', 'gorras', 'vaso-termico-grande', 'tazas'] }
+    ];
+    let activeEvent = null;
+
+    // ---------- COLORES DISPONIBLES PARA TERMOS Y VASOS ----------
+    const CUP_COLORS = [
+      { name: 'Azul marino', hex: '#0A196A' }, { name: 'Rosa', hex: '#F974AD' },
+      { name: 'Naranja', hex: '#F09602' }, { name: 'Gris', hex: '#8B8B8B' },
+      { name: 'Ciruela', hex: '#944280' }, { name: 'Terracota', hex: '#C53904' },
+      { name: 'Verde olivo', hex: '#637150' }, { name: 'Verde', hex: '#68A935' },
+      { name: 'Azul noche', hex: '#0B1D35' }, { name: 'Amarillo', hex: '#E8D44F' },
+      { name: 'Lila', hex: '#89569B' }, { name: 'Rojo', hex: '#A30303' },
+      { name: 'Negro', hex: '#010101' }, { name: 'Rosa pastel', hex: '#E7A9B8' },
+      { name: 'Turquesa', hex: '#60DADF' }, { name: 'Blanco', hex: '#F6F6F6' }
+    ];
+    let selectedCupColor = null;
+
     const CATEGORIES = ['Todos', 'Regalos & Termos', 'Eventos y Fiestas', 'Ropa y Textiles', 'Impresión y Papelería', 'Materiales por Metro'];
 
     // ---------- ESTADO ----------
@@ -716,11 +801,11 @@
     function goCatalog(category) {
       switchView('catalog');
       setNav('catalog-grid');
-      if (category) { activeCategory = category; showOnlyFavs = false; searchTerm = ''; renderCatalog(); }
+      if (category) { activeCategory = category; activeEvent = null; showOnlyFavs = false; searchTerm = ''; renderCatalog(); }
       requestAnimationFrame(() => document.getElementById('catalog-view').scrollIntoView());
     }
     function goContact() { if (!document.getElementById('product-detail-view').classList.contains('hidden')) switchView('catalog'); document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' }); }
-    function resetFilters() { activeCategory = 'Todos'; searchTerm = ''; showOnlyFavs = false; document.querySelectorAll('input[type=search]').forEach(i => i.value = ''); renderCatalog(); }
+    function resetFilters() { activeCategory = 'Todos'; activeEvent = null; searchTerm = ''; showOnlyFavs = false; document.querySelectorAll('input[type=search]').forEach(i => i.value = ''); renderCatalog(); }
     function toggleMobileSearch() {
       const box = document.getElementById('mobile-search');
       box.classList.toggle('hidden');
@@ -728,7 +813,7 @@
     }
     function onSearch(v) {
       searchTerm = v.trim().toLowerCase();
-      showOnlyFavs = false; activeCategory = 'Todos';
+      showOnlyFavs = false; activeCategory = 'Todos'; activeEvent = null;
       if (document.getElementById('catalog-view').classList.contains('hidden')) switchView('catalog');
       renderCatalog();
       document.getElementById('catalog-view').scrollIntoView();
@@ -759,12 +844,12 @@
         const b = document.createElement('button');
         const count = cat === 'Todos' ? productsDatabase.length : productsDatabase.filter(p => p.category === cat).length;
         b.className = 'chip shrink-0 h-10 px-4 rounded-full bg-white border border-line text-sm font-semibold';
-        const on = cat === activeCategory && !showOnlyFavs && !searchTerm;
+        const on = cat === activeCategory && !showOnlyFavs && !searchTerm && !activeEvent;
         b.setAttribute('aria-pressed', on);
         if (on) { b.style.background = CAT_STYLE[cat].solid; b.style.borderColor = CAT_STYLE[cat].solid; b.style.color = cat === 'Materiales por Metro' ? '#2B1838' : '#fff'; }
         else { b.style.background = CAT_STYLE[cat].bg; b.style.borderColor = 'transparent'; b.style.color = CAT_STYLE[cat].fg; }
         b.innerHTML = `${CAT_LABEL[cat]} <span class="opacity-60 font-normal">${count}</span>`;
-        b.onclick = () => { activeCategory = cat; showOnlyFavs = false; searchTerm = ''; document.querySelectorAll('input[type=search]').forEach(i => i.value = ''); renderCatalog(); };
+        b.onclick = () => { activeCategory = cat; activeEvent = null; showOnlyFavs = false; searchTerm = ''; document.querySelectorAll('input[type=search]').forEach(i => i.value = ''); renderCatalog(); };
         box.appendChild(b);
       });
     }
@@ -785,6 +870,7 @@
         </div>
         <div class="px-3 pb-3 pt-2.5 flex-1 flex flex-col">
           <h3 class="text-sm font-bold leading-snug line-clamp-2 text-ink">${product.name}</h3>
+          ${product.colors ? `<div class="flex items-center gap-1 mt-1.5" aria-label="${CUP_COLORS.length} colores disponibles">${CUP_COLORS.slice(0, 7).map(c => `<span class="w-3.5 h-3.5 rounded-full border border-black/10" style="background:${c.hex}"></span>`).join('')}<span class="text-[11px] font-semibold text-soft ml-0.5">+${CUP_COLORS.length - 7}</span></div>` : ''}
           <p class="mt-auto pt-1.5 text-[13px] font-extrabold" style="color:${st.fg}">${product.price.replace(' MXN', '')}</p>
         </div>`;
       const fav = document.createElement('button');
@@ -801,17 +887,46 @@
       const grid = document.getElementById('products-grid');
       grid.innerHTML = '';
       let list = productsDatabase;
+      const ev = EVENTS.find(e => e.id === activeEvent);
       if (showOnlyFavs) list = list.filter(p => favorites.includes(p.id));
+      else if (ev) list = ev.products.map(id => productsDatabase.find(p => p.id === id)).filter(Boolean);
       else if (activeCategory !== 'Todos') list = list.filter(p => p.category === activeCategory);
       if (searchTerm) list = list.filter(p => norm(p.name + ' ' + p.category + ' ' + p.description).includes(norm(searchTerm)));
 
-      document.getElementById('catalog-title').textContent = showOnlyFavs ? 'Tus favoritos' : searchTerm ? `Resultados para “${searchTerm}”` : (activeCategory === 'Todos' ? 'Catálogo' : CAT_LABEL[activeCategory]);
+      document.getElementById('catalog-title').textContent = showOnlyFavs ? 'Tus favoritos' : searchTerm ? `Resultados para “${searchTerm}”` : ev ? ev.name : (activeCategory === 'Todos' ? 'Catálogo' : CAT_LABEL[activeCategory]);
+      const pill = document.getElementById('event-pill');
+      pill.classList.toggle('hidden', !ev || showOnlyFavs || !!searchTerm);
+      pill.innerHTML = ev ? `<button onclick="clearEvent()" class="inline-flex items-center gap-2 h-10 pl-2 pr-4 rounded-full text-white text-sm font-semibold" style="background:${ev.color}"><span class="w-7 h-7 rounded-full bg-white/25 grid place-items-center"><i class="fas ${ev.icon} text-xs"></i></span>${ev.name}<i class="fas fa-xmark ml-1 opacity-80"></i><span class="sr-only">Quitar filtro</span></button>` : '';
       document.getElementById('catalog-subtitle').textContent = `${list.length} producto${list.length === 1 ? '' : 's'}. Toca uno para personalizarlo.`;
       document.getElementById('catalog-empty').classList.toggle('hidden', list.length > 0);
       document.getElementById('catalog-empty-text').textContent = showOnlyFavs ? 'Aún no guardas favoritos. Toca el corazón de un producto para guardarlo aquí.' : 'Ningún producto coincide con tu búsqueda. Prueba con otra palabra.';
       list.forEach(p => grid.appendChild(productCard(p)));
     }
     window.renderCatalog = renderCatalog;
+
+    function renderEvents() {
+      const box = document.getElementById('event-tiles');
+      box.innerHTML = EVENTS.map(e => {
+        const n = e.products.filter(id => productsDatabase.some(p => p.id === id)).length;
+        return `<button onclick="showEvent('${e.id}')" class="occ-card" style="--c1:${e.c1};--c2:${e.c2}" aria-label="${e.name}: ver ${n} productos">
+          <span class="occ-body">
+            <span class="occ-badge" aria-hidden="true"><i class="fas ${e.icon}"></i></span>
+            <span class="occ-title">${e.name}</span>
+            <span class="occ-count">${n} producto${n === 1 ? '' : 's'}</span>
+            <i class="fas ${e.deco} occ-deco" aria-hidden="true"></i>
+          </span>
+          <span class="occ-photo"><img src="${IMG(e.img)}" alt="" loading="lazy" onerror="${imgFallback}"></span>
+        </button>`;
+      }).join('');
+    }
+    function showEvent(id) {
+      activeEvent = id; activeCategory = 'Todos'; showOnlyFavs = false; searchTerm = '';
+      document.querySelectorAll('input[type=search]').forEach(i => i.value = '');
+      switchView('catalog'); setNav('catalog-grid'); renderCatalog();
+      requestAnimationFrame(() => document.getElementById('catalog-view').scrollIntoView());
+    }
+    function clearEvent() { activeEvent = null; renderCatalog(); }
+    Object.assign(window, { showEvent, clearEvent });
 
     function filterCatalogCategory(cat) {
       if (cat === 'etiquetas') { openStickerQuoter(); return; }
@@ -835,7 +950,7 @@
       c.classList.toggle('hidden', !favorites.length);
       if (currentProduct) document.getElementById('detail-fav-btn').innerHTML = `<i class="${favorites.includes(currentProduct.id) ? 'fas' : 'far'} fa-heart"></i>`;
     }
-    function showFavorites() { switchView('catalog'); showOnlyFavs = true; renderCatalog(); setNav('catalog-grid'); requestAnimationFrame(() => document.getElementById('catalog-view').scrollIntoView()); }
+    function showFavorites() { switchView('catalog'); showOnlyFavs = true; activeEvent = null; renderCatalog(); setNav('catalog-grid'); requestAnimationFrame(() => document.getElementById('catalog-view').scrollIntoView()); }
     Object.assign(window, { toggleFavorite, showFavorites });
 
     // ---------- FICHA DE PRODUCTO ----------
@@ -879,7 +994,10 @@
       quoteBtn.classList.toggle('hidden', !product.quote);
       quoteBtn.querySelector('span').textContent = product.quote === 'sheet' ? 'Personalizar y cotizar' : 'Calcular precio por metro';
 
-      document.getElementById('whatsapp-btn').href = waLink(`Hola PERSONALIZA STUDIO, me interesa el producto: ${product.name}`);
+      selectedCupColor = null;
+      document.getElementById('detail-colors-box').classList.toggle('hidden', !product.colors);
+      if (product.colors) renderCupColors();
+      updateDetailWA();
       document.getElementById('main-product-image').alt = product.name;
 
       // Galería móvil (deslizable) + miniaturas numeradas
@@ -915,6 +1033,32 @@
         document.querySelectorAll('#mobile-thumbs .thumb-btn').forEach(b => { const on = +b.dataset.i === i; b.classList.toggle('border-fucsia', on); b.classList.toggle('border-line', !on); });
       }
     }, { passive: true });
+
+    function renderCupColors() {
+      const box = document.getElementById('detail-colors');
+      box.innerHTML = '';
+      CUP_COLORS.forEach(c => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'cup-swatch';
+        b.style.background = c.hex;
+        if (['Blanco', 'Amarillo', 'Rosa pastel', 'Turquesa'].includes(c.name)) b.style.setProperty('--check', '#2B1838');
+        b.setAttribute('role', 'radio');
+        b.setAttribute('aria-checked', selectedCupColor === c.name);
+        b.setAttribute('aria-label', c.name);
+        b.title = c.name;
+        b.onclick = () => { selectedCupColor = c.name; renderCupColors(); updateDetailWA(); };
+        box.appendChild(b);
+      });
+      const label = document.getElementById('detail-color-name');
+      label.textContent = selectedCupColor || 'elige uno';
+      label.classList.toggle('text-soft', !selectedCupColor);
+      label.classList.toggle('text-fucsia', !!selectedCupColor);
+    }
+    function updateDetailWA() {
+      const p = currentProduct; if (!p) return;
+      document.getElementById('whatsapp-btn').href = waLink(`Hola PERSONALIZA STUDIO, me interesa el producto: ${p.name}${selectedCupColor ? ` en color ${selectedCupColor}` : ''}`);
+    }
 
     function renderRelated() {
       const grid = document.getElementById('related-grid');
@@ -965,7 +1109,12 @@
       const phrase = document.getElementById('detail-phrase').value.trim();
       const variant = document.getElementById('detail-variant').value;
       const file = document.getElementById('detail-file').files[0];
-      const details = [variant, phrase && `“${phrase}”`, file && `diseño: ${file.name}`].filter(Boolean).join(', ');
+      if (p.colors && !selectedCupColor) {
+        toast('Elige el color de tu vaso');
+        document.getElementById('detail-colors-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      const details = [p.colors && `color ${selectedCupColor}`, variant, phrase && `“${phrase}”`, file && `diseño: ${file.name}`].filter(Boolean).join(', ');
       const vi = (p.variants || []).indexOf(variant);
       const unit = (p.variantPrices && vi >= 0) ? p.variantPrices[vi] : p.basePrice;
       addToCart({ name: p.name, details, qty, unit, total: unit != null ? unit * qty : null });
@@ -1394,6 +1543,7 @@
       });
     }
     buildMarquee();
+    renderEvents();
     document.getElementById('hero-count').textContent = `Ver los ${productsDatabase.length} productos`;
     renderCatalog();
     renderCart();
