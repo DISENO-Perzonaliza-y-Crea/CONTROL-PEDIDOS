@@ -105,6 +105,12 @@
     .tab[aria-current="page"] .tab-dot { opacity: 1; }
     .navlink[aria-current="page"] { color: #2B1838; box-shadow: inset 0 -2px 0 #E62C91; }
 
+    .finish { position: relative; display: block; cursor: pointer; }
+    .finish input { position: absolute; opacity: 0; pointer-events: none; }
+    .finish span { display: flex; flex-direction: column; justify-content: center; min-height: 52px; padding: 8px 12px; border-radius: 14px; border: 2px solid #E9E3F0; background: #F8F6FB; font-weight: 600; font-size: 14px; line-height: 1.2; }
+    .finish small { font-weight: 500; font-size: 12px; color: #6E6178; margin-top: 2px; }
+    .finish input:checked + span { border-color: #E62C91; background: #FFE3F1; }
+    .finish input:focus-visible + span { outline: 3px solid #16B6C7; outline-offset: 2px; }
     .switch { appearance: none; width: 42px; height: 24px; border-radius: 999px; background: #E9E3F0; position: relative; transition: background .2s; flex-shrink: 0; cursor: pointer; }
     .switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .2s; }
     .switch:checked { background: #783C99; }
@@ -132,7 +138,6 @@
         <a href="#" data-nav="catalog" onclick="goHome(); return false;" class="navlink py-5 hover:text-ink">Inicio</a>
         <a href="#" data-nav="catalog-grid" onclick="goCatalog(); return false;" class="navlink py-5 hover:text-ink">Catálogo</a>
         <a href="#" data-nav="materiales" onclick="switchView('materiales'); return false;" class="navlink py-5 hover:text-ink">DTF y vinil por metro</a>
-        <a href="#" data-nav="labels-calculator" onclick="switchView('labels-calculator'); return false;" class="navlink py-5 hover:text-ink">Etiquetas por hoja</a>
         <a href="#contacto" onclick="goContact(); return false;" class="navlink py-5 hover:text-ink">Contacto</a>
       </nav>
 
@@ -175,7 +180,7 @@
         <h1 class="font-display font-semibold text-[44px] leading-[.98] sm:text-6xl md:text-7xl max-w-[14ch]">Tu nombre, tu fiesta, tu idea. Nosotros lo creamos.</h1>
         <p class="mt-4 text-[17px] leading-relaxed text-white/85 max-w-[38ch]">Vasos, tazas, ropa, recuerdos, etiquetas y DTF personalizados a tu gusto.</p>
         <div class="mt-6 grid grid-cols-1 sm:flex gap-3">
-          <button onclick="goCatalog()" class="h-14 px-7 rounded-2xl bg-white text-plum font-bold text-base active:scale-[.98] transition">Ver los 25 productos</button>
+          <button onclick="goCatalog()" class="h-14 px-7 rounded-2xl bg-white text-plum font-bold text-base active:scale-[.98] transition"><span id="hero-count">Ver todos los productos</span></button>
           <a href="#" data-wa="Hola PERSONALIZA STUDIO 👋 Quiero cotizar un producto personalizado. ¿Me pueden ayudar con precios y tiempos de entrega?" target="_blank" rel="noopener" class="h-14 px-7 rounded-2xl bg-[#1FAF5A] text-white font-bold text-base grid place-items-center active:scale-[.98] transition"><span><i class="fab fa-whatsapp mr-2 text-lg align-[-2px]"></i>Cotizar por WhatsApp</span></a>
         </div>
       </div>
@@ -212,9 +217,9 @@
             <span class="tile-icon" aria-hidden="true"><i class="fas fa-ruler-combined"></i></span>
             <span class="tile-text"><b>DTF y vinil por metro</b><small>Calcula tu precio</small></span>
             <img data-img="DTF UV 1.png" alt="" class="tile-img"></button>
-          <button onclick="switchView('labels-calculator')" class="tile bg-ink text-white">
+          <button onclick="openProductDetail('stickers-hoja')" class="tile bg-ink text-white">
             <span class="tile-icon" aria-hidden="true"><i class="fas fa-tags"></i></span>
-            <span class="tile-text"><b>Etiquetas por hoja</b><small>Calcula tu precio</small></span>
+            <span class="tile-text"><b>Stickers y etiquetas</b><small>Cotiza por hoja tabloide</small></span>
             <img data-img="STICKERS MEDIDAS.png" alt="" class="tile-img"></button>
         </div>
       </div>
@@ -331,97 +336,6 @@
       </div>
     </div>
 
-    <!-- ========== ETIQUETAS POR HOJA 33×48 ========== -->
-    <div id="labels-calculator-view" class="hidden">
-      <div class="max-w-6xl mx-auto px-4 pt-6 pb-36 md:pb-12">
-        <button onclick="goHome()" class="text-sm text-soft font-semibold mb-3"><i class="fas fa-chevron-left mr-1.5"></i>Inicio</button>
-        <div class="relative overflow-hidden rounded-[28px] bg-fucsia text-white p-5 md:p-8 pr-32 md:pr-60 min-h-[150px]">
-          <h2 class="font-display font-semibold text-3xl md:text-5xl leading-[1.02] relative z-10">Etiquetas y stickers por hoja</h2>
-          <p class="mt-2 max-w-[44ch] text-white/85 relative z-10">Hoja de 33 × 48 cm con área de impresión de 32 × 47 cm y 0.4 cm entre etiquetas.</p>
-          <img data-img="STICKERS MEDIDAS.png" alt="" class="absolute -right-6 -bottom-8 w-36 md:w-60 aspect-square object-cover rounded-full border-[5px] border-white rotate-[8deg]">
-        </div>
-
-        <div class="mt-6 grid lg:grid-cols-12 gap-6">
-          <div class="lg:col-span-7 space-y-5">
-            <fieldset class="bg-white rounded-3xl border border-line p-4 sm:p-5">
-              <legend class="font-bold px-1">1. Material de la hoja</legend>
-              <select id="sheet-material-select" onchange="calculateSheetNesting()" class="mt-1 w-full h-12 px-4 rounded-xl bg-paper border border-line text-base font-semibold focus:outline-none focus:border-plum">
-                <option value="couche">Papel couché, $35 por hoja</option>
-                <option value="opalina">Papel opalina, $35 por hoja</option>
-                <option value="adhesivo" selected>Papel adhesivo, $35 por hoja</option>
-                <option value="vinil-blanco">Vinil blanco, $55 por hoja</option>
-                <option value="vinil-transparente">Vinil transparente, $55 por hoja</option>
-              </select>
-            </fieldset>
-
-            <fieldset class="bg-white rounded-3xl border border-line p-4 sm:p-5">
-              <legend class="font-bold px-1">2. Medida y cantidad</legend>
-              <div class="grid grid-cols-2 gap-3 mt-1">
-                <label class="block"><span class="text-sm text-soft">Ancho (cm)</span>
-                  <input type="number" inputmode="decimal" id="sheet-width" value="5" min="0.5" step="0.1" oninput="calculateSheetNesting()" class="mt-1 w-full h-12 px-4 rounded-xl bg-paper border border-line text-lg font-semibold focus:outline-none focus:border-plum"></label>
-                <label class="block"><span class="text-sm text-soft">Alto (cm)</span>
-                  <input type="number" inputmode="decimal" id="sheet-height" value="5" min="0.5" step="0.1" oninput="calculateSheetNesting()" class="mt-1 w-full h-12 px-4 rounded-xl bg-paper border border-line text-lg font-semibold focus:outline-none focus:border-plum"></label>
-              </div>
-              <label class="block mt-3"><span class="text-sm text-soft">Cantidad de etiquetas</span>
-                <div class="mt-1 flex items-center gap-2">
-                  <button type="button" onclick="stepInput('sheet-qty',-10)" class="w-12 h-12 rounded-xl bg-paper border border-line text-sm font-semibold" aria-label="Diez menos">−10</button>
-                  <input type="number" inputmode="numeric" id="sheet-qty" value="100" min="1" step="1" oninput="calculateSheetNesting()" class="flex-1 min-w-0 h-12 px-4 rounded-xl bg-paper border border-line text-lg font-semibold text-center focus:outline-none focus:border-plum">
-                  <button type="button" onclick="stepInput('sheet-qty',10)" class="w-12 h-12 rounded-xl bg-paper border border-line text-sm font-semibold" aria-label="Diez más">+10</button>
-                </div>
-              </label>
-              <p id="sheet-hint" class="hidden mt-3 text-sm bg-[#FFF7E0] border border-[#F0DFA6] text-[#6B5414] rounded-xl px-3 py-2.5"></p>
-            </fieldset>
-
-            <fieldset class="bg-white rounded-3xl border border-line p-4 sm:p-5">
-              <legend class="font-bold px-1">3. Acabados (opcional)</legend>
-              <div class="divide-y divide-line">
-                <div class="py-3">
-                  <label class="flex items-center justify-between gap-3 cursor-pointer"><span>Laminado <span class="text-soft text-sm">+ $15 por hoja</span></span><input type="checkbox" id="extra-laminado" onchange="calculateSheetNesting()" class="switch"></label>
-                  <div id="laminado-options" class="hidden mt-3">
-                    <select id="extra-laminado-tipo" onchange="calculateSheetNesting()" class="w-full h-12 px-4 rounded-xl bg-paper border border-line text-base focus:outline-none focus:border-plum">
-                      <option value="brillante">Brillante estándar</option>
-                      <option value="mate">Mate soft touch</option>
-                      <option value="holografico">Holográfico (+ $5 por hoja)</option>
-                    </select>
-                  </div>
-                </div>
-                <label class="flex items-center justify-between gap-3 py-3 cursor-pointer"><span>Suaje de corte 30 × 40 cm <span class="text-soft text-sm">+ $20 por hoja</span></span><input type="checkbox" id="extra-suaje" onchange="calculateSheetNesting()" class="switch"></label>
-              </div>
-            </fieldset>
-          </div>
-
-          <div class="lg:col-span-5 space-y-5 lg:sticky lg:top-24 self-start">
-            <div class="bg-white rounded-3xl border border-line p-4 sm:p-5">
-              <p class="text-sm text-soft">Total estimado</p>
-              <p class="font-display font-semibold text-4xl mt-1" id="sheet-total-price">$0.00 MXN</p>
-              <p class="text-sm text-soft mt-1"><span id="sheet-unit-cost">$0.00</span> por etiqueta aprox.</p>
-              <dl class="mt-4 text-sm grid grid-cols-2 gap-y-2 gap-x-3">
-                <dt class="text-soft">Acomodo por hoja</dt><dd id="sheet-layout" class="text-right font-semibold">—</dd>
-                <dt class="text-soft">Etiquetas por hoja</dt><dd id="sheet-per-page" class="text-right font-semibold text-plum">0</dd>
-                <dt class="text-soft">Hojas necesarias</dt><dd id="sheet-total-pages" class="text-right font-semibold text-plum">0</dd>
-                <dt class="text-soft">Material</dt><dd id="sheet-base-cost" class="text-right">$0.00</dd>
-                <dt class="text-soft">Acabados</dt><dd id="sheet-extras-cost" class="text-right">$0.00</dd>
-                <dt class="text-soft">Separación</dt><dd class="text-right">0.4 cm</dd>
-              </dl>
-            </div>
-            <details class="bg-white rounded-3xl border border-line p-4 sm:p-5 group" open>
-              <summary class="font-bold cursor-pointer list-none flex justify-between items-center">Así queda tu hoja <i class="fas fa-chevron-down text-soft text-sm group-open:rotate-180 transition-transform"></i></summary>
-              <p class="text-xs text-soft mt-1">La línea punteada es el área de impresión de 32 × 47 cm.</p>
-              <div class="mt-3 flex justify-center"><canvas id="sheetCanvas" width="330" height="480" class="max-w-full"></canvas></div>
-            </details>
-          </div>
-        </div>
-      </div>
-
-      <div class="actionbar fixed inset-x-0 z-30 bg-white border-t border-line md:static md:border-0 md:bg-transparent">
-        <div class="max-w-6xl mx-auto px-4 py-3 md:pb-10 md:pt-0 flex items-center gap-2">
-          <div class="md:hidden mr-auto leading-tight min-w-0"><p class="text-xs text-soft">Total</p><p class="font-display font-semibold text-lg" id="sheet-total-bar">$0.00</p></div>
-          <button onclick="addSheetQuoteToCart()" class="h-12 w-12 shrink-0 md:w-auto md:px-6 rounded-xl border-2 border-ink font-bold grid place-items-center" aria-label="Agregar al carrito"><span><i class="fas fa-cart-plus"></i><span class="hidden md:inline ml-2">Agregar al carrito</span></span></button>
-          <button onclick="sendSheetQuoteWA()" class="h-12 px-4 md:px-7 rounded-xl bg-[#1FAF5A] text-white font-bold text-[15px] whitespace-nowrap flex items-center gap-2 shrink-0"><i class="fab fa-whatsapp text-lg"></i> Pedir por WhatsApp</button>
-        </div>
-      </div>
-    </div>
-
     <!-- ========== FICHA DE PRODUCTO ========== -->
     <div id="product-detail-view" class="hidden">
       <div class="max-w-6xl mx-auto md:px-4 md:pt-6 pb-40 md:pb-12">
@@ -457,7 +371,7 @@
               <h2 class="font-bold">Personalízalo</h2>
               <label class="block"><span class="text-sm text-soft">Nombre o frase</span>
                 <input id="detail-phrase" type="text" placeholder="Ej. Mis XV Valeria, 12 de diciembre" class="mt-1 w-full h-12 px-4 rounded-xl bg-paper border border-line text-base focus:outline-none focus:border-plum"></label>
-              <div class="grid grid-cols-2 gap-3">
+              <div id="detail-variant-row" class="grid grid-cols-2 gap-3">
                 <label class="block"><span class="text-sm text-soft">Opción</span>
                   <select id="detail-variant" class="mt-1 w-full h-12 px-3 rounded-xl bg-paper border border-line text-base focus:outline-none focus:border-plum"></select></label>
                 <div><span class="text-sm text-soft">Cantidad</span>
@@ -473,12 +387,104 @@
               <button id="detail-quote-btn" onclick="quoteCurrentProduct()" class="w-full h-12 rounded-xl bg-paper border border-line font-semibold flex items-center justify-center gap-2"><i class="fas fa-calculator text-plum"></i> <span>Calcular precio exacto</span></button>
             </div>
 
-            <div id="detail-actions" class="actionbar fixed inset-x-0 z-30 bg-white border-t border-line px-4 py-3 md:static md:p-0 md:border-0 md:bg-transparent flex gap-2">
+            <div id="detail-actions" class="actionbar fixed inset-x-0 z-30 bg-white border-t border-line px-4 py-3 md:static md:p-0 md:border-0 md:bg-transparent flex items-center gap-2">
+              <div id="detail-total-box" class="hidden leading-tight mr-1 shrink-0"><p class="text-xs text-soft">Total</p><p class="font-display font-semibold text-lg" id="sheet-total-bar">$0.00</p></div>
               <button onclick="addDetailToCart()" class="flex-1 h-12 rounded-xl bg-fucsia text-white font-bold flex items-center justify-center gap-2"><i class="fas fa-bag-shopping"></i> Agregar al carrito</button>
               <a id="whatsapp-btn" href="#" target="_blank" rel="noopener" class="h-12 w-12 md:w-auto md:px-5 rounded-xl bg-[#1FAF5A] text-white font-bold flex items-center justify-center gap-2" aria-label="Preguntar por WhatsApp"><i class="fab fa-whatsapp text-xl"></i><span class="hidden md:inline">Preguntar</span></a>
             </div>
           </div>
         </div>
+
+        <section id="sticker-quoter" class="hidden px-4 md:px-0 mt-8 scroll-mt-20">
+          <h2 class="font-display font-semibold text-2xl md:text-3xl">Cotiza tus stickers</h2>
+          <p class="text-soft mt-1 max-w-[60ch]">Hoja tabloide de 33 × 48 cm, área imprimible de 32 × 47 cm y 0.4 cm fijos entre stickers.</p>
+        <div class="mt-4 grid lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-7 space-y-5">
+            <fieldset class="bg-white rounded-3xl border border-line p-4 sm:p-5">
+              <legend class="font-bold px-1">1. Material</legend>
+              <select id="sheet-material-select" onchange="calculateSheetNesting()" class="mt-1 w-full h-12 px-4 rounded-xl bg-paper border border-line text-base font-semibold focus:outline-none focus:border-plum">
+                <option value="couche">Papel couché, $35 por hoja</option>
+                <option value="opalina">Papel opalina, $35 por hoja</option>
+                <option value="adhesivo" selected>Papel adhesivo, $35 por hoja</option>
+                <option value="vinil-blanco">Vinil blanco, $55 por hoja</option>
+                <option value="vinil-transparente">Vinil transparente, $55 por hoja</option>
+              </select>
+            </fieldset>
+
+            <fieldset class="bg-white rounded-3xl border border-line p-4 sm:p-5">
+              <legend class="font-bold px-1">2. Medida y cantidad</legend>
+              <div class="grid grid-cols-2 gap-3 mt-1">
+                <label class="block"><span class="text-sm text-soft">Ancho (cm)</span>
+                  <input type="number" inputmode="decimal" id="sheet-width" value="5" min="0.5" step="0.1" oninput="calculateSheetNesting()" class="mt-1 w-full h-12 px-4 rounded-xl bg-paper border border-line text-lg font-semibold focus:outline-none focus:border-plum"></label>
+                <label class="block"><span class="text-sm text-soft">Alto (cm)</span>
+                  <input type="number" inputmode="decimal" id="sheet-height" value="5" min="0.5" step="0.1" oninput="calculateSheetNesting()" class="mt-1 w-full h-12 px-4 rounded-xl bg-paper border border-line text-lg font-semibold focus:outline-none focus:border-plum"></label>
+              </div>
+              <label class="block mt-3"><span class="text-sm text-soft">Cantidad de stickers</span>
+                <div class="mt-1 flex items-center gap-2">
+                  <button type="button" onclick="stepInput('sheet-qty',-10)" class="w-12 h-12 rounded-xl bg-paper border border-line text-sm font-semibold" aria-label="Diez menos">−10</button>
+                  <input type="number" inputmode="numeric" id="sheet-qty" value="100" min="1" step="1" oninput="calculateSheetNesting()" class="flex-1 min-w-0 h-12 px-4 rounded-xl bg-paper border border-line text-lg font-semibold text-center focus:outline-none focus:border-plum">
+                  <button type="button" onclick="stepInput('sheet-qty',10)" class="w-12 h-12 rounded-xl bg-paper border border-line text-sm font-semibold" aria-label="Diez más">+10</button>
+                </div>
+              </label>
+              <p id="sheet-hint" class="hidden mt-3 text-sm bg-[#FFF7E0] border border-[#F0DFA6] text-[#6B5414] rounded-xl px-3 py-2.5"></p>
+            </fieldset>
+
+            <fieldset class="bg-white rounded-3xl border border-line p-4 sm:p-5">
+              <legend class="font-bold px-1">3. Acabados</legend>
+              <p class="text-sm text-soft">Cada acabado se cobra por hoja y se suma al precio del material.</p>
+              <div class="mt-3">
+                <p class="text-sm font-semibold mb-2">Laminado</p>
+                <div class="grid grid-cols-1 min-[420px]:grid-cols-3 gap-2">
+                  <label class="finish"><input type="radio" name="sk-laminado" value="none" onchange="calculateSheetNesting()" checked><span>Sin laminado<small>+ $0</small></span></label>
+                  <label class="finish"><input type="radio" name="sk-laminado" value="one" onchange="calculateSheetNesting()"><span>Un lado<small>+ $11 por hoja</small></span></label>
+                  <label class="finish"><input type="radio" name="sk-laminado" value="both" onchange="calculateSheetNesting()"><span>Ambos lados<small>+ $22 por hoja</small></span></label>
+                </div>
+              </div>
+              <div class="mt-3">
+                <p class="text-sm font-semibold mb-2">Suaje</p>
+                <div class="grid grid-cols-1 min-[420px]:grid-cols-3 gap-2">
+                  <label class="finish"><input type="radio" name="sk-suaje" value="none" onchange="calculateSheetNesting()" checked><span>Sin suaje<small>+ $0</small></span></label>
+                  <label class="finish"><input type="radio" name="sk-suaje" value="half" onchange="calculateSheetNesting()"><span>Medio corte<small>+ $35 por hoja</small></span></label>
+                  <label class="finish"><input type="radio" name="sk-suaje" value="full" onchange="calculateSheetNesting()"><span>Corte completo<small>+ $60 por hoja</small></span></label>
+                </div>
+              </div>
+              <div class="mt-3">
+                <p class="text-sm font-semibold mb-2">Impresión por el reverso</p>
+                <div class="grid grid-cols-1 min-[420px]:grid-cols-3 gap-2">
+                  <label class="finish"><input type="radio" name="sk-reverso" value="none" onchange="calculateSheetNesting()" checked><span>Sin reverso<small>+ $0</small></span></label>
+                  <label class="finish"><input type="radio" name="sk-reverso" value="yes" onchange="calculateSheetNesting()"><span>Con reverso<small>+ $11 por hoja</small></span></label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="lg:col-span-5 space-y-5 lg:sticky lg:top-24 self-start">
+            <div class="bg-white rounded-3xl border border-line p-4 sm:p-5">
+              <p class="text-sm text-soft">Total estimado</p>
+              <p class="font-display font-semibold text-4xl mt-1" id="sheet-total-price">$0.00 MXN</p>
+              <p class="text-sm text-soft mt-1"><span id="sheet-unit-cost">$0.00</span> por sticker</p>
+              <dl class="mt-4 text-sm grid grid-cols-2 gap-y-2 gap-x-3">
+                <dt class="text-soft">Medida acomodada</dt><dd id="sheet-layout" class="text-right font-semibold">—</dd>
+                <dt class="text-soft">Stickers por fila</dt><dd id="sheet-cols" class="text-right font-semibold">0</dd>
+                <dt class="text-soft">Filas por hoja</dt><dd id="sheet-rows" class="text-right font-semibold">0</dd>
+                <dt class="text-soft">Stickers por hoja</dt><dd id="sheet-per-page" class="text-right font-semibold text-plum">0</dd>
+                <dt class="text-soft">Hojas necesarias</dt><dd id="sheet-total-pages" class="text-right font-semibold text-plum">0</dd>
+                <dt class="text-soft">Lugares libres en la última hoja</dt><dd id="sheet-free-slots" class="text-right">0</dd>
+                <dt class="text-soft">Espacio sobrante por hoja</dt><dd id="sheet-leftover" class="text-right">—</dd>
+                <dt class="text-soft">Material</dt><dd id="sheet-base-cost" class="text-right">$0.00</dd>
+                <dt class="text-soft">Acabados</dt><dd id="sheet-extras-cost" class="text-right">$0.00</dd>
+                <dt class="text-soft">Separación</dt><dd class="text-right">0.4 cm</dd>
+              </dl>
+              <p id="sheet-extras-detail" class="hidden mt-3 text-xs text-soft bg-paper rounded-xl px-3 py-2"></p>
+            </div>
+            <details class="bg-white rounded-3xl border border-line p-4 sm:p-5 group" open>
+              <summary class="font-bold cursor-pointer list-none flex justify-between items-center">Así queda tu hoja <i class="fas fa-chevron-down text-soft text-sm group-open:rotate-180 transition-transform"></i></summary>
+              <p class="text-xs text-soft mt-1">La línea punteada es el área de impresión de 32 × 47 cm.</p>
+              <div class="mt-3 flex justify-center"><canvas id="sheetCanvas" width="330" height="480" class="max-w-full"></canvas></div>
+            </details>
+          </div>
+        </div>
+        </section>
 
         <div class="px-4 md:px-0 mt-10">
           <h2 class="font-display font-bold text-2xl">También te puede gustar</h2>
@@ -514,11 +520,10 @@
   </footer>
 
   <!-- ===================== BARRA DE PESTAÑAS (móvil) ===================== -->
-  <nav class="tabbar md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-line grid grid-cols-5 text-[11px] font-semibold text-soft" aria-label="Navegación principal">
+  <nav class="tabbar md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-line grid grid-cols-4 text-[11px] font-semibold text-soft" aria-label="Navegación principal">
     <a href="#" data-nav="catalog" onclick="goHome(); return false;" class="tab flex flex-col items-center justify-center gap-1"><i class="fas fa-house text-lg"></i>Inicio<span class="tab-dot w-1 h-1 rounded-full bg-fucsia opacity-0"></span></a>
     <a href="#" data-nav="catalog-grid" onclick="goCatalog(); return false;" class="tab flex flex-col items-center justify-center gap-1"><i class="fas fa-table-cells-large text-lg"></i>Catálogo<span class="tab-dot w-1 h-1 rounded-full bg-fucsia opacity-0"></span></a>
     <a href="#" data-nav="materiales" onclick="switchView('materiales'); return false;" class="tab flex flex-col items-center justify-center gap-1"><i class="fas fa-ruler-horizontal text-lg"></i>Por metro<span class="tab-dot w-1 h-1 rounded-full bg-fucsia opacity-0"></span></a>
-    <a href="#" data-nav="labels-calculator" onclick="switchView('labels-calculator'); return false;" class="tab flex flex-col items-center justify-center gap-1"><i class="fas fa-note-sticky text-lg"></i>Etiquetas<span class="tab-dot w-1 h-1 rounded-full bg-fucsia opacity-0"></span></a>
     <a href="#" onclick="openCart(); return false;" class="tab relative flex flex-col items-center justify-center gap-1"><i class="fas fa-bag-shopping text-lg"></i>Carrito<span id="cart-count-tab" class="absolute top-2 left-1/2 ml-2 bg-fucsia text-white text-[10px] min-w-[16px] h-4 px-1 rounded-full grid place-items-center">0</span><span class="tab-dot w-1 h-1 opacity-0"></span></a>
   </nav>
 
@@ -574,10 +579,10 @@
     // ---------- BASE DE DATOS DE PRODUCTOS (sin cambios) ----------
     const DEFAULT_VARIANTS = ['Estándar', 'Especial / Premium'];
     const productsDatabase = [
-      { id: 'stickers-hoja', name: 'Stickers & Etiquetas Adhesivas (Hoja 33×48 cm)', category: 'Impresión y Papelería', price: 'Desde $35.00 MXN / hoja', basePrice: 35, quote: 'sheet',
-        description: 'Impresión en pliego de 33×48 cm con área útil de 32×47 cm. Papel adhesivo, couché, opalina, vinil blanco o transparente, con laminado y suaje opcionales.',
+      { id: 'stickers-hoja', name: 'Stickers', category: 'Impresión y Papelería', price: 'Desde $35.00 MXN / hoja', basePrice: 35, quote: 'sheet',
+        description: 'Stickers y etiquetas impresos en hoja tabloide de 33×48 cm (área imprimible de 32×47 cm). Elige el material: papel couché, papel opalina, papel adhesivo, vinil blanco o vinil transparente. Acabados opcionales: laminado, suaje e impresión por el reverso.',
         variants: ['Papel Adhesivo', 'Papel Couché', 'Papel Opalina', 'Vinil Blanco', 'Vinil Transparente'],
-        views: ['STICKERS MEDIDAS.png', 'LIB COLOREAR 1.png', 'TARJ PRESEN 1.png'] },
+        views: ['STICKERS MEDIDAS.png', 'STICKERS TRANS 1.jfif', 'STICKERS TRANS 2.jfif', 'STICKER 2.jfif', 'STICKER 3.jfif', 'STICKERS 4.jfif', 'LIB COLOREAR 1.png', 'TARJ PRESEN 1.png'] },
       { id: 'vinil-corte-colores', name: 'Vinil de Corte de Colores', category: 'Materiales por Metro', price: '$400.00 MXN / metro ($100 por ¼ m)', basePrice: 100, quote: 'vinil-corte',
         description: 'Vinil de corte de color sólido en rollo de 55 cm. Se vende por fracciones de ¼ m con 0.4 cm de separación entre diseños.',
         variants: ['Negro', 'Blanco', 'Rojo', 'Azul Rey', 'Dorado', 'Rose Gold', 'Verde Menta', 'Amarillo Neón', 'Plata'],
@@ -596,7 +601,7 @@
       { id: 'burbujas', name: 'Burbujas Personalizadas', category: 'Eventos y Fiestas', price: 'Desde $25.00 MXN', basePrice: 25,
         description: 'Frascos de burbujas decorados con etiquetas personalizadas de tu tema o personaje favorito.',
         views: ['BURBUJAS 1.png', 'BURBUJAS 2.png', 'BURBUJAS 3.png'] },
-      { id: 'burbujas-grandes', name: 'Burbujas Grandes / Gigantes', category: 'Eventos y Fiestas', price: 'Desde $40.00 MXN', basePrice: 40,
+      { id: 'burbujas-grandes', name: 'Burbujas Grandes', category: 'Eventos y Fiestas', price: 'Desde $40.00 MXN', basePrice: 40,
         description: 'Botes de burbujas de formato grande con varita y diseño temático personalizado.',
         views: ['BURBUJAS GRAN 1.png', 'burbujas grandes 2.png', 'BURBUJAS GRAN 3.png'] },
       { id: 'bolsa-transparente', name: 'Bolsas Transparentes Personalizadas', category: 'Eventos y Fiestas', price: 'Desde $50.00 MXN', basePrice: 50,
@@ -620,10 +625,8 @@
         views: ['VASO 770 ML 1.png', 'VASO 770 ML 2.png'] },
       { id: 'tazas', name: 'Tazas Personalizadas', category: 'Regalos & Termos', price: 'Desde $90.00 MXN', basePrice: 90,
         description: 'Tazas de cerámica de 11 oz impresas en sublimación a todo color con diseños exclusivos o corporativos.',
-        views: ['TAZAS 1.png', 'TAZAS 2.png', 'TAZAS 3.png'] },
-      { id: 'taza-magica', name: 'Taza Mágica / Especial', category: 'Regalos & Termos', price: 'Desde $130.00 MXN', basePrice: 130,
-        description: 'Taza especial con efecto térmico o acabado brillante para sorpresas inolvidables.',
-        views: ['TAZA M 1.png', 'TAZA M 2.png', 'TAZA M 3.png', 'TAZA M 4.png'] },
+        variants: ['Taza blanca 11 oz'],
+        views: ['TAZAS 1.png', 'TAZAS 2.png', 'TAZAS 3.png', 'TAZA M 1.png', 'TAZA M 2.png', 'TAZA M 3.png', 'TAZA M 4.png'] },
       { id: 'tatuajes', name: 'Tatuajes Temporales Personalizados', category: 'Eventos y Fiestas', price: 'Consultar precio', basePrice: null,
         description: 'Planillas de tatuajes temporales para la piel, seguros y divertidos, con tu diseño o temática.',
         views: ['TATUAJES 1.png', 'Tatuajes 2.png', 'TATU 3.png', 'TATU 4.png'] },
@@ -654,7 +657,22 @@
         views: ['LLAVERO RECT 1.png', 'LLAVERO RECT 2.png', 'LLAVERO RECT 3.png'] },
       { id: 'libros-colorear', name: 'Libros y Sets para Colorear', category: 'Impresión y Papelería', price: 'Desde $85.00 MXN', basePrice: 85,
         description: 'Libritos para colorear temáticos y personalizados, ideales como recuerdo de fiestas.',
-        views: ['LIB COLOREAR 1.png', 'LIB COLOREAR 2.png', 'LIB COLOREAR 3.png'] }
+        views: ['LIB COLOREAR 1.png', 'LIB COLOREAR 2.png', 'LIB COLOREAR 3.png'] },
+      { id: 'carrito-personalizado', name: 'Carrito Personalizado', category: 'Eventos y Fiestas', price: 'Consultar precio', basePrice: null,
+        description: 'Carrito de juguete en empaque personalizado con foto, nombre y fecha. Ideal como recuerdo de XV años, bautizos y cumpleaños.',
+        views: ['CARRITO PERS 1.png', 'CARRITO PERS 2.png', 'CARRITO PERS 3.png'] },
+      { id: 'cojin-xv', name: 'Cojín Personalizado XV Años', category: 'Regalos & Termos', price: 'Consultar precio', basePrice: null,
+        description: 'Cojín suave personalizado con nombre y diseño en vinil dorado o del color que elijas. Perfecto para XV años y regalos especiales.',
+        views: ['Cojín XV 1.png', 'Cojín XV 2.png', 'Cojín XV 3.png', 'Cojín XV 4.png'] },
+      { id: 'caja-dulcera', name: 'Caja Dulcera Personalizada', category: 'Eventos y Fiestas', price: 'Consultar precio', basePrice: null,
+        description: 'Caja dulcera con asa, decorada con el nombre y la temática de tu fiesta. Ideal para cumpleaños, bautizos y recuerdos.',
+        views: ['CAJA DULCE 1.png', 'CAJA DULCE 4.png', 'CAJA DULCE NAV 3.png'] },
+      { id: 'caja-dulcera-navidad', name: 'Caja Dulcera Navideña', category: 'Eventos y Fiestas', price: 'Consultar precio', basePrice: null,
+        description: 'Caja dulcera con asa y diseño navideño personalizado. Perfecta para posadas, intercambios y regalos de temporada.',
+        views: ['CAJA DULCE NAV 1.png', 'CAJA DULCE NAV 3.png', 'CAJA DULCE 4.png'] },
+      { id: 'kit-navideno-pintar', name: 'Kit Navideño para Pintar', category: 'Eventos y Fiestas', price: 'Consultar precio', basePrice: null,
+        description: 'Figura de madera para pintar con pinturas de colores y pincel, en bolsa con diseño navideño personalizado. Ideal para posadas, intercambios y actividades con niños.',
+        views: ['ESFERA PINTAR 1.png', 'ESFERA PINTAR 2.png', 'ESFERA PINTAR 3.png'] }
     ];
     const CATEGORIES = ['Todos', 'Regalos & Termos', 'Eventos y Fiestas', 'Ropa y Textiles', 'Impresión y Papelería', 'Materiales por Metro'];
 
@@ -681,14 +699,14 @@
       });
     }
     function switchView(viewName) {
-      const map = { 'catalog': 'catalog-view', 'materiales': 'materiales-view', 'labels-calculator': 'labels-calculator-view', 'detail': 'product-detail-view' };
+      if (viewName === 'labels-calculator') { openStickerQuoter(); return; }
+      const map = { 'catalog': 'catalog-view', 'materiales': 'materiales-view', 'detail': 'product-detail-view' };
       Object.values(map).forEach(id => document.getElementById(id).classList.add('hidden'));
       document.getElementById(map[viewName] || 'catalog-view').classList.remove('hidden');
       document.getElementById('home-sections').classList.toggle('hidden', viewName !== 'catalog');
       document.getElementById('contacto').classList.toggle('hidden', viewName === 'detail' && window.innerWidth < 768);
       if (viewName !== 'detail') setNav(viewName);
       if (viewName === 'materiales') calculateMeterNesting();
-      if (viewName === 'labels-calculator') calculateSheetNesting();
       window.scrollTo({ top: 0 });
     }
     window.switchView = switchView;
@@ -796,7 +814,7 @@
     window.renderCatalog = renderCatalog;
 
     function filterCatalogCategory(cat) {
-      if (cat === 'etiquetas') { switchView('labels-calculator'); return; }
+      if (cat === 'etiquetas') { openStickerQuoter(); return; }
       goCatalog(cat);
     }
     window.filterCatalogCategory = filterCatalogCategory;
@@ -853,9 +871,13 @@
       document.getElementById('qty-input').value = 1;
       document.getElementById('detail-variant').innerHTML = (product.variants || DEFAULT_VARIANTS).map(v => `<option>${v}</option>`).join('');
 
+      const isSheet = product.quote === 'sheet';
+      document.getElementById('sticker-quoter').classList.toggle('hidden', !isSheet);
+      document.getElementById('detail-variant-row').classList.toggle('hidden', isSheet);
+      document.getElementById('detail-total-box').classList.toggle('hidden', !isSheet);
       const quoteBtn = document.getElementById('detail-quote-btn');
       quoteBtn.classList.toggle('hidden', !product.quote);
-      quoteBtn.querySelector('span').textContent = product.quote === 'sheet' ? 'Calcular precio por hoja' : 'Calcular precio por metro';
+      quoteBtn.querySelector('span').textContent = product.quote === 'sheet' ? 'Personalizar y cotizar' : 'Calcular precio por metro';
 
       document.getElementById('whatsapp-btn').href = waLink(`Hola PERSONALIZA STUDIO, me interesa el producto: ${product.name}`);
       document.getElementById('main-product-image').alt = product.name;
@@ -879,8 +901,12 @@
       updateFavUI();
       renderRelated();
       switchView('detail');
+      if (isSheet) calculateSheetNesting();
     }
     window.openProductDetail = openProductDetail;
+    document.getElementById('whatsapp-btn').addEventListener('click', e => {
+      if (currentProduct && currentProduct.quote === 'sheet') { e.preventDefault(); sendSheetQuoteWA(); }
+    });
 
     document.getElementById('mobile-gallery').addEventListener('scroll', e => {
       const g = e.currentTarget;
@@ -916,10 +942,7 @@
     function quoteCurrentProduct() {
       if (!currentProduct || !currentProduct.quote) return;
       if (currentProduct.quote === 'sheet') {
-        const v = document.getElementById('detail-variant').value;
-        const map = { 'Papel Adhesivo': 'adhesivo', 'Papel Couché': 'couche', 'Papel Opalina': 'opalina', 'Vinil Blanco': 'vinil-blanco', 'Vinil Transparente': 'vinil-transparente' };
-        if (map[v]) document.getElementById('sheet-material-select').value = map[v];
-        switchView('labels-calculator');
+        document.getElementById('sticker-quoter').scrollIntoView({ behavior: 'smooth' });
       } else {
         if (currentProduct.quote === 'vinil-corte') {
           const c = VINYL_COLORS.find(c => c.name === document.getElementById('detail-variant').value);
@@ -928,14 +951,24 @@
         openMeterCalculator(currentProduct.quote);
       }
     }
+    // Cotizador de STICKERS dentro de su ficha
+    function openStickerQuoter() {
+      openProductDetail('stickers-hoja');
+      requestAnimationFrame(() => document.getElementById('sticker-quoter').scrollIntoView());
+    }
+    window.openStickerQuoter = openStickerQuoter;
+
     function addDetailToCart() {
       const p = currentProduct;
+      if (p.quote === 'sheet') { addSheetQuoteToCart(); return; }
       const qty = Math.max(1, parseInt(document.getElementById('qty-input').value) || 1);
       const phrase = document.getElementById('detail-phrase').value.trim();
       const variant = document.getElementById('detail-variant').value;
       const file = document.getElementById('detail-file').files[0];
       const details = [variant, phrase && `“${phrase}”`, file && `diseño: ${file.name}`].filter(Boolean).join(', ');
-      addToCart({ name: p.name, details, qty, unit: p.basePrice, total: p.basePrice != null ? p.basePrice * qty : null });
+      const vi = (p.variants || []).indexOf(variant);
+      const unit = (p.variantPrices && vi >= 0) ? p.variantPrices[vi] : p.basePrice;
+      addToCart({ name: p.name, details, qty, unit, total: unit != null ? unit * qty : null });
     }
     Object.assign(window, { updateQty, quoteCurrentProduct, addDetailToCart });
 
@@ -1201,6 +1234,12 @@
       'adhesivo': { name: 'Papel Adhesivo', price: 35 }, 'vinil-blanco': { name: 'Vinil Blanco', price: 55 },
       'vinil-transparente': { name: 'Vinil Transparente', price: 55 }
     };
+    // Acabados de STICKERS: costo adicional por hoja
+    const STICKER_FINISHES = {
+      'sk-laminado': { none: { name: 'Sin laminado', price: 0 }, one: { name: 'Laminado de un lado', price: 11 }, both: { name: 'Laminado de ambos lados', price: 22 } },
+      'sk-suaje':    { none: { name: 'Sin suaje', price: 0 }, half: { name: 'Suaje de medio corte', price: 35 }, full: { name: 'Suaje de corte completo', price: 60 } },
+      'sk-reverso':  { none: { name: 'Sin impresión por el reverso', price: 0 }, yes: { name: 'Impresión por el reverso', price: 11 } }
+    };
     let lastSheetQuote = null;
 
     function sheetFit(w, h) {
@@ -1214,34 +1253,46 @@
       const h = parseFloat(document.getElementById('sheet-height').value) || 0;
       const qty = Math.max(1, parseInt(document.getElementById('sheet-qty').value) || 1);
       const mat = SHEET_MATERIALS[document.getElementById('sheet-material-select').value];
-      const lam = document.getElementById('extra-laminado').checked;
-      const lamType = document.getElementById('extra-laminado-tipo').value;
-      const suaje = document.getElementById('extra-suaje').checked;
-      document.getElementById('laminado-options').classList.toggle('hidden', !lam);
+      const finishes = Object.keys(STICKER_FINISHES).map(group => {
+        const sel = document.querySelector(`input[name="${group}"]:checked`);
+        return STICKER_FINISHES[group][sel ? sel.value : 'none'];
+      });
       const hint = document.getElementById('sheet-hint');
 
       const a = sheetFit(w, h), b = sheetFit(h, w);
       const fit = (w > 0 && h > 0) ? (b.perPage > a.perPage ? b : a) : { perPage: 0 };
       if (!fit.perPage) {
-        hint.textContent = (w > 0 && h > 0) ? 'La etiqueta es más grande que el área de impresión de 32 × 47 cm. Reduce la medida.' : 'Escribe el ancho y el alto de tu etiqueta.';
+        hint.textContent = (w > 0 && h > 0) ? 'El sticker es más grande que el área imprimible de 32 × 47 cm. Reduce la medida.' : 'Escribe el ancho y el alto de tu sticker.';
         hint.classList.remove('hidden');
-        ['sheet-per-page', 'sheet-total-pages'].forEach(id => document.getElementById(id).textContent = '0');
-        document.getElementById('sheet-layout').textContent = '—';
+        ['sheet-per-page', 'sheet-total-pages', 'sheet-cols', 'sheet-rows', 'sheet-free-slots'].forEach(id => document.getElementById(id).textContent = '0');
+        ['sheet-layout', 'sheet-leftover'].forEach(id => document.getElementById(id).textContent = '—');
+        document.getElementById('sheet-extras-detail').classList.add('hidden');
         document.getElementById('sheet-total-price').textContent = '$0.00 MXN';
         document.getElementById('sheet-total-bar').textContent = '$0.00';
         lastSheetQuote = null; drawSheetCanvas(null); return;
       }
       const rotated = fit === b && b.perPage > a.perPage;
-      if (rotated) { hint.textContent = `Acomodamos tus etiquetas giradas porque así caben ${b.perPage} por hoja en vez de ${a.perPage}.`; hint.classList.remove('hidden'); }
+      if (rotated) { hint.textContent = `Acomodamos tus stickers girados porque así caben ${b.perPage} por hoja en vez de ${a.perPage}.`; hint.classList.remove('hidden'); }
       else hint.classList.add('hidden');
 
       const pages = Math.ceil(qty / fit.perPage);
       const base = pages * mat.price;
-      const extrasPerSheet = (lam ? 15 + (lamType === 'holografico' ? 5 : 0) : 0) + (suaje ? 20 : 0);
+      const chosen = finishes.filter(x => x.price > 0);
+      const extrasPerSheet = chosen.reduce((sum, x) => sum + x.price, 0);
       const extras = pages * extrasPerSheet;
       const total = base + extras;
+      const usedW = fit.cols * fit.w + (fit.cols - 1) * SEP;
+      const usedH = fit.rows * fit.h + (fit.rows - 1) * SEP;
+      const r1 = n => Math.round(n * 10) / 10;
 
-      document.getElementById('sheet-layout').textContent = `${fit.cols} × ${fit.rows}${rotated ? ' (girado)' : ''}`;
+      document.getElementById('sheet-layout').textContent = `${fit.w} × ${fit.h} cm${rotated ? ' (girado)' : ''}`;
+      document.getElementById('sheet-cols').textContent = fit.cols;
+      document.getElementById('sheet-rows').textContent = fit.rows;
+      document.getElementById('sheet-free-slots').textContent = pages * fit.perPage - qty;
+      document.getElementById('sheet-leftover').textContent = `${r1(SHEET.usableW - usedW)} × ${r1(SHEET.usableH - usedH)} cm`;
+      const det = document.getElementById('sheet-extras-detail');
+      det.innerHTML = chosen.map(x => `${x.name}: ${pages} × ${money(x.price)} = <b>${money(pages * x.price)}</b>`).join('<br>');
+      det.classList.toggle('hidden', !chosen.length);
       document.getElementById('sheet-per-page').textContent = fit.perPage;
       document.getElementById('sheet-total-pages').textContent = pages;
       document.getElementById('sheet-base-cost').textContent = money(base);
@@ -1250,8 +1301,8 @@
       document.getElementById('sheet-total-price').textContent = money(total) + ' MXN';
       document.getElementById('sheet-total-bar').textContent = money(total);
 
-      const lamNames = { brillante: 'Brillante estándar', mate: 'Mate soft touch', holografico: 'Holográfico' };
-      lastSheetQuote = { mat: mat.name, w, h, qty, fit, pages, total, extras: [lam && `Laminado ${lamNames[lamType]}`, suaje && 'Suaje de corte'].filter(Boolean) };
+      lastSheetQuote = { mat: mat.name, w, h, qty, fit, pages, base, extrasTotal: extras, total, extras: chosen.map(x => x.name) };
+      const tb = document.getElementById('sheet-total-bar'); if (tb) tb.textContent = money(total);
       drawSheetCanvas(fit, Math.min(qty, fit.perPage));
     }
 
@@ -1287,16 +1338,19 @@
     }
 
     function sheetQuoteText(q) {
-      return `Hola PERSONALIZA STUDIO, quiero cotizar etiquetas en hoja 33×48 cm:\n` +
+      return `Hola PERSONALIZA STUDIO, quiero cotizar STICKERS (hoja 33×48 cm):\n` +
         `• Material: ${q.mat}\n• Medida: ${q.w} × ${q.h} cm\n• Cantidad: ${q.qty}\n` +
-        `• ${q.fit.perPage} etiquetas por hoja, ${q.pages} hoja(s)\n` +
+        `• ${q.fit.perPage} stickers por hoja, ${q.pages} hoja(s)\n` +
         (q.extras.length ? `• Acabados: ${q.extras.join(', ')}\n` : '') +
+        (document.getElementById('detail-phrase').value.trim() ? `• Texto: ${document.getElementById('detail-phrase').value.trim()}\n` : '') +
         `• Total estimado: ${money(q.total)} MXN`;
     }
-    function sendSheetQuoteWA() { if (!lastSheetQuote) { toast('Revisa las medidas de tu etiqueta'); return; } window.open(waLink(sheetQuoteText(lastSheetQuote)), '_blank'); }
+    function sendSheetQuoteWA() { if (!lastSheetQuote) { toast('Revisa las medidas de tu sticker'); return; } window.open(waLink(sheetQuoteText(lastSheetQuote)), '_blank'); }
     function addSheetQuoteToCart() {
-      const q = lastSheetQuote; if (!q) { toast('Revisa las medidas de tu etiqueta'); return; }
-      addToCart({ name: `Etiquetas ${q.mat}`, details: [`${q.w}×${q.h} cm`, ...q.extras].join(', '), qty: 1, pieces: `${q.qty} etiquetas en ${q.pages} hoja(s)`, total: q.total });
+      const q = lastSheetQuote; if (!q) { toast('Revisa las medidas de tu sticker'); return; }
+      const phrase = document.getElementById('detail-phrase').value.trim();
+      const file = document.getElementById('detail-file').files[0];
+      addToCart({ name: `Stickers ${q.mat}`, details: [`${q.w}×${q.h} cm`, ...q.extras, phrase && `“${phrase}”`, file && `diseño: ${file.name}`].filter(Boolean).join(', '), qty: 1, pieces: `${q.qty} stickers en ${q.pages} hoja(s)`, total: q.total });
     }
     Object.assign(window, { calculateSheetNesting, sendSheetQuoteWA, addSheetQuoteToCart });
 
@@ -1327,7 +1381,7 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCart(); const o = document.getElementById('sim-overlay'); if (o && !o.classList.contains('hidden')) toggleMobileSimulator(); } });
     window.addEventListener('resize', () => {
       if (!document.getElementById('materiales-view').classList.contains('hidden')) calculateMeterNesting();
-      if (!document.getElementById('labels-calculator-view').classList.contains('hidden')) calculateSheetNesting();
+      if (currentProduct && currentProduct.quote === 'sheet' && !document.getElementById('product-detail-view').classList.contains('hidden')) calculateSheetNesting();
     });
 
     function buildMarquee() {
@@ -1340,6 +1394,7 @@
       });
     }
     buildMarquee();
+    document.getElementById('hero-count').textContent = `Ver los ${productsDatabase.length} productos`;
     renderCatalog();
     renderCart();
     updateFavUI();
