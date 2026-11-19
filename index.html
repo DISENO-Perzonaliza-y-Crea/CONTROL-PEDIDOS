@@ -317,7 +317,7 @@
             <div class="bg-white rounded-3xl border border-line p-4 sm:p-5">
               <div class="flex items-baseline justify-between gap-3">
                 <h3 class="font-bold" id="meter-title">DTF Textil</h3>
-                <span id="meter-rate" class="text-sm text-soft">$250.00 / m</span>
+                <span id="meter-rate" class="text-sm text-soft">$400.00 / m</span>
               </div>
               <p class="font-display font-semibold text-4xl mt-2" id="meter-total-price">$0.00 MXN</p>
               <p class="text-sm text-soft mt-1"><span id="meter-unit-cost">$0.00</span> por pieza aprox.</p>
@@ -391,15 +391,26 @@
               <label class="block"><span class="text-sm text-soft">Nombre o frase</span>
                 <input id="detail-phrase" type="text" placeholder="Ej. Mis XV Valeria, 12 de diciembre" class="mt-1 w-full h-12 px-4 rounded-xl bg-paper border border-line text-base focus:outline-none focus:border-plum"></label>
               <div id="detail-variant-row" class="grid grid-cols-2 gap-3">
-                <label class="block"><span class="text-sm text-soft">Opción</span>
+                <label id="detail-variant-wrap" class="block"><span class="text-sm text-soft" id="detail-variant-label">Opción</span>
                   <select id="detail-variant" class="mt-1 w-full h-12 px-3 rounded-xl bg-paper border border-line text-base focus:outline-none focus:border-plum"></select></label>
-                <div><span class="text-sm text-soft">Cantidad</span>
+                <div id="detail-qty-wrap"><span class="text-sm text-soft" id="detail-qty-label">Cantidad</span>
                   <div class="mt-1 flex items-center h-12 rounded-xl bg-paper border border-line overflow-hidden">
                     <button onclick="updateQty(-1)" class="w-11 h-full text-lg" aria-label="Menos">−</button>
                     <input id="qty-input" type="number" inputmode="numeric" value="1" min="1" class="w-full min-w-0 h-full text-center bg-transparent text-base font-semibold focus:outline-none" aria-label="Cantidad">
                     <button onclick="updateQty(1)" class="w-11 h-full text-lg" aria-label="Más">+</button>
                   </div>
                 </div>
+              </div>
+              <label id="detail-size-wrap" class="hidden block"><span class="text-sm text-soft">Talla</span>
+                <select id="detail-size" class="mt-1 w-full h-12 px-3 rounded-xl bg-paper border border-line text-base focus:outline-none focus:border-plum"></select></label>
+              <div id="detail-pricing" class="hidden rounded-2xl bg-paper border border-line p-4">
+                <div class="flex items-baseline justify-between gap-3">
+                  <p class="text-sm text-soft">Precio por <span id="detail-unit-word">pieza</span></p>
+                  <p id="detail-unit-price" class="font-bold text-lg"></p>
+                </div>
+                <p id="detail-wholesale-tag" class="hidden mt-1 text-sm font-semibold text-[#1F8A4C]">Precio de mayoreo aplicado</p>
+                <ul id="detail-tiers" class="mt-3 pt-3 border-t border-line text-sm space-y-1"></ul>
+                <p id="detail-group-note" class="mt-2 text-xs text-soft"></p>
               </div>
               <label class="block"><span class="text-sm text-soft">Tu diseño o foto (opcional)</span>
                 <input id="detail-file" type="file" accept="image/*,.pdf,.ai,.svg" class="mt-1 w-full text-sm text-soft file:mr-3 file:h-11 file:px-4 file:rounded-xl file:border-0 file:bg-ink file:text-white file:font-semibold cursor-pointer"></label>
@@ -422,11 +433,11 @@
             <fieldset class="bg-white rounded-3xl border border-line p-4 sm:p-5">
               <legend class="font-bold px-1">1. Material</legend>
               <select id="sheet-material-select" onchange="calculateSheetNesting()" class="mt-1 w-full h-12 px-4 rounded-xl bg-paper border border-line text-base font-semibold focus:outline-none focus:border-plum">
-                <option value="couche">Papel couché, $35 por hoja</option>
-                <option value="opalina">Papel opalina, $35 por hoja</option>
-                <option value="adhesivo" selected>Papel adhesivo, $35 por hoja</option>
-                <option value="vinil-blanco">Vinil blanco, $55 por hoja</option>
-                <option value="vinil-transparente">Vinil transparente, $55 por hoja</option>
+                <option value="couche">Papel couché, $56 por hoja</option>
+                <option value="opalina">Papel opalina, $56 por hoja</option>
+                <option value="adhesivo" selected>Papel adhesivo, $56 por hoja</option>
+                <option value="vinil-blanco">Vinil blanco, $88 por hoja</option>
+                <option value="vinil-transparente">Vinil transparente, $88 por hoja</option>
               </select>
             </fieldset>
 
@@ -455,23 +466,23 @@
                 <p class="text-sm font-semibold mb-2">Laminado</p>
                 <div class="grid grid-cols-1 min-[420px]:grid-cols-3 gap-2">
                   <label class="finish"><input type="radio" name="sk-laminado" value="none" onchange="calculateSheetNesting()" checked><span>Sin laminado<small>+ $0</small></span></label>
-                  <label class="finish"><input type="radio" name="sk-laminado" value="one" onchange="calculateSheetNesting()"><span>Un lado<small>+ $11 por hoja</small></span></label>
-                  <label class="finish"><input type="radio" name="sk-laminado" value="both" onchange="calculateSheetNesting()"><span>Ambos lados<small>+ $22 por hoja</small></span></label>
+                  <label class="finish"><input type="radio" name="sk-laminado" value="one" onchange="calculateSheetNesting()"><span>Un lado<small>+ $17.60 por hoja</small></span></label>
+                  <label class="finish"><input type="radio" name="sk-laminado" value="both" onchange="calculateSheetNesting()"><span>Ambos lados<small>+ $35.20 por hoja</small></span></label>
                 </div>
               </div>
               <div class="mt-3">
                 <p class="text-sm font-semibold mb-2">Suaje</p>
                 <div class="grid grid-cols-1 min-[420px]:grid-cols-3 gap-2">
                   <label class="finish"><input type="radio" name="sk-suaje" value="none" onchange="calculateSheetNesting()" checked><span>Sin suaje<small>+ $0</small></span></label>
-                  <label class="finish"><input type="radio" name="sk-suaje" value="half" onchange="calculateSheetNesting()"><span>Medio corte<small>+ $35 por hoja</small></span></label>
-                  <label class="finish"><input type="radio" name="sk-suaje" value="full" onchange="calculateSheetNesting()"><span>Corte completo<small>+ $60 por hoja</small></span></label>
+                  <label class="finish"><input type="radio" name="sk-suaje" value="half" onchange="calculateSheetNesting()"><span>Medio corte<small>+ $56 por hoja</small></span></label>
+                  <label class="finish"><input type="radio" name="sk-suaje" value="full" onchange="calculateSheetNesting()"><span>Corte completo<small>+ $96 por hoja</small></span></label>
                 </div>
               </div>
               <div class="mt-3">
                 <p class="text-sm font-semibold mb-2">Impresión por el reverso</p>
                 <div class="grid grid-cols-1 min-[420px]:grid-cols-3 gap-2">
                   <label class="finish"><input type="radio" name="sk-reverso" value="none" onchange="calculateSheetNesting()" checked><span>Sin reverso<small>+ $0</small></span></label>
-                  <label class="finish"><input type="radio" name="sk-reverso" value="yes" onchange="calculateSheetNesting()"><span>Con reverso<small>+ $11 por hoja</small></span></label>
+                  <label class="finish"><input type="radio" name="sk-reverso" value="yes" onchange="calculateSheetNesting()"><span>Con reverso<small>+ $17.60 por hoja</small></span></label>
                 </div>
               </div>
             </fieldset>
@@ -559,7 +570,7 @@
     <div id="cart-items" class="flex-1 overflow-y-auto px-5 space-y-3"></div>
     <div class="border-t border-line p-5 space-y-3 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
       <div class="flex justify-between items-baseline"><span class="text-soft">Total estimado</span><span id="cart-total" class="font-display font-semibold text-2xl">$0.00 MXN</span></div>
-      <p id="cart-note" class="hidden text-xs text-soft">Algunos productos se cotizan aparte; te confirmamos el total por WhatsApp.</p>
+      <p id="cart-note" class="hidden text-xs text-soft">Algunos productos dicen «Consultar precio»: no se suman al total y te confirmamos su precio por WhatsApp.</p>
       <button onclick="sendCartWA()" class="w-full h-14 rounded-2xl bg-[#1FAF5A] text-white font-bold text-base flex items-center justify-center gap-2"><i class="fab fa-whatsapp text-xl"></i> Enviar pedido por WhatsApp</button>
       <button onclick="clearCart()" class="w-full text-sm text-soft py-1">Vaciar carrito</button>
     </div>
@@ -598,63 +609,71 @@
     // ---------- BASE DE DATOS DE PRODUCTOS (sin cambios) ----------
     const DEFAULT_VARIANTS = ['Estándar', 'Especial / Premium'];
     const productsDatabase = [
-      { id: 'stickers-hoja', name: 'Stickers', category: 'Impresión y Papelería', price: 'Desde $35.00 MXN / hoja', basePrice: 35, quote: 'sheet',
+      { id: 'stickers-hoja', name: 'Stickers', category: 'Impresión y Papelería', price: 'Desde $56.00 MXN / hoja', basePrice: 56, quote: 'sheet',
         description: 'Stickers y etiquetas impresos en hoja tabloide de 33×48 cm (área imprimible de 32×47 cm). Elige el material: papel couché, papel opalina, papel adhesivo, vinil blanco o vinil transparente. Acabados opcionales: laminado, suaje e impresión por el reverso.',
         variants: ['Papel Adhesivo', 'Papel Couché', 'Papel Opalina', 'Vinil Blanco', 'Vinil Transparente'],
         views: ['STICKERS MEDIDAS.png', 'STICKERS TRANS 1.jfif', 'STICKERS TRANS 2.jfif', 'STICKER 2.jfif', 'STICKER 3.jfif', 'STICKERS 4.jfif', 'LIB COLOREAR 1.png', 'TARJ PRESEN 1.png'] },
-      { id: 'vinil-corte-colores', name: 'Vinil de Corte de Colores', category: 'Materiales por Metro', price: '$400.00 MXN / metro ($100 por ¼ m)', basePrice: 100, quote: 'vinil-corte',
+      { id: 'vinil-corte-colores', name: 'Vinil de Corte de Colores', category: 'Materiales por Metro', price: '$640.00 MXN / metro ($160 por ¼ m)', basePrice: 160, quote: 'vinil-corte',
         description: 'Vinil de corte de color sólido en rollo de 55 cm. Se vende por fracciones de ¼ m con 0.4 cm de separación entre diseños.',
         variants: ['Negro', 'Blanco', 'Rojo', 'Azul Rey', 'Dorado', 'Rose Gold', 'Verde Menta', 'Amarillo Neón', 'Plata'],
         views: ['GORRA 2.png', 'GORRA 3.png', 'GORRA 4.png', 'GORRA 5.png'] },
-      { id: 'dtf-textil', name: 'DTF Textil', category: 'Materiales por Metro', price: '$250.00 MXN / metro ($62.50 por ¼ m)', basePrice: 62.5, quote: 'dtf-textil',
+      { id: 'dtf-textil', name: 'DTF Textil', category: 'Materiales por Metro', price: '$400.00 MXN / metro ($100 por ¼ m)', basePrice: 100, quote: 'dtf-textil',
         description: 'Impresión DTF Textil por metro lineal (55 cm de ancho útil). Alta definición para estampar algodón, poliéster y mezclas.',
         variants: ['¼ de metro', '½ metro', '1 metro'],
         views: ['DTF TEX 1.jfif', 'DTF TEX 2.jfif'] },
-      { id: 'dtf-uv', name: 'DTF UV', category: 'Materiales por Metro', price: '$550.00 MXN / metro ($137.50 por ¼ m)', basePrice: 137.5, quote: 'dtf-uv',
+      { id: 'dtf-uv', name: 'DTF UV', category: 'Materiales por Metro', price: '$880.00 MXN / metro ($220 por ¼ m)', basePrice: 220, quote: 'dtf-uv',
         description: 'Impresión DTF UV por metro lineal (55 cm de ancho útil) con barniz en relieve para vasos, termos, cristal y plásticos.',
         variants: ['¼ de metro', '½ metro', '1 metro'],
         views: ['DTF UV 1.png', 'DTF UV 2.png', 'DTF UV 3.jfif', 'DTF UV 4.png'] },
       { id: 'botella-chupon', name: 'Botella Chupón Infantil 500 ml', category: 'Regalos & Termos', price: 'Desde $180.00 MXN', basePrice: 180,
         description: 'Botella plástica infantil de 500 ml con tapón chupón ergonómico. Resistente e ideal para la escuela o eventos.',
         views: ['Botella chupon 500 ml 1.png', 'Botella chupon 500 ml 2.png', 'Botella chupon 500 ml 3.png'] },
-      { id: 'burbujas', name: 'Burbujas Personalizadas', category: 'Eventos y Fiestas', price: 'Desde $25.00 MXN', basePrice: 25,
+      { id: 'burbujas', name: 'Burbujas Personalizadas', category: 'Eventos y Fiestas', price: 'Desde $13.00 MXN', basePrice: 13,
         description: 'Frascos de burbujas decorados con etiquetas personalizadas de tu tema o personaje favorito.',
+        variants: ['Burbuja con tarjeta', 'Burbuja personalizada'],
         views: ['BURBUJAS 1.png', 'BURBUJAS 2.png', 'BURBUJAS 3.png'] },
       { id: 'burbujas-grandes', name: 'Burbujas Grandes', category: 'Eventos y Fiestas', price: 'Desde $40.00 MXN', basePrice: 40,
         description: 'Botes de burbujas de formato grande con varita y diseño temático personalizado.',
         views: ['BURBUJAS GRAN 1.png', 'burbujas grandes 2.png', 'BURBUJAS GRAN 3.png'] },
-      { id: 'bolsa-transparente', name: 'Bolsas Transparentes Personalizadas', category: 'Eventos y Fiestas', price: 'Desde $50.00 MXN', basePrice: 50,
+      { id: 'bolsa-transparente', name: 'Bolsas Transparentes Personalizadas', category: 'Eventos y Fiestas', price: '$35.00 MXN', basePrice: 35,
         description: 'Bolsas de acetato o PVC transparente con etiqueta personalizada para dulces o recuerdos.',
+        variants: ['Bolsa transparente'],
         views: ['Bolsa transparente 1.png', 'Bolsa transparente 2.png', 'Bolsa transparente 3.png'] },
-      { id: 'camisa-blanca', name: 'Camisas / Playeras Blancas Personalizadas', category: 'Ropa y Textiles', price: 'Desde $180.00 MXN', basePrice: 180,
+      { id: 'camisa-blanca', name: 'Camisas / Playeras Blancas Personalizadas', category: 'Ropa y Textiles', price: 'Desde $250.00 MXN', basePrice: 250,
         description: 'Playeras blancas de poliéster o algodón personalizadas con sublimación o DTF textil.',
-        variants: ['Chica', 'Mediana', 'Grande', 'Extra grande', 'Infantil'],
+        variants: ['Estampado al frente 25 × 25 cm', 'Diseño en la espalda y logo al frente'], sizes: ['Chica', 'Mediana', 'Grande', 'Extra grande', 'Infantil'],
         views: ['Camisa blanca 1.png', 'Camisa blanca 2.png', 'Camisa blanca 3.png'] },
-      { id: 'vaso-500-popote', colors: true, name: 'Vasos con Popote 500 ml', category: 'Regalos & Termos', price: 'Desde $140.00 MXN', basePrice: 140,
+      { id: 'vaso-500-popote', colors: true, name: 'Vasos con Popote 500 ml', category: 'Regalos & Termos', price: '$23.00 MXN', basePrice: 23,
         description: 'Vasos reutilizables de 500 ml con tapa y popote, personalizados con vinil de alta adherencia.',
+        variants: ['Vaso 500 ml'],
         views: ['Vaso 500 ml 1.png', 'VASOS POPOTE 500 ML 2.png', 'VASOS POPOTE 500 ML 3.png', 'VASO XV 500 ml .png', 'VASO XV 500 ml amarillo.png', 'VASO XV 500 ml azul.png', 'VASO XV 500 ml dorado.png', 'VASO XV 500 ml naranja.png', 'VASO XV 500 ml plateado.png'] },
-      { id: 'botellas-agua-mini', name: 'Botellas de Agua Mini', category: 'Eventos y Fiestas', price: 'Desde $15.00 MXN', basePrice: 15,
+      { id: 'botellas-agua-mini', name: 'Botellas de Agua Mini', category: 'Eventos y Fiestas', price: '$15.00 MXN', basePrice: 15,
         description: 'Botellitas de agua personalizadas con etiqueta temática resistente a la humedad.',
+        variants: ['Botellita de agua 355 ml'],
         views: ['botellas agua mini 1.png', 'botellas agua mini 2.png', 'botellas agua mini 3.png'] },
-      { id: 'vaso-770-mono', colors: true, name: 'Vaso 770 ml con Moño', category: 'Regalos & Termos', price: 'Desde $195.00 MXN', basePrice: 195,
+      { id: 'vaso-770-mono', colors: true, name: 'Vaso 770 ml con Moño', category: 'Regalos & Termos', price: '$35.00 MXN', basePrice: 35,
         description: 'Vaso de gran capacidad con moño y accesorios decorativos, personalizado para regalos y eventos.',
+        variants: ['Vaso 770 ml con moño'],
         views: ['VASO 770 ml MOÑO 1.png', 'VASO 770 ml MOÑO 2.png', 'VASO 770 ml MOÑO 3.png', 'VASO 770 ml MOÑO 4.png'] },
-      { id: 'vaso-770-std', colors: true, name: 'Vaso 770 ml Estándar', category: 'Regalos & Termos', price: 'Desde $160.00 MXN', basePrice: 160,
+      { id: 'vaso-770-std', colors: true, name: 'Vaso 770 ml Estándar', category: 'Regalos & Termos', price: '$30.00 MXN', basePrice: 30,
         description: 'Vaso acrílico de 770 ml personalizado con vinil de alta resistencia o impresión UV.',
+        variants: ['Vaso 770 ml sencillo'],
         views: ['VASO 770 ML 1.png', 'VASO 770 ML 2.png', 'VASO boda 770 ml 1.png', 'VASO boda 770 ml 3.png', 'VASO boda 3.png', 'VASO boda 4.png', 'VASO NAV 770 ml 1.png', 'VASO NAV 770 ml 2.png', 'VASO NAV 770 ml 3.png'] },
-      { id: 'tazas', name: 'Tazas Personalizadas', category: 'Regalos & Termos', price: 'Desde $90.00 MXN', basePrice: 90,
+      { id: 'tazas', name: 'Tazas Personalizadas', category: 'Regalos & Termos', price: '$75.00 MXN', basePrice: 75,
         description: 'Tazas de cerámica de 11 oz impresas en sublimación a todo color con diseños exclusivos o corporativos.',
         variants: ['Taza blanca 11 oz'],
         views: ['TAZAS 1.png', 'TAZAS 2.png', 'TAZAS 3.png', 'TAZA M 1.png', 'TAZA M 2.png', 'TAZA M 3.png', 'TAZA M 4.png'] },
-      { id: 'tatuajes', name: 'Tatuajes Temporales Personalizados', category: 'Eventos y Fiestas', price: 'Consultar precio', basePrice: null,
+      { id: 'tatuajes', name: 'Tatuajes Temporales Personalizados', category: 'Eventos y Fiestas', price: 'Desde $220.00 MXN / paquete', basePrice: 220,
         description: 'Planillas de tatuajes temporales para la piel, seguros y divertidos, con tu diseño o temática.',
+        variants: ['Paquete de 20 piezas', 'Paquete de 40 piezas', 'Paquete de 60 piezas', 'Paquete de 100 piezas'],
         views: ['TATUAJES 1.png', 'Tatuajes 2.png', 'TATU 3.png', 'TATU 4.png'] },
-      { id: 'tarjetas-presentacion', name: 'Tarjetas de Presentación', category: 'Impresión y Papelería', price: 'Desde $330.00 MXN', basePrice: 330,
-        description: 'Tarjetas de presentación en couché grueso con opción de laminado mate, brillante o suaje.',
+      { id: 'tarjetas-presentacion', name: 'Tarjetas de Presentación', category: 'Impresión y Papelería', price: '$330.00 MXN / 100 piezas', basePrice: 330,
+        description: 'Paquete de 100 tarjetas de presentación de 8.5 × 5.5 cm en couché grueso, con opción de laminado mate, brillante o suaje.',
+        variants: ['Paquete de 100 tarjetas (8.5 × 5.5 cm)'],
         views: ['TARJ PRESEN 1.png', 'TARJ PRESEN 2.png', 'TARJ PRESEN 3.png', 'TARJ PRESEN 4.png'] },
-      { id: 'sudaderas', name: 'Sudaderas Personalizadas', category: 'Ropa y Textiles', price: 'Desde $260.00 MXN', basePrice: 260,
+      { id: 'sudaderas', name: 'Sudaderas Personalizadas', category: 'Ropa y Textiles', price: 'Desde $330.00 MXN', basePrice: 330,
         description: 'Sudaderas de algodón suave personalizadas en DTF textil de alta definición y gran durabilidad.',
-        variants: ['Chica', 'Mediana', 'Grande', 'Extra grande', 'Infantil'],
+        variants: ['Diseño en el pecho', 'Logo y diseño en la espalda'], sizes: ['Chica', 'Mediana', 'Grande', 'Extra grande', 'Infantil'],
         views: ['SUD 1.png', 'SUD 2.png', 'SUD 3.png', 'SUD 4.png'] },
       { id: 'joyero-grande', name: 'Joyero Grande Multisección', category: 'Regalos & Termos', price: 'Desde $240.00 MXN', basePrice: 240,
         description: 'Joyero amplio con compartimentos y grabado o impresión personalizada.',
@@ -665,8 +684,9 @@
       { id: 'gorro-cumple', name: 'Gorro Festejado / Cumpleaños', category: 'Eventos y Fiestas', price: 'Desde $35.00 MXN', basePrice: 35,
         description: 'Gorritos temáticos impresos a color para fiestas infantiles y celebraciones.',
         views: ['GORRO CUMPLE 1.png', 'GORRO CUMPLE 2.png', 'GORRO CUMPLE 3 .png', 'GORRO CUMPLE 4.png'] },
-      { id: 'gorras', name: 'Gorras Personalizadas', category: 'Ropa y Textiles', price: 'Desde $110.00 MXN', basePrice: 110,
+      { id: 'gorras', name: 'Gorras Personalizadas', category: 'Ropa y Textiles', price: '$60.00 MXN', basePrice: 60,
         description: 'Gorras estilo camionero o cerradas personalizadas con parche, vinil o DTF textil.',
+        variants: ['Gorra personalizada'],
         views: ['GORRA 2.png', 'GORRA 3.png', 'GORRA 4.png', 'GORRA 5.png'] },
       { id: 'lonas', name: 'Lonas Impresas para Eventos', category: 'Impresión y Papelería', price: 'Consultar precio', basePrice: null,
         description: 'Lonas infantiles y publicitarias impresas en alta resolución en gran formato, con dobladillo y ojillos.',
@@ -704,8 +724,9 @@
       { id: 'sobre-santa', name: 'Sobre para Carta a Santa', category: 'Impresión y Papelería', price: 'Consultar precio', basePrice: null,
         description: 'Sobre navideño impreso y personalizado para enviar la carta a Santa Claus.',
         views: ['SOBRE SANTA.png'] },
-      { id: 'papel-navideno', name: 'Papel de Baño Navideño', category: 'Regalos & Termos', price: 'Consultar precio', basePrice: null,
+      { id: 'papel-navideno', name: 'Papel de Baño Navideño', category: 'Regalos & Termos', price: '$50.00 MXN', basePrice: 50,
         description: 'Rollo de papel de baño con diseño navideño divertido. Perfecto para intercambios y regalos de broma.',
+        variants: ['Papel de baño navideño'],
         views: ['PAPEL NAV.png'] },
       { id: 'vaso-termico-grande', colors: true, name: 'Vaso Térmico Grande', category: 'Regalos & Termos', price: 'Consultar precio', basePrice: null,
         description: 'Vaso térmico de acero inoxidable de 20 oz, personalizado con grabado o diseño. Mantiene tus bebidas frías o calientes.',
@@ -758,6 +779,68 @@
       { name: 'Turquesa', hex: '#60DADF' }, { name: 'Blanco', hex: '#F6F6F6' }
     ];
     let selectedCupColor = null;
+
+    // ---------- PRECIOS DE VENTA Y MAYOREO ----------
+    // tiers: { min, max (null = sin límite), price (null = Consultar precio) }.
+    // Una cantidad que no cae en ningún rango también se muestra como «Consultar precio».
+    // group: 'design' = piezas iguales (mismo producto, opción y diseño); 'product' = todas las piezas del producto.
+    const PRICING = {
+      'papel-navideno': { unit: ['pieza', 'piezas'], group: 'product', variants: {
+        'Papel de baño navideño': [{ min: 1, max: 6, price: 50 }, { min: 7, max: null, price: 45 }] } },
+      'burbujas': { unit: ['pieza', 'piezas'], group: 'design', variants: {
+        'Burbuja con tarjeta':   [{ min: 1, max: 25, price: 25 }, { min: 26, max: null, price: 20 }],
+        'Burbuja personalizada': [{ min: 1, max: null, price: 13 }] } },
+      'bolsa-transparente': { unit: ['pieza', 'piezas'], group: 'design', variants: {
+        'Bolsa transparente': [{ min: 1, max: 24, price: 35 }, { min: 25, max: null, price: 28 }] } },
+      'gorras': { unit: ['pieza', 'piezas'], group: 'product', variants: {
+        'Gorra personalizada': [{ min: 1, max: 9, price: 60 }, { min: 10, max: null, price: 50 }] } },
+      'camisa-blanca': { unit: ['pieza', 'piezas'], group: 'product', variants: {
+        'Estampado al frente 25 × 25 cm':        [{ min: 1, max: 9, price: 250 }, { min: 10, max: null, price: 195 }],
+        'Diseño en la espalda y logo al frente': [{ min: 1, max: 9, price: 280 }, { min: 10, max: null, price: 235 }] } },
+      'sudaderas': { unit: ['pieza', 'piezas'], group: 'product', variants: {
+        'Diseño en el pecho':          [{ min: 1, max: 6, price: 330 }, { min: 7, max: null, price: 290 }],
+        'Logo y diseño en la espalda': [{ min: 1, max: 6, price: 355 }, { min: 7, max: null, price: 335 }] } },
+      'tazas': { unit: ['pieza', 'piezas'], group: 'product', variants: {
+        'Taza blanca 11 oz': [{ min: 1, max: 5, price: 75 }, { min: 6, max: null, price: 35 }] } },
+      'botellas-agua-mini': { unit: ['pieza', 'piezas'], group: 'product', variants: {
+        'Botellita de agua 355 ml': [{ min: 1, max: 24, price: 15 }, { min: 25, max: null, price: 10 }] } },
+      'vaso-500-popote': { unit: ['vaso', 'vasos'], group: 'product', variants: {
+        'Vaso 500 ml': [{ min: 1, max: 25, price: 23 }, { min: 26, max: null, price: 19 }] } },
+      'vaso-770-std': { unit: ['vaso', 'vasos'], group: 'product', variants: {
+        'Vaso 770 ml sencillo': [{ min: 1, max: 30, price: 30 }, { min: 31, max: null, price: 27 }] } },
+      'vaso-770-mono': { unit: ['vaso', 'vasos'], group: 'product', variants: {
+        'Vaso 770 ml con moño': [{ min: 1, max: 30, price: 35 }, { min: 31, max: null, price: 32 }] } },
+      'tarjetas-presentacion': { unit: ['paquete', 'paquetes'], group: 'product', pack: true, variants: {
+        'Paquete de 100 tarjetas (8.5 × 5.5 cm)': [{ min: 1, max: null, price: 330 }] } },
+      'tatuajes': { unit: ['paquete', 'paquetes'], group: 'product', pack: true, variants: {
+        'Paquete de 20 piezas':  [{ min: 1, max: null, price: 220 }],
+        'Paquete de 40 piezas':  [{ min: 1, max: null, price: 370 }],
+        'Paquete de 60 piezas':  [{ min: 1, max: null, price: 480 }],
+        'Paquete de 100 piezas': [{ min: 1, max: null, price: 750 }] } }
+    };
+    function tierFor(productId, variant, qty) {
+      const rule = PRICING[productId]; if (!rule) return null;
+      const tiers = rule.variants[variant] || Object.values(rule.variants)[0];
+      const t = tiers.find(t => qty >= t.min && (t.max == null || qty <= t.max));
+      return { price: t ? t.price : null, wholesale: !!t && tiers.indexOf(t) > 0, tiers };
+    }
+    const designKey = (variant, phrase, fileName) => [variant, (phrase || '').trim().toLowerCase(), fileName || ''].join('|');
+    function sameGroup(line, productId, variant, design) {
+      if (line.productId !== productId) return false;
+      return PRICING[productId].group === 'product' || (line.variant === variant && line.design === design);
+    }
+    const unitWord = (productId, n) => PRICING[productId].unit[n === 1 ? 0 : 1];
+    function tierLines(productId, tiers) {
+      const w = n => unitWord(productId, n), out = [];
+      const range = (a, b) => b == null ? `Desde ${a} ${w(2)}` : a === b ? `${a} ${w(a)}` : b === a + 1 ? `${a} y ${b} ${w(2)}` : `${a} a ${b} ${w(2)}`;
+      let next = 1;
+      tiers.forEach((t, i) => {
+        if (t.min > next) out.push({ label: range(next, t.min - 1), price: null });
+        out.push({ label: range(t.min, t.max), price: t.price, wholesale: i > 0 });
+        next = t.max == null ? Infinity : t.max + 1;
+      });
+      return out;
+    }
 
     const CATEGORIES = ['Todos', 'Regalos & Termos', 'Eventos y Fiestas', 'Ropa y Textiles', 'Impresión y Papelería', 'Materiales por Metro'];
 
@@ -985,11 +1068,19 @@
       document.getElementById('detail-file').value = '';
       document.getElementById('qty-input').value = 1;
       document.getElementById('detail-variant').innerHTML = (product.variants || DEFAULT_VARIANTS).map(v => `<option>${v}</option>`).join('');
+      document.getElementById('detail-size-wrap').classList.toggle('hidden', !product.sizes);
+      document.getElementById('detail-size').innerHTML = (product.sizes || []).map(v => `<option>${v}</option>`).join('');
+      const rule = PRICING[product.id];
+      document.getElementById('detail-variant-label').textContent = rule && rule.pack ? 'Paquete' : product.sizes ? 'Diseño' : 'Opción';
+      document.getElementById('detail-qty-label').textContent = rule ? `Cantidad de ${rule.unit[1]}` : 'Cantidad';
+      const single = (product.variants || DEFAULT_VARIANTS).length === 1;
+      document.getElementById('detail-variant-wrap').classList.toggle('hidden', single);
+      document.getElementById('detail-qty-wrap').classList.toggle('col-span-2', single);
 
       const isSheet = product.quote === 'sheet';
       document.getElementById('sticker-quoter').classList.toggle('hidden', !isSheet);
       document.getElementById('detail-variant-row').classList.toggle('hidden', isSheet);
-      document.getElementById('detail-total-box').classList.toggle('hidden', !isSheet);
+      document.getElementById('detail-total-box').classList.toggle('hidden', !isSheet && !rule);
       const quoteBtn = document.getElementById('detail-quote-btn');
       quoteBtn.classList.toggle('hidden', !product.quote);
       quoteBtn.querySelector('span').textContent = product.quote === 'sheet' ? 'Personalizar y cotizar' : 'Calcular precio por metro';
@@ -1020,8 +1111,39 @@
       renderRelated();
       switchView('detail');
       if (isSheet) calculateSheetNesting();
+      updateDetailPricing();
     }
     window.openProductDetail = openProductDetail;
+
+    // Precio en vivo en la ficha (incluye las piezas del mismo grupo que ya están en el carrito)
+    function updateDetailPricing() {
+      const p = currentProduct, rule = p && PRICING[p.id];
+      const box = document.getElementById('detail-pricing');
+      box.classList.toggle('hidden', !rule);
+      if (!rule) return;
+      const qty = Math.max(1, parseInt(document.getElementById('qty-input').value) || 1);
+      const variant = document.getElementById('detail-variant').value;
+      const file = document.getElementById('detail-file').files[0];
+      const design = designKey(variant, document.getElementById('detail-phrase').value, file && file.name);
+      const inCart = cart.filter(l => sameGroup(l, p.id, variant, design)).reduce((s, l) => s + l.qty, 0);
+      const groupQty = qty + inCart;
+      const t = tierFor(p.id, variant, groupQty);
+      document.getElementById('detail-unit-word').textContent = rule.unit[0];
+      document.getElementById('detail-unit-price').textContent = t.price != null ? money(t.price) : 'Consultar precio';
+      document.getElementById('detail-wholesale-tag').classList.toggle('hidden', !(t.wholesale && t.price != null));
+      document.getElementById('sheet-total-bar').textContent = t.price != null ? money(t.price * qty) : 'Consultar';
+      document.getElementById('detail-tiers').innerHTML = tierLines(p.id, t.tiers).map(l =>
+        `<li class="flex justify-between gap-3"><span class="text-soft">${l.label}</span><span class="font-semibold">${l.price != null ? money(l.price) + (rule.pack ? '' : ' c/u') + (l.wholesale ? ' <span class="text-[#1F8A4C]">mayoreo</span>' : '') : 'Consultar precio'}</span></li>`).join('');
+      const note = rule.group === 'design'
+        ? 'El mayoreo cuenta piezas iguales: mismo producto, opción y diseño.'
+        : rule.pack ? 'Precio total por paquete.' : `El mayoreo cuenta todas las ${rule.unit[1]} de este producto en tu pedido.`;
+      document.getElementById('detail-group-note').textContent = note + (inCart ? ` Ya tienes ${inCart} ${unitWord(p.id, inCart)} en el carrito que cuentan para el mayoreo.` : '');
+    }
+    window.updateDetailPricing = updateDetailPricing;
+    ['detail-variant', 'detail-phrase', 'qty-input', 'detail-file'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('input', updateDetailPricing); el.addEventListener('change', updateDetailPricing);
+    });
     document.getElementById('whatsapp-btn').addEventListener('click', e => {
       if (currentProduct && currentProduct.quote === 'sheet') { e.preventDefault(); sendSheetQuoteWA(); }
     });
@@ -1082,6 +1204,7 @@
     function updateQty(change) {
       const input = document.getElementById('qty-input');
       input.value = Math.max(1, (parseInt(input.value) || 1) + change);
+      updateDetailPricing();
     }
     function quoteCurrentProduct() {
       if (!currentProduct || !currentProduct.quote) return;
@@ -1114,9 +1237,14 @@
         document.getElementById('detail-colors-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
-      const details = [p.colors && `color ${selectedCupColor}`, variant, phrase && `“${phrase}”`, file && `diseño: ${file.name}`].filter(Boolean).join(', ');
-      const vi = (p.variants || []).indexOf(variant);
-      const unit = (p.variantPrices && vi >= 0) ? p.variantPrices[vi] : p.basePrice;
+      const size = p.sizes ? document.getElementById('detail-size').value : '';
+      const details = [p.colors && `color ${selectedCupColor}`, variant, size && `talla ${size}`, phrase && `“${phrase}”`, file && `diseño: ${file.name}`].filter(Boolean).join(', ');
+      if (PRICING[p.id]) {
+        addToCart({ productId: p.id, variant, design: designKey(variant, phrase, file && file.name), name: p.name, details, qty });
+        updateDetailPricing();
+        return;
+      }
+      const unit = p.basePrice;
       addToCart({ name: p.name, details, qty, unit, total: unit != null ? unit * qty : null });
     }
     Object.assign(window, { updateQty, quoteCurrentProduct, addDetailToCart });
@@ -1128,7 +1256,19 @@
       renderCart();
       toast('Agregado al carrito');
     }
+    // Aplica precio regular o de mayoreo a cada renglón según el total de su grupo
+    function repriceCart() {
+      cart.forEach(line => {
+        if (!line.productId || !PRICING[line.productId]) return;
+        const groupQty = cart.filter(l => sameGroup(l, line.productId, line.variant, line.design)).reduce((s, l) => s + l.qty, 0);
+        const t = tierFor(line.productId, line.variant, groupQty);
+        line.unit = t.price;
+        line.wholesale = t.wholesale && t.price != null;
+        line.total = t.price != null ? t.price * line.qty : null;
+      });
+    }
     function renderCart() {
+      repriceCart();
       const list = document.getElementById('cart-items');
       const count = cart.reduce((s, i) => s + (i.pieces ? 1 : i.qty), 0);
       const total = cart.reduce((s, i) => s + (i.total || 0), 0);
@@ -1150,11 +1290,12 @@
         row.innerHTML = `<div class="flex-1 min-w-0">
             <p class="font-semibold leading-snug">${i.name}</p>
             ${i.details ? `<p class="text-sm text-soft mt-0.5 break-words">${i.details}</p>` : ''}
-            <p class="text-sm text-soft mt-0.5">${i.pieces ? i.pieces : 'Cantidad: ' + i.qty}</p>
-            <p class="font-bold mt-1.5">${i.total != null ? money(i.total) : 'Por cotizar'}</p>
+            <p class="text-sm text-soft mt-0.5">${i.pieces ? i.pieces : 'Cantidad: ' + i.qty + (i.productId && PRICING[i.productId] ? ' ' + unitWord(i.productId, i.qty) : '')}${i.productId && i.unit != null && !PRICING[i.productId].pack ? ` · ${money(i.unit)} c/u` : ''}</p>
+            ${i.wholesale ? '<p class="text-xs font-semibold text-[#1F8A4C] mt-0.5">Precio de mayoreo</p>' : ''}
+            <p class="font-bold mt-1.5">${i.total != null ? money(i.total) : 'Consultar precio'}</p>
           </div>
           <button class="w-10 h-10 rounded-full bg-white grid place-items-center text-soft shrink-0" aria-label="Quitar ${i.name}"><i class="fas fa-trash-can"></i></button>`;
-        row.querySelector('button').onclick = () => { cart.splice(idx, 1); store.set('cart', cart); renderCart(); };
+        row.querySelector('button').onclick = () => { cart.splice(idx, 1); store.set('cart', cart); renderCart(); if (currentProduct) updateDetailPricing(); };
         list.appendChild(row);
       });
     }
@@ -1166,10 +1307,11 @@
       document.getElementById('cart-overlay').classList.add('hidden');
       document.getElementById('cart-panel').classList.add('translate-y-full', 'md:translate-x-full');
     }
-    function clearCart() { cart = []; store.set('cart', cart); renderCart(); }
+    function clearCart() { cart = []; store.set('cart', cart); renderCart(); if (currentProduct) updateDetailPricing(); }
     function sendCartWA() {
       if (!cart.length) { toast('Tu carrito está vacío'); return; }
-      const lines = cart.map((i, n) => `${n + 1}. ${i.name}${i.details ? ' (' + i.details + ')' : ''}, ${i.pieces || 'cantidad ' + i.qty}: ${i.total != null ? money(i.total) : 'por cotizar'}`);
+      repriceCart();
+      const lines = cart.map((i, n) => `${n + 1}. ${i.name}${i.details ? ' (' + i.details + ')' : ''}, ${i.pieces || 'cantidad ' + i.qty}${i.productId && i.unit != null && !PRICING[i.productId].pack ? ' a ' + money(i.unit) + ' c/u' + (i.wholesale ? ' (mayoreo)' : '') : ''}: ${i.total != null ? money(i.total) : 'consultar precio'}`);
       const total = cart.reduce((s, i) => s + (i.total || 0), 0);
       window.open(waLink(`Hola PERSONALIZA STUDIO, quiero hacer este pedido:\n\n${lines.join('\n')}\n\nTotal estimado: ${money(total)} MXN`), '_blank');
     }
@@ -1183,9 +1325,9 @@
 
     // ---------- MATERIALES POR METRO (55 cm) ----------
     const METER_MATERIALS = {
-      'dtf-textil':  { name: 'DTF Textil', perMeter: 250, img: 'DTF TEX 1.jfif', desc: 'Playeras, sudaderas, gorras y telas.' },
-      'dtf-uv':      { name: 'DTF UV', perMeter: 550, img: 'DTF UV 1.png', desc: 'Vasos, termos, cristal y superficies rígidas.' },
-      'vinil-corte': { name: 'Vinil de Corte de Colores', perMeter: 400, img: 'GORRA 2.png', desc: 'Colores sólidos para textil y rotulación.' }
+      'dtf-textil':  { name: 'DTF Textil', perMeter: 400, img: 'DTF TEX 1.jfif', desc: 'Playeras, sudaderas, gorras y telas.' },
+      'dtf-uv':      { name: 'DTF UV', perMeter: 880, img: 'DTF UV 1.png', desc: 'Vasos, termos, cristal y superficies rígidas.' },
+      'vinil-corte': { name: 'Vinil de Corte de Colores', perMeter: 640, img: 'GORRA 2.png', desc: 'Colores sólidos para textil y rotulación.' }
     };
     const VINYL_COLORS = [
       { name: 'Negro', hex: '#1F1F1F' }, { name: 'Blanco', hex: '#FFFFFF' }, { name: 'Rojo', hex: '#D62828' },
@@ -1379,15 +1521,15 @@
 
     // ---------- ETIQUETAS POR HOJA 33×48 ----------
     const SHEET_MATERIALS = {
-      'couche': { name: 'Papel Couché', price: 35 }, 'opalina': { name: 'Papel Opalina', price: 35 },
-      'adhesivo': { name: 'Papel Adhesivo', price: 35 }, 'vinil-blanco': { name: 'Vinil Blanco', price: 55 },
-      'vinil-transparente': { name: 'Vinil Transparente', price: 55 }
+      'couche': { name: 'Papel Couché', price: 56 }, 'opalina': { name: 'Papel Opalina', price: 56 },
+      'adhesivo': { name: 'Papel Adhesivo', price: 56 }, 'vinil-blanco': { name: 'Vinil Blanco', price: 88 },
+      'vinil-transparente': { name: 'Vinil Transparente', price: 88 }
     };
     // Acabados de STICKERS: costo adicional por hoja
     const STICKER_FINISHES = {
-      'sk-laminado': { none: { name: 'Sin laminado', price: 0 }, one: { name: 'Laminado de un lado', price: 11 }, both: { name: 'Laminado de ambos lados', price: 22 } },
-      'sk-suaje':    { none: { name: 'Sin suaje', price: 0 }, half: { name: 'Suaje de medio corte', price: 35 }, full: { name: 'Suaje de corte completo', price: 60 } },
-      'sk-reverso':  { none: { name: 'Sin impresión por el reverso', price: 0 }, yes: { name: 'Impresión por el reverso', price: 11 } }
+      'sk-laminado': { none: { name: 'Sin laminado', price: 0 }, one: { name: 'Laminado de un lado', price: 17.6 }, both: { name: 'Laminado de ambos lados', price: 35.2 } },
+      'sk-suaje':    { none: { name: 'Sin suaje', price: 0 }, half: { name: 'Suaje de medio corte', price: 56 }, full: { name: 'Suaje de corte completo', price: 96 } },
+      'sk-reverso':  { none: { name: 'Sin impresión por el reverso', price: 0 }, yes: { name: 'Impresión por el reverso', price: 17.6 } }
     };
     let lastSheetQuote = null;
 
