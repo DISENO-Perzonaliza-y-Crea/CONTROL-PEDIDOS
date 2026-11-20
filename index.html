@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#783C99">
+  <title>PERSONALIZA STUDIO</title>
+  <meta name="description" content="PERSONALIZA STUDIO: regalos y recuerdos personalizados, etiquetas en pliego y DTF / vinil por metro.">
+
+  <!-- Vista previa al compartir en WhatsApp, Facebook y otras redes -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PERSONALIZA STUDIO">
+  <meta property="og:locale" content="es_MX">
+  <meta property="og:title" content="PERSONALIZA STUDIO | Tu nombre, tu fiesta, tu idea">
+  <meta property="og:description" content="Vasos, tazas, ropa, recuerdos, etiquetas y DTF personalizados a tu gusto. Cotiza por WhatsApp.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/CONTROL-PEDIDOS/main/Personaliza%20tu%20fiesta%20a%20tu%20estilo.png">
+  <meta property="og:image:secure_url" content="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/CONTROL-PEDIDOS/main/Personaliza%20tu%20fiesta%20a%20tu%20estilo.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1254">
+  <meta property="og:image:height" content="1254">
+  <meta property="og:image:alt" content="PERSONALIZA STUDIO: vasos, tazas y recuerdos personalizados">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PERSONALIZA STUDIO | Tu nombre, tu fiesta, tu idea">
+  <meta name="twitter:description" content="Vasos, tazas, ropa, recuerdos, etiquetas y DTF personalizados a tu gusto.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/CONTROL-PEDIDOS/main/Personaliza%20tu%20fiesta%20a%20tu%20estilo.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#2B1838',
+            plum: '#783C99',
+            fucsia: '#E62C91',
+            azul: '#168FC7',
+            turq: '#16B6C7',
+            oro: '#C8A64B',
+            paper: '#F8F6FB',
+            rosa: '#FFE3F1', aqua: '#D8F5F8', cielo: '#DDF0FB', lila: '#EFE3F7', crema: '#FFF1CC',
+            line: '#E9E3F0',
+            soft: '#6E6178'
+          },
+          fontFamily: {
+            sans: ['Figtree', 'system-ui', 'sans-serif'],
+            display: ['Fraunces', 'Georgia', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root { --tabbar: 64px; --safe: env(safe-area-inset-bottom, 0px); }
+    html { -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Figtree', system-ui, sans-serif; background: #F8F6FB; color: #2B1838; }
+    .font-display { font-optical-sizing: auto; font-variation-settings: 'SOFT' 60, 'WONK' 0; letter-spacing: -0.015em; }
+    fieldset { min-width: 0; }
+    [class*='col-span'] { min-width: 0; }
+    html, body { overflow-x: clip; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { scrollbar-width: none; }
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    :focus-visible { outline: 3px solid #16B6C7; outline-offset: 2px; border-radius: 10px; }
+
+    /* Motivo: línea de corte (suaje) de un sticker */
+    .diecut { background: #fff; border-radius: 999px; padding: 7px; box-shadow: 0 10px 24px -12px rgba(43,24,56,.45); }
+    .diecut::after { content: ''; position: absolute; inset: 3px; border-radius: 999px; border: 1.5px dashed rgba(120,60,153,.45); pointer-events: none; }
+    .diecut img { width: 100%; height: 100%; object-fit: contain; border-radius: 999px; background: #F8F6FB; }
+    .cutline { border: 1.5px dashed #CDBFDB; }
+
+    /* Portada: cinta de stickers en movimiento */
+    .marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+    .marquee-track { display: flex; gap: 14px; width: max-content; padding: 8px 0; animation: marquee 70s linear infinite; }
+    .marquee-track.reverse { animation-direction: reverse; animation-duration: 80s; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    .sticker { position: relative; flex-shrink: 0; width: 118px; height: 118px; border-radius: 999px; background: #fff; padding: 6px; box-shadow: 0 10px 22px -10px rgba(0,0,0,.45); transition: transform .2s; }
+    .sticker::after { content: ''; position: absolute; inset: 3px; border-radius: 999px; border: 1.5px dashed rgba(120,60,153,.45); pointer-events: none; }
+    .sticker img { width: 100%; height: 100%; object-fit: cover; border-radius: 999px; }
+    .sticker:nth-child(3n+1) { transform: rotate(-6deg); }
+    .sticker:nth-child(3n+2) { transform: rotate(5deg) translateY(6px); }
+    .sticker:active { transform: scale(.95); }
+    @media (min-width: 768px) { .sticker { width: 150px; height: 150px; } }
+    .event-btn { flex-shrink: 0; width: 82px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+    .event-btn .event-icon { width: 64px; height: 64px; border-radius: 999px; display: grid; place-items: center; font-size: 26px; color: #fff; box-shadow: 0 6px 14px -8px rgba(43,24,56,.6); transition: transform .15s; }
+    .event-btn:active .event-icon { transform: scale(.94); }
+    .event-btn span { font-size: 12px; font-weight: 600; line-height: 1.2; color: #2B1838; }
+    @media (min-width: 1024px) { .event-btn { width: 96px; } }
+    .colorbar { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(5, 1fr); height: 8px; }
+
+    /* Accesos rápidos: dibujo + texto + foto, sin encimarse */
+    .tile { position: relative; overflow: hidden; border-radius: 26px; padding: 16px; text-align: left; display: flex; flex-direction: column; gap: 10px; min-height: 236px; transition: transform .15s; }
+    .tile:active { transform: scale(.98); }
+    .tile-icon { width: 46px; height: 46px; border-radius: 15px; display: grid; place-items: center; font-size: 22px; background: rgba(255,255,255,.22); flex-shrink: 0; }
+    .tile.on-light .tile-icon { background: rgba(43,24,56,.12); }
+    .tile-text b { display: block; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-variation-settings: 'SOFT' 60; font-size: 20px; line-height: 1.1; letter-spacing: -.01em; }
+    .tile-text small { display: block; font-size: 13px; opacity: .88; margin-top: 4px; line-height: 1.35; }
+    .tile-img { margin-top: auto; align-self: flex-end; width: 92px; height: 92px; object-fit: cover; border-radius: 999px; border: 4px solid #fff; transform: rotate(-6deg); box-shadow: 0 8px 18px -8px rgba(0,0,0,.4); margin-right: -2px; margin-bottom: -2px; }
+    @media (min-width: 768px) { .tile { padding: 22px; min-height: 270px; } .tile-text b { font-size: 25px; } .tile-img { width: 120px; height: 120px; } }
+
+    /* ===== Categorías por ocasión ===== */
+    .occ-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 640px) { .occ-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
+    @media (min-width: 1024px) { .occ-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+    .occ-card { container-type: inline-size; position: relative; overflow: hidden; isolation: isolate; aspect-ratio: 1.42; border-radius: 24px; text-align: left; color: #fff;
+      background: linear-gradient(135deg, var(--c1), var(--c2)); box-shadow: 0 12px 24px -14px var(--c2), 0 2px 6px -2px rgba(43,24,56,.18);
+      transition: transform .25s ease, box-shadow .25s ease; }
+    .occ-card::before { content: ''; position: absolute; z-index: -1; left: -20%; right: -20%; bottom: -46%; height: 80%;
+      background: radial-gradient(closest-side, rgba(255,255,255,.22), rgba(255,255,255,0)); border-radius: 50%; }
+    .occ-card::after { content: ''; position: absolute; z-index: -1; left: -10%; bottom: -30%; width: 75%; height: 55%;
+      background: var(--c2); opacity: .45; border-radius: 50% 50% 0 0 / 70% 70% 0 0; transform: rotate(-6deg); }
+    .occ-card:hover { transform: translateY(-4px); box-shadow: 0 20px 34px -16px var(--c2), 0 4px 10px -4px rgba(43,24,56,.2); }
+    .occ-card:focus-visible { outline: 3px solid #16B6C7; outline-offset: 3px; }
+    .occ-body { position: absolute; inset: 0; right: 49%; padding: 5.5cqw 0 5cqw 5.8cqw; display: flex; flex-direction: column; align-items: flex-start; z-index: 2; }
+    .occ-badge { width: clamp(36px, 12cqw, 46px); height: clamp(36px, 12cqw, 46px); border-radius: 14px; display: grid; place-items: center; font-size: 20px; background: rgba(255,255,255,.24); backdrop-filter: blur(2px); }
+    .occ-title { margin-top: 12px; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-variation-settings: 'SOFT' 60; font-size: clamp(17px, 6.6cqw, 29px); overflow-wrap: anywhere; line-height: 1.04; letter-spacing: -.01em; text-shadow: 0 1px 2px rgba(0,0,0,.12); }
+    .occ-count { margin-top: 10px; font-size: 12.5px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.26); white-space: nowrap; }
+    .occ-deco { margin-top: auto; font-size: clamp(28px, 11cqw, 42px); line-height: 1; color: transparent; -webkit-text-stroke: 1.6px rgba(255,255,255,.9); opacity: .9; }
+    .occ-photo { position: absolute; z-index: 1; top: 50%; right: -5%; width: 55%; aspect-ratio: 1; transform: translateY(-50%); border-radius: 50%;
+      background: #fff; box-shadow: 0 0 0 7px rgba(255,255,255,.35), 0 14px 26px -12px rgba(0,0,0,.45); overflow: hidden; transition: transform .35s ease; }
+    .occ-photo img { width: 100%; height: 100%; object-fit: contain; padding: 7%; mix-blend-mode: multiply; transition: transform .35s ease; }
+    .occ-card:hover .occ-photo img { transform: scale(1.07); }
+    .occ-card.occ-dark { color: #2B1838; }
+    .occ-card.occ-dark .occ-deco { -webkit-text-stroke-color: rgba(43,24,56,.7); }
+    .occ-card.occ-dark .occ-badge, .occ-card.occ-dark .occ-count { background: rgba(255,255,255,.4); }
+    @media (prefers-reduced-motion: reduce) { .occ-card, .occ-photo img { transition: none; } .occ-card:hover { transform: none; } }
+
+    /* Galería deslizable */
+    .snap-x-mandatory { scroll-snap-type: x mandatory; }
+    .snap-center { scroll-snap-align: center; }
+
+    /* Zoom en escritorio */
+    @media (hover: hover) and (min-width: 1024px) {
+      .zoom-box { cursor: zoom-in; overflow: hidden; }
+      .zoom-box img { transition: transform .2s ease; }
+      .zoom-box.zooming img { transform: scale(2); }
+    }
+
+    /* Barras inferiores (móvil) */
+    .tabbar { height: calc(var(--tabbar) + var(--safe)); padding-bottom: var(--safe); }
+    .actionbar { bottom: calc(var(--tabbar) + var(--safe)); }
+    @media (min-width: 768px) { .actionbar { bottom: 0; } }
+
+    .chip[aria-pressed="true"] { background: #2B1838; color: #fff; border-color: #2B1838; }
+    .seg[aria-pressed="true"] { background: #fff; border-color: #783C99; box-shadow: 0 0 0 3px rgba(120,60,153,.15); }
+    .swatch[aria-pressed="true"] { box-shadow: 0 0 0 3px #fff, 0 0 0 5px #783C99; }
+    .cup-swatch { position: relative; aspect-ratio: 1; border-radius: 12px; border: 1px solid rgba(43,24,56,.15); transition: transform .12s; }
+    .cup-swatch:active { transform: scale(.92); }
+    .cup-swatch[aria-checked="true"] { box-shadow: 0 0 0 2px #fff, 0 0 0 4px #E62C91; }
+    .cup-swatch[aria-checked="true"]::after { content: ''; position: absolute; left: 50%; top: 46%; width: 30%; height: 52%; border: solid var(--check, #fff); border-width: 0 3px 3px 0; transform: translate(-50%, -50%) rotate(45deg); }
+    .tab[aria-current="page"] { color: #E62C91; }
+    .tab[aria-current="page"] .tab-dot { opacity: 1; }
+    .navlink[aria-current="page"] { color: #2B1838; box-shadow: inset 0 -2px 0 #E62C91; }
+
+    .finish { position: relative; display: block; cursor: pointer; }
+    .finish input { position: absolute; opacity: 0; pointer-events: none; }
+    .finish span { display: flex; flex-direction: column; justify-content: center; min-height: 52px; padding: 8px 12px; border-radius: 14px; border: 2px solid #E9E3F0; background: #F8F6FB; font-weight: 600; font-size: 14px; line-height: 1.2; }
+    .finish small { font-weight: 500; font-size: 12px; color: #6E6178; margin-top: 2px; }
+    .finish input:checked + span { border-color: #E62C91; background: #FFE3F1; }
+    .finish input:focus-visible + span { outline: 3px solid #16B6C7; outline-offset: 2px; }
+    .switch { appearance: none; width: 42px; height: 24px; border-radius: 999px; background: #E9E3F0; position: relative; transition: background .2s; flex-shrink: 0; cursor: pointer; }
+    .switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .2s; }
+    .switch:checked { background: #783C99; }
+    .switch:checked::after { transform: translateX(18px); }
+
+    input[type=number] { -moz-appearance: textfield; }
+    input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+    .sheet-enter { transition: transform .28s cubic-bezier(.2,.8,.2,1); }
+    @media (prefers-reduced-motion: reduce) { .marquee { overflow-x: auto; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col pb-[calc(64px+env(safe-area-inset-bottom))] md:pb-0">
+
+  <!-- ===================== ENCABEZADO ===================== -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-line">
+    <div class="max-w-6xl mx-auto px-3 sm:px-4 h-14 md:h-16 flex items-center gap-2 sm:gap-3">
+      <a href="#" onclick="goHome(); return false;" class="flex items-center gap-2 shrink-0" aria-label="PERSONALIZA STUDIO, inicio">
+        <span class="w-8 h-8 rounded-full bg-fucsia text-white grid place-items-center font-display font-semibold text-lg leading-none">P</span>
+        <span class="font-display font-semibold text-[13.5px] min-[360px]:text-[15px] min-[400px]:text-[17px] md:text-lg tracking-tight leading-none whitespace-nowrap">PERSONALIZA <span class="text-plum">STUDIO</span></span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 ml-8 text-sm font-semibold text-soft">
+        <a href="#" data-nav="catalog" onclick="goHome(); return false;" class="navlink py-5 hover:text-ink">Inicio</a>
+        <a href="#" data-nav="catalog-grid" onclick="goCatalog(); return false;" class="navlink py-5 hover:text-ink">Catálogo</a>
+        <a href="#" data-nav="materiales" onclick="switchView('materiales'); return false;" class="navlink py-5 hover:text-ink">DTF y vinil por metro</a>
+        <a href="#contacto" onclick="goContact(); return false;" class="navlink py-5 hover:text-ink">Contacto</a>
+      </nav>
+
+      <div class="ml-auto flex items-center gap-0.5 sm:gap-1 shrink-0">
+        <button onclick="toggleMobileSearch()" class="w-9 h-9 sm:w-10 sm:h-10 grid place-items-center rounded-full hover:bg-paper text-ink" aria-label="Buscar"><svg class="w-[21px] h-[21px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+        <button onclick="showFavorites()" class="relative w-9 h-9 sm:w-10 sm:h-10 grid place-items-center rounded-full hover:bg-paper text-ink" aria-label="Favoritos">
+          <svg class="w-[21px] h-[21px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 8 3.4 4.5 7 4.5c2 0 3.3 1.1 5 3 1.7-1.9 3-3 5-3 3.6 0 5.6 3.5 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2Z"/></svg>
+          <span id="fav-count" class="hidden absolute top-1 right-1 bg-fucsia text-white text-[10px] min-w-[16px] h-4 px-1 rounded-full grid place-items-center font-bold">0</span>
+        </button>
+        <button onclick="openCart()" class="relative w-9 h-9 sm:w-10 sm:h-10 grid place-items-center rounded-full hover:bg-paper text-ink" aria-label="Carrito">
+          <svg class="w-[22px] h-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M2 3h3l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.9a1.5 1.5 0 0 0 1.5-1.1L21 7H6"/></svg>
+          <span id="cart-count" class="absolute top-1 right-0.5 bg-fucsia text-white text-[10px] min-w-[16px] h-4 px-1 rounded-full grid place-items-center font-bold">0</span>
+        </button>
+        <span id="cart-total-header" class="hidden lg:inline text-sm font-bold ml-1">$0.00</span>
+      </div>
+    </div>
+
+    <div id="mobile-search" class="hidden border-t border-line bg-white">
+      <div class="max-w-6xl mx-auto px-4 py-3 relative">
+        <i class="fas fa-magnifying-glass absolute left-8 top-1/2 -translate-y-1/2 text-soft text-sm"></i>
+        <input id="search-input" type="search" placeholder="Buscar: vaso, taza, sudadera…" oninput="onSearch(this.value)"
+          class="w-full h-12 pl-11 pr-4 rounded-2xl bg-paper border border-line text-base focus:outline-none focus:border-plum">
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== INICIO ===================== -->
+  <section id="home-sections">
+    <!-- Portada: fotos reales de tus productos en movimiento -->
+    <div class="relative bg-plum text-white overflow-hidden">
+      <div class="absolute -top-24 -right-20 w-72 h-72 rounded-full bg-fucsia/70 blur-2xl" aria-hidden="true"></div>
+      <div class="absolute -bottom-28 -left-16 w-72 h-72 rounded-full bg-turq/60 blur-2xl" aria-hidden="true"></div>
+
+      <div class="relative max-w-6xl mx-auto px-4 pt-8 md:pt-14 md:min-h-[420px] lg:min-h-[450px]">
+        <div class="hidden md:block absolute right-4 top-10 w-[300px] lg:w-[380px] aspect-square" aria-hidden="true">
+          <div class="sticker !w-full !h-full !p-3 rotate-[6deg]"><img data-img="VASO 770 ml MOÑO 1.png" alt="" class="!object-contain bg-white"></div>
+          <div class="sticker !absolute -left-10 bottom-0 !w-[42%] !h-[42%] -rotate-12"><img data-img="TAZAS 1.png" alt=""></div>
+          <span class="absolute right-2 bottom-8 bg-oro text-ink font-bold px-4 py-2 rounded-full rotate-[-6deg] shadow">con tu nombre</span>
+        </div>
+        <h1 class="font-display font-semibold text-[44px] leading-[.98] sm:text-6xl md:text-7xl max-w-[14ch]">Tu nombre, tu fiesta, tu idea. Nosotros lo creamos.</h1>
+        <p class="mt-4 text-[17px] leading-relaxed text-white/85 max-w-[38ch]">Vasos, tazas, ropa, recuerdos, etiquetas y DTF personalizados a tu gusto.</p>
+        <div class="mt-6 grid grid-cols-1 sm:flex gap-3">
+          <a href="#" data-wa="Hola PERSONALIZA STUDIO 👋 Quiero cotizar un producto personalizado. ¿Me pueden ayudar con precios y tiempos de entrega?" target="_blank" rel="noopener" class="h-14 px-7 rounded-2xl bg-[#1FAF5A] text-white font-bold text-base grid place-items-center active:scale-[.98] transition"><span><i class="fab fa-whatsapp mr-2 text-lg align-[-2px]"></i>Cotizar por WhatsApp</span></a>
+        </div>
+      </div>
+
+      <div class="relative mt-10 pb-10 space-y-4" aria-hidden="true">
+        <div class="marquee"><div id="marquee-a" class="marquee-track"></div></div>
+        <div class="marquee"><div id="marquee-b" class="marquee-track reverse"></div></div>
+      </div>
+      <div class="colorbar" aria-hidden="true"><span class="bg-fucsia"></span><span class="bg-plum"></span><span class="bg-azul"></span><span class="bg-turq"></span><span class="bg-oro"></span></div>
+    </div>
+
+    <!-- Accesos rápidos con fotos -->
+    <div class="bg-white">
+      <div class="max-w-6xl mx-auto px-4 py-9">
+        <h2 class="font-display font-semibold text-[28px] md:text-4xl">¿Qué estás buscando?</h2>
+        <p class="mt-1 text-soft">Elige tu evento o temporada y te mostramos los productos ideales.</p>
+        <div id="event-tiles" class="occ-grid mt-5">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTENIDO ===================== -->
+  <main class="flex-1 w-full">
+
+    <!-- ========== CATÁLOGO ========== -->
+    <div id="catalog-view" class="scroll-mt-14">
+      <div class="max-w-6xl mx-auto px-4 pt-8">
+        <h2 class="font-display font-semibold text-[28px] md:text-4xl" id="catalog-title">Catálogo</h2>
+        <p class="text-sm text-soft mt-1" id="catalog-subtitle"></p>
+        <div id="event-pill" class="hidden mt-3"></div>
+      </div>
+      <div class="sticky top-14 md:top-16 z-30 bg-paper/95 backdrop-blur mt-3">
+        <div id="category-chips" class="max-w-6xl mx-auto px-4 py-3 flex gap-2 overflow-x-auto no-scrollbar"></div>
+      </div>
+      <div class="max-w-6xl mx-auto px-4 pb-10">
+        <div id="products-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5"></div>
+        <div id="catalog-empty" class="hidden text-center py-14">
+          <p class="text-soft" id="catalog-empty-text">No hay productos con esa búsqueda.</p>
+          <button onclick="goHome()" class="mt-4 h-11 px-5 rounded-xl border border-line bg-white font-semibold text-sm">Ver todo el catálogo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== MATERIALES POR METRO (55 cm) ========== -->
+    <div id="materiales-view" class="hidden">
+      <div class="max-w-6xl mx-auto px-4 pt-6 pb-36 md:pb-12">
+        <button onclick="goHome()" class="text-sm text-soft font-semibold mb-3"><i class="fas fa-chevron-left mr-1.5"></i>Inicio</button>
+        <div class="relative overflow-hidden rounded-[28px] bg-oro text-ink p-5 md:p-8 pr-32 md:pr-60 min-h-[150px]">
+          <h2 class="font-display font-semibold text-3xl md:text-5xl leading-[1.02] relative z-10">DTF y vinil por metro</h2>
+          <p class="mt-2 max-w-[44ch] text-ink/80 relative z-10">Rollo de 55 cm de ancho. Se cobra en fracciones de ¼ de metro, con 0.4 cm de separación entre diseños.</p>
+          <img data-img="DTF TEX 1.jfif" alt="" class="absolute -right-6 -bottom-8 w-36 md:w-60 aspect-square object-cover rounded-full border-[5px] border-white rotate-[-8deg]">
+        </div>
+
+        <div class="mt-6 grid lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-7 space-y-5">
+            <fieldset>
+              <legend class="font-bold mb-2">1. Elige el material</legend>
+              <div id="material-cards" class="grid grid-cols-1 sm:grid-cols-3 gap-2.5"></div>
+            </fieldset>
+
+            <fieldset class="bg-white rounded-3xl border border-line p-4 sm:p-5">
+              <legend class="font-bold px-1">2. Medidas de tu diseño</legend>
+              <div class="grid grid-cols-2 gap-3 mt-1">
+                <label class="block"><span class="text-sm text-soft">Ancho (cm)</span>
+                  <input type="number" inputmode="decimal" id="meter-width" value="10" min="0.5" step="0.1" oninput="calculateMeterNesting()" class="mt-1 w-full h-12 px-4 rounded-xl bg-paper border border-line text-lg font-semibold focus:outline-none focus:border-plum"></label>
+                <label class="block"><span class="text-sm text-soft">Alto (cm)</span>
+                  <input type="number" inputmode="decimal" id="meter-height" value="8" min="0.5" step="0.1" oninput="calculateMeterNesting()" class="mt-1 w-full h-12 px-4 rounded-xl bg-paper border border-line text-lg font-semibold focus:outline-none focus:border-plum"></label>
+              </div>
+              <label class="block mt-3"><span class="text-sm text-soft">Cantidad de piezas</span>
+                <div class="mt-1 flex items-center gap-2">
+                  <button type="button" onclick="stepInput('meter-qty',-1)" class="w-12 h-12 rounded-xl bg-paper border border-line text-lg" aria-label="Menos piezas">−</button>
+                  <input type="number" inputmode="numeric" id="meter-qty" value="50" min="1" step="1" oninput="calculateMeterNesting()" class="flex-1 min-w-0 h-12 px-4 rounded-xl bg-paper border border-line text-lg font-semibold text-center focus:outline-none focus:border-plum">
+                  <button type="button" onclick="stepInput('meter-qty',1)" class="w-12 h-12 rounded-xl bg-paper border border-line text-lg" aria-label="Más piezas">+</button>
+                </div>
+              </label>
+              <button onclick="toggleRotateMeterDesign()" id="rotate-meter-btn" class="mt-3 w-full h-12 rounded-xl border border-line bg-white font-semibold text-sm flex items-center justify-center gap-2"><i class="fas fa-rotate"></i> Girar diseño 90° <span class="text-soft font-normal">(normal)</span></button>
+              <p id="meter-hint" class="hidden mt-3 text-sm bg-[#FFF7E0] border border-[#F0DFA6] text-[#6B5414] rounded-xl px-3 py-2.5"></p>
+            </fieldset>
+
+            <fieldset id="vinyl-colors-box" class="hidden bg-white rounded-3xl border border-line p-4 sm:p-5">
+              <legend class="font-bold px-1">Color de vinil: <span id="vinyl-color-name" class="text-plum">Negro</span></legend>
+              <div id="vinyl-swatches" class="flex flex-wrap gap-3 mt-2"></div>
+            </fieldset>
+
+            <fieldset class="bg-white rounded-3xl border border-line p-4 sm:p-5">
+              <legend class="font-bold px-1">3. Servicios extra (opcional)</legend>
+              <div class="divide-y divide-line">
+                <label class="flex items-center justify-between gap-3 py-3 cursor-pointer"><span>Corte <span class="text-soft text-sm">+ $20 por metro</span></span><input type="checkbox" id="srv-corte" onchange="calculateMeterNesting()" class="switch"></label>
+                <label class="flex items-center justify-between gap-3 py-3 cursor-pointer"><span>Depilado <span class="text-soft text-sm">+ $30 por metro</span></span><input type="checkbox" id="srv-depilado" onchange="calculateMeterNesting()" class="switch"></label>
+                <label class="flex items-center justify-between gap-3 py-3 cursor-pointer"><span>Transfer <span class="text-soft text-sm">+ $25 por metro</span></span><input type="checkbox" id="srv-transfer" onchange="calculateMeterNesting()" class="switch"></label>
+                <label class="flex items-center justify-between gap-3 py-3 cursor-pointer"><span>Vectorización o diseño <span class="text-soft text-sm">+ $50 una vez</span></span><input type="checkbox" id="srv-vector" onchange="calculateMeterNesting()" class="switch"></label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="lg:col-span-5 space-y-5 lg:sticky lg:top-24 self-start">
+            <div class="bg-white rounded-3xl border border-line p-4 sm:p-5">
+              <div class="flex items-baseline justify-between gap-3">
+                <h3 class="font-bold" id="meter-title">DTF Textil</h3>
+                <span id="meter-rate" class="text-sm text-soft">$400.00 / m</span>
+              </div>
+              <p class="font-display font-semibold text-4xl mt-2" id="meter-total-price">$0.00 MXN</p>
+              <p class="text-sm text-soft mt-1"><span id="meter-unit-cost">$0.00</span> por pieza aprox.</p>
+              <dl class="mt-4 text-sm grid grid-cols-2 gap-y-2 gap-x-3">
+                <dt class="text-soft">Medida usada</dt><dd id="meter-used-size" class="text-right font-semibold">—</dd>
+                <dt class="text-soft">Piezas por fila</dt><dd id="meter-per-row" class="text-right font-semibold">0</dd>
+                <dt class="text-soft">Filas</dt><dd id="meter-rows" class="text-right font-semibold">0</dd>
+                <dt class="text-soft">Largo usado</dt><dd id="meter-length-cm" class="text-right font-semibold">0 cm</dd>
+                <dt class="text-soft">Fracciones de ¼ m</dt><dd id="meter-fractions" class="text-right font-semibold text-plum">0</dd>
+                <dt class="text-soft">Material</dt><dd id="meter-base-cost" class="text-right">$0.00</dd>
+                <dt class="text-soft">Servicios</dt><dd id="meter-services-cost" class="text-right">$0.00</dd>
+                <dt class="text-soft">Separación</dt><dd class="text-right">0.4 cm</dd>
+              </dl>
+            </div>
+            <details class="bg-white rounded-3xl border border-line p-4 sm:p-5 group" open>
+              <summary class="font-bold cursor-pointer list-none flex justify-between items-center">Así queda en el rollo <i class="fas fa-chevron-down text-soft text-sm group-open:rotate-180 transition-transform"></i></summary>
+              <p class="text-xs text-soft mt-1">Cada franja punteada es ¼ m. La línea fucsia marca dónde termina tu pedido.</p>
+              <div class="mt-3 flex justify-center"><canvas id="meterCanvas" width="330" height="300" class="max-w-full"></canvas></div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="actionbar fixed inset-x-0 z-30 bg-white border-t border-line md:static md:border-0 md:bg-transparent">
+        <div class="max-w-6xl mx-auto px-4 py-3 md:pb-10 md:pt-0 flex items-center gap-2">
+          <div class="md:hidden mr-auto leading-tight min-w-0"><p class="text-xs text-soft">Total</p><p class="font-display font-semibold text-lg" id="meter-total-bar">$0.00</p></div>
+          <button onclick="addMeterQuoteToCart()" class="h-12 w-12 shrink-0 md:w-auto md:px-6 rounded-xl border-2 border-ink font-bold grid place-items-center" aria-label="Agregar al carrito"><span><i class="fas fa-cart-plus"></i><span class="hidden md:inline ml-2">Agregar al carrito</span></span></button>
+          <button onclick="sendMeterQuoteWA()" class="h-12 px-4 md:px-7 rounded-xl bg-[#1FAF5A] text-white font-bold text-[15px] whitespace-nowrap flex items-center gap-2 shrink-0"><i class="fab fa-whatsapp text-lg"></i> Pedir por WhatsApp</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== FICHA DE PRODUCTO ========== -->
+    <div id="product-detail-view" class="hidden">
+      <div class="max-w-6xl mx-auto md:px-4 md:pt-6 pb-40 md:pb-12">
+        <button onclick="goCatalog()" class="hidden md:inline-block text-sm text-soft font-semibold mb-4"><i class="fas fa-chevron-left mr-1.5"></i>Catálogo <span class="mx-1">/</span> <span id="breadcrumb-product-name" class="text-ink">Producto</span></button>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 md:gap-6 lg:gap-8 items-start">
+          <!-- Miniaturas numeradas (escritorio) -->
+          <div id="thumbnails-container" class="hidden lg:flex lg:col-span-2 flex-col gap-3"></div>
+
+          <!-- Imagen principal / galería deslizable -->
+          <div id="detail-media" class="lg:col-span-5 relative lg:bg-transparent">
+            <button onclick="goCatalog()" class="md:hidden absolute top-3 left-3 z-10 w-10 h-10 rounded-full bg-white/90 shadow grid place-items-center" aria-label="Volver al catálogo"><i class="fas fa-chevron-left"></i></button>
+            <button id="detail-fav-btn" onclick="toggleFavorite(currentProduct.id)" class="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-white/90 shadow grid place-items-center text-fucsia" aria-label="Guardar en favoritos"><i class="far fa-heart"></i></button>
+
+            <div id="mobile-gallery" class="lg:hidden flex overflow-x-auto snap-x-mandatory no-scrollbar"></div>
+            <div id="mobile-thumbs" class="lg:hidden flex gap-2 px-4 pt-1 pb-4 overflow-x-auto no-scrollbar"></div>
+
+            <div id="zoom-box" class="zoom-box hidden lg:flex rounded-3xl aspect-square items-center justify-center p-8">
+              <img id="main-product-image" src="" alt="" class="max-h-full max-w-full object-contain bg-white rounded-2xl">
+            </div>
+          </div>
+
+          <!-- Información y pedido -->
+          <div class="lg:col-span-5 px-4 md:px-0 pt-5 lg:pt-0 space-y-5">
+            <div>
+              <button id="detail-category" onclick="goCatalog(currentProduct.category)" class="text-sm font-bold px-3 py-1 rounded-full">Categoría</button>
+              <h1 id="detail-title" class="font-display font-semibold text-[28px] md:text-4xl leading-tight mt-1">Producto</h1>
+              <p id="detail-price" class="text-xl font-bold text-fucsia mt-2">$0.00</p>
+              <p id="detail-description" class="text-[15px] text-soft mt-3 leading-relaxed"></p>
+            </div>
+
+            <div id="detail-colors-box" class="hidden bg-white rounded-3xl border border-line p-4 sm:p-5">
+              <h2 class="font-bold">Color: <span id="detail-color-name" class="font-semibold text-soft">elige uno</span></h2>
+              <div id="detail-colors" class="mt-3 grid grid-cols-8 gap-2.5 max-w-[420px]" role="radiogroup" aria-label="Color del vaso"></div>
+            </div>
+
+            <div class="bg-white rounded-3xl border border-line p-4 sm:p-5 space-y-4">
+              <h2 class="font-bold">Personalízalo</h2>
+              <label class="block"><span class="text-sm text-soft">Nombre o frase</span>
+                <input id="detail-phrase" type="text" placeholder="Ej. Mis XV Valeria, 12 de diciembre" class="mt-1 w-full h-12 px-4 rounded-xl bg-paper border border-line text-base focus:outline-none focus:border-plum"></label>
+              <div id="detail-variant-row" class="grid grid-cols-2 gap-3">
+                <label id="detail-variant-wrap" class="block"><span class="text-sm text-soft" id="detail-variant-label">Opción</span>
+                  <select id="detail-variant" class="mt-1 w-full h-12 px-3 rounded-xl bg-paper border border-line text-base focus:outline-none focus:border-plum"></select></label>
+                <div id="detail-qty-wrap"><span class="text-sm text-soft" id="detail-qty-label">Cantidad</span>
+                  <div class="mt-1 flex items-center h-12 rounded-xl bg-paper border border-line overflow-hidden">
+                    <button onclick="updateQty(-1)" class="w-11 h-full text-lg" aria-label="Menos">−</button>
+                    <input id="qty-input" type="number" inputmode="numeric" value="1" min="1" class="w-full min-w-0 h-full text-center bg-transparent text-base font-semibold focus:outline-none" aria-label="Cantidad">
+                    <button onclick="updateQty(1)" class="w-11 h-full text-lg" aria-label="Más">+</button>
+                  </div>
+                </div>
+              </div>
+              <label id="detail-size-wrap" class="hidden block"><span class="text-sm text-soft">Talla</span>
+                <select id="detail-size" class="mt-1 w-full h-12 px-3 rounded-xl bg-paper border border-line text-base focus:outline-none focus:border-plum"></select></label>
+              <div id="detail-pricing" class="hidden rounded-2xl bg-paper border border-line p-4">
+                <div class="flex items-baseline justify-between gap-3">
+                  <p class="text-sm text-soft">Precio por <span id="detail-unit-word">pieza</span></p>
+                  <p id="detail-unit-price" class="font-bold text-lg"></p>
+                </div>
+                <p id="detail-wholesale-tag" class="hidden mt-1 text-sm font-semibold text-[#1F8A4C]">Precio de mayoreo aplicado</p>
+                <ul id="detail-tiers" class="mt-3 pt-3 border-t border-line text-sm space-y-1"></ul>
+                <p id="detail-group-note" class="mt-2 text-xs text-soft"></p>
+              </div>
+              <label class="block"><span class="text-sm text-soft">Tu diseño o foto (opcional)</span>
+                <input id="detail-file" type="file" accept="image/*,.pdf,.ai,.svg" class="mt-1 w-full text-sm text-soft file:mr-3 file:h-11 file:px-4 file:rounded-xl file:border-0 file:bg-ink file:text-white file:font-semibold cursor-pointer"></label>
+              <button id="detail-quote-btn" onclick="quoteCurrentProduct()" class="w-full h-12 rounded-xl bg-paper border border-line font-semibold flex items-center justify-center gap-2"><i class="fas fa-calculator text-plum"></i> <span>Calcular precio exacto</span></button>
+            </div>
+
+            <div id="detail-actions" class="actionbar fixed inset-x-0 z-30 bg-white border-t border-line px-4 py-3 md:static md:p-0 md:border-0 md:bg-transparent flex items-center gap-2">
+              <div id="detail-total-box" class="hidden leading-tight mr-1 shrink-0"><p class="text-xs text-soft">Total</p><p class="font-display font-semibold text-lg" id="sheet-total-bar">$0.00</p></div>
+              <button onclick="addDetailToCart()" class="flex-1 h-12 rounded-xl bg-fucsia text-white font-bold flex items-center justify-center gap-2"><i class="fas fa-bag-shopping"></i> Agregar al carrito</button>
+              <a id="whatsapp-btn" href="#" target="_blank" rel="noopener" class="h-12 w-12 md:w-auto md:px-5 rounded-xl bg-[#1FAF5A] text-white font-bold flex items-center justify-center gap-2" aria-label="Preguntar por WhatsApp"><i class="fab fa-whatsapp text-xl"></i><span class="hidden md:inline">Preguntar</span></a>
+            </div>
+          </div>
+        </div>
+
+        <section id="sticker-quoter" class="hidden px-4 md:px-0 mt-8 scroll-mt-20">
+          <h2 class="font-display font-semibold text-2xl md:text-3xl">Cotiza tus stickers</h2>
+          <p class="text-soft mt-1 max-w-[60ch]">Hoja tabloide de 33 × 48 cm, área imprimible de 32 × 47 cm y 0.4 cm fijos entre stickers.</p>
+        <div class="mt-4 grid lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-7 space-y-5">
+            <fieldset class="bg-white rounded-3xl border border-line p-4 sm:p-5">
+              <legend class="font-bold px-1">1. Material</legend>
+              <select id="sheet-material-select" onchange="calculateSheetNesting()" class="mt-1 w-full h-12 px-4 rounded-xl bg-paper border border-line text-base font-semibold focus:outline-none focus:border-plum">
+                <option value="couche">Papel couché</option>
+                <option value="opalina">Papel opalina</option>
+                <option value="adhesivo" selected>Papel adhesivo</option>
+                <option value="vinil-blanco">Vinil blanco</option>
+                <option value="vinil-transparente">Vinil transparente</option>
+              </select>
+            </fieldset>
+
+            <fieldset class="bg-white rounded-3xl border border-line p-4 sm:p-5">
+              <legend class="font-bold px-1">2. Medida y cantidad</legend>
+              <div class="grid grid-cols-2 gap-3 mt-1">
+                <label class="block"><span class="text-sm text-soft">Ancho (cm)</span>
+                  <input type="number" inputmode="decimal" id="sheet-width" value="5" min="0.5" step="0.1" oninput="calculateSheetNesting()" class="mt-1 w-full h-12 px-4 rounded-xl bg-paper border border-line text-lg font-semibold focus:outline-none focus:border-plum"></label>
+                <label class="block"><span class="text-sm text-soft">Alto (cm)</span>
+                  <input type="number" inputmode="decimal" id="sheet-height" value="5" min="0.5" step="0.1" oninput="calculateSheetNesting()" class="mt-1 w-full h-12 px-4 rounded-xl bg-paper border border-line text-lg font-semibold focus:outline-none focus:border-plum"></label>
+              </div>
+              <label class="block mt-3"><span class="text-sm text-soft">Cantidad de stickers</span>
+                <div class="mt-1 flex items-center gap-2">
+                  <button type="button" onclick="stepInput('sheet-qty',-10)" class="w-12 h-12 rounded-xl bg-paper border border-line text-sm font-semibold" aria-label="Diez menos">−10</button>
+                  <input type="number" inputmode="numeric" id="sheet-qty" value="100" min="1" step="1" oninput="calculateSheetNesting()" class="flex-1 min-w-0 h-12 px-4 rounded-xl bg-paper border border-line text-lg font-semibold text-center focus:outline-none focus:border-plum">
+                  <button type="button" onclick="stepInput('sheet-qty',10)" class="w-12 h-12 rounded-xl bg-paper border border-line text-sm font-semibold" aria-label="Diez más">+10</button>
+                </div>
+              </label>
+              <p id="sheet-hint" class="hidden mt-3 text-sm bg-[#FFF7E0] border border-[#F0DFA6] text-[#6B5414] rounded-xl px-3 py-2.5"></p>
+            </fieldset>
+
+            <fieldset class="bg-white rounded-3xl border border-line p-4 sm:p-5">
+              <legend class="font-bold px-1">3. Acabados</legend>
+              <p class="text-sm text-soft">Elige los acabados que quieres para tus stickers.</p>
+              <div class="mt-3">
+                <p class="text-sm font-semibold mb-2">Laminado</p>
+                <div class="grid grid-cols-1 min-[420px]:grid-cols-3 gap-2">
+                  <label class="finish"><input type="radio" name="sk-laminado" value="none" onchange="calculateSheetNesting()" checked><span>Sin laminado</span></label>
+                  <label class="finish"><input type="radio" name="sk-laminado" value="one" onchange="calculateSheetNesting()"><span>Un lado</span></label>
+                  <label class="finish"><input type="radio" name="sk-laminado" value="both" onchange="calculateSheetNesting()"><span>Ambos lados</span></label>
+                </div>
+              </div>
+              <div class="mt-3">
+                <p class="text-sm font-semibold mb-2">Suaje</p>
+                <div class="grid grid-cols-1 min-[420px]:grid-cols-3 gap-2">
+                  <label class="finish"><input type="radio" name="sk-suaje" value="none" onchange="calculateSheetNesting()" checked><span>Sin suaje</span></label>
+                  <label class="finish"><input type="radio" name="sk-suaje" value="half" onchange="calculateSheetNesting()"><span>Medio corte</span></label>
+                  <label class="finish"><input type="radio" name="sk-suaje" value="full" onchange="calculateSheetNesting()"><span>Corte completo</span></label>
+                </div>
+              </div>
+              <div class="mt-3">
+                <p class="text-sm font-semibold mb-2">Impresión por el reverso</p>
+                <div class="grid grid-cols-1 min-[420px]:grid-cols-3 gap-2">
+                  <label class="finish"><input type="radio" name="sk-reverso" value="none" onchange="calculateSheetNesting()" checked><span>Sin reverso</span></label>
+                  <label class="finish"><input type="radio" name="sk-reverso" value="yes" onchange="calculateSheetNesting()"><span>Con reverso</span></label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="lg:col-span-5 space-y-5 lg:sticky lg:top-24 self-start">
+            <div class="bg-white rounded-3xl border border-line p-4 sm:p-5">
+              <p class="text-sm text-soft">Precio</p>
+              <p class="font-display font-semibold text-3xl mt-1" id="sheet-total-price">Consultar precio</p>
+              <p class="text-sm text-soft mt-1">Te enviamos tu cotización por WhatsApp.</p>
+              <dl class="mt-4 text-sm grid grid-cols-2 gap-y-2 gap-x-3">
+                <dt class="text-soft">Medida acomodada</dt><dd id="sheet-layout" class="text-right font-semibold">—</dd>
+                <dt class="text-soft">Stickers por fila</dt><dd id="sheet-cols" class="text-right font-semibold">0</dd>
+                <dt class="text-soft">Filas por hoja</dt><dd id="sheet-rows" class="text-right font-semibold">0</dd>
+                <dt class="text-soft">Stickers por hoja</dt><dd id="sheet-per-page" class="text-right font-semibold text-plum">0</dd>
+                <dt class="text-soft">Hojas necesarias</dt><dd id="sheet-total-pages" class="text-right font-semibold text-plum">0</dd>
+                <dt class="text-soft">Lugares libres en la última hoja</dt><dd id="sheet-free-slots" class="text-right">0</dd>
+                <dt class="text-soft">Espacio sobrante por hoja</dt><dd id="sheet-leftover" class="text-right">—</dd>
+                <dt class="text-soft">Separación</dt><dd class="text-right">0.4 cm</dd>
+              </dl>
+            </div>
+            <details class="bg-white rounded-3xl border border-line p-4 sm:p-5 group" open>
+              <summary class="font-bold cursor-pointer list-none flex justify-between items-center">Así queda tu hoja <i class="fas fa-chevron-down text-soft text-sm group-open:rotate-180 transition-transform"></i></summary>
+              <p class="text-xs text-soft mt-1">La línea punteada es el área de impresión de 32 × 47 cm.</p>
+              <div class="mt-3 flex justify-center"><canvas id="sheetCanvas" width="330" height="480" class="max-w-full"></canvas></div>
+            </details>
+          </div>
+        </div>
+        </section>
+
+        <div class="px-4 md:px-0 mt-10">
+          <h2 class="font-display font-bold text-2xl">También te puede gustar</h2>
+          <div id="related-grid" class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================== CONTACTO ===================== -->
+  <footer id="contacto" class="bg-ink text-white scroll-mt-14">
+    <div class="colorbar" aria-hidden="true"><span class="bg-fucsia"></span><span class="bg-plum"></span><span class="bg-azul"></span><span class="bg-turq"></span><span class="bg-oro"></span></div>
+    <div class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-8">
+      <div>
+        <p class="font-display font-semibold text-2xl">PERSONALIZA <span class="text-fucsia">STUDIO</span></p>
+        <p class="text-white/70 mt-2 text-sm max-w-[36ch]">Regalos, recuerdos, ropa y papelería personalizada. Etiquetas en pliego y DTF por metro.</p>
+      </div>
+      <div class="space-y-2 text-sm">
+        <h2 class="font-bold text-base mb-3">Contacto</h2>
+        <p><i class="fab fa-whatsapp w-5 text-[#25D366]"></i> <span id="wa-display"></span></p>
+        <a href="#" data-wa="Hola PERSONALIZA STUDIO, me gustaría hacer un pedido." target="_blank" rel="noopener" class="mt-3 inline-flex h-12 px-5 rounded-xl bg-[#1FAF5A] font-bold items-center gap-2"><i class="fab fa-whatsapp text-lg"></i> Escríbenos</a>
+      </div>
+      <div class="text-sm">
+        <h2 class="font-bold text-base mb-3">Síguenos</h2>
+        <div class="flex gap-3 text-lg">
+          <a href="#" class="w-11 h-11 rounded-full bg-white/10 grid place-items-center hover:bg-white/20" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="w-11 h-11 rounded-full bg-white/10 grid place-items-center hover:bg-white/20" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="w-11 h-11 rounded-full bg-white/10 grid place-items-center hover:bg-white/20" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+    <p class="text-center text-xs text-white/50 pb-8">© <span id="year"></span> PERSONALIZA STUDIO</p>
+  </footer>
+
+  <!-- ===================== BARRA DE PESTAÑAS (móvil) ===================== -->
+  <nav class="tabbar md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-line grid grid-cols-4 text-[11px] font-semibold text-soft" aria-label="Navegación principal">
+    <a href="#" data-nav="catalog" onclick="goHome(); return false;" class="tab flex flex-col items-center justify-center gap-1"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>Inicio<span class="tab-dot w-1 h-1 rounded-full bg-fucsia opacity-0"></span></a>
+    <a href="#" data-nav="catalog-grid" onclick="goCatalog(); return false;" class="tab flex flex-col items-center justify-center gap-1"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>Catálogo<span class="tab-dot w-1 h-1 rounded-full bg-fucsia opacity-0"></span></a>
+    <a href="#" data-nav="materiales" onclick="switchView('materiales'); return false;" class="tab flex flex-col items-center justify-center gap-1"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M6 7v4M10 7v3M14 7v4M18 7v3"/></svg>Por metro<span class="tab-dot w-1 h-1 rounded-full bg-fucsia opacity-0"></span></a>
+    <a href="#" onclick="openCart(); return false;" class="tab relative flex flex-col items-center justify-center gap-1"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M2 3h3l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.9a1.5 1.5 0 0 0 1.5-1.1L21 7H6"/></svg>Carrito<span id="cart-count-tab" class="absolute top-2 left-1/2 ml-2 bg-fucsia text-white text-[10px] min-w-[16px] h-4 px-1 rounded-full grid place-items-center">0</span><span class="tab-dot w-1 h-1 opacity-0"></span></a>
+  </nav>
+
+  <!-- ===================== CARRITO ===================== -->
+  <div id="cart-overlay" class="hidden fixed inset-0 bg-ink/40 z-50" onclick="closeCart()"></div>
+  <aside id="cart-panel" role="dialog" aria-label="Carrito" class="sheet-enter fixed z-50 bg-white flex flex-col
+      inset-x-0 bottom-0 max-h-[88vh] rounded-t-3xl translate-y-full
+      md:inset-x-auto md:top-0 md:right-0 md:bottom-0 md:max-h-none md:h-full md:w-[400px] md:rounded-none md:translate-y-0 md:translate-x-full">
+    <div class="md:hidden mx-auto mt-2 w-10 h-1.5 rounded-full bg-line"></div>
+    <div class="flex items-center justify-between px-5 py-4">
+      <h2 class="font-display font-semibold text-2xl">Tu carrito</h2>
+      <button onclick="closeCart()" class="w-10 h-10 rounded-full bg-paper grid place-items-center" aria-label="Cerrar carrito"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div id="cart-items" class="flex-1 overflow-y-auto px-5 space-y-3"></div>
+    <div class="border-t border-line p-5 space-y-3 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
+      <div class="flex justify-between items-baseline"><span class="text-soft">Total estimado</span><span id="cart-total" class="font-display font-semibold text-2xl">$0.00 MXN</span></div>
+      <p id="cart-note" class="hidden text-xs text-soft">Algunos productos dicen «Consultar precio»: no se suman al total y te confirmamos su precio por WhatsApp.</p>
+      <button onclick="sendCartWA()" class="w-full h-14 rounded-2xl bg-[#1FAF5A] text-white font-bold text-base flex items-center justify-center gap-2"><i class="fab fa-whatsapp text-xl"></i> Enviar pedido por WhatsApp</button>
+      <button onclick="clearCart()" class="w-full text-sm text-soft py-1">Vaciar carrito</button>
+    </div>
+  </aside>
+
+  <div id="toast" role="status" class="fixed left-1/2 -translate-x-1/2 bottom-[calc(140px+env(safe-area-inset-bottom))] md:bottom-8 bg-ink text-white text-sm font-semibold px-5 py-3 rounded-full shadow-lg opacity-0 pointer-events-none transition-opacity z-[60]"></div>
+
+  <!-- ===================== SIMULADOR CELULAR (escritorio) ===================== -->
+  <div id="sim-btn-wrap" class="hidden md:block fixed bottom-5 right-5 z-40">
+    <button onclick="toggleMobileSimulator()" class="h-11 px-4 rounded-full bg-ink text-white text-sm font-semibold shadow-lg flex items-center gap-2"><i class="fas fa-mobile-screen"></i><span id="mobile-sim-label">Ver Simulador Celular</span></button>
+  </div>
+  <div id="sim-overlay" class="hidden fixed inset-0 z-[70] bg-ink/70 flex items-center justify-center p-4">
+    <div style="width:448px;max-width:100%;height:min(880px,94vh);" class="rounded-[46px] border-[12px] border-[#1d1424] bg-[#1d1424] shadow-2xl overflow-hidden relative">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-[#1d1424] rounded-b-2xl z-10"></div>
+      <iframe id="sim-frame" title="Simulador celular" class="w-full h-full bg-white rounded-[34px]"></iframe>
+    </div>
+  </div>
+
+  <!-- ===================== DATOS Y LÓGICA ===================== -->
+  <script>
+    const PAGE_SOURCE = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    const IS_SIM = !!window.__SIM;
+
+    // ---------- CONFIGURACIÓN ----------
+    const WA_NUMBER = '524423530267';          // WhatsApp de PERSONALIZA STUDIO (52 + 442 353 0267)
+    const GITHUB_RAW = 'https://raw.githubusercontent.com/DISENO-Perzonaliza-y-Crea/CONTROL-PEDIDOS/main/';
+    const IMG = name => GITHUB_RAW + encodeURIComponent(name);
+    const SEP = 0.4;
+    const ROLL_W = 55;
+    const FRACTION_CM = 25;
+    const SHEET = { w: 33, h: 48, usableW: 32, usableH: 47 };
+
+    const money = n => '$' + n.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const waLink = text => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+
+    // ---------- BASE DE DATOS DE PRODUCTOS (sin cambios) ----------
+    const DEFAULT_VARIANTS = ['Estándar', 'Especial / Premium'];
+    const productsDatabase = [
+      { id: 'stickers-hoja', name: 'Stickers', category: 'Impresión y Papelería', price: 'Consultar precio', basePrice: null, quote: 'sheet',
+        description: 'Stickers y etiquetas impresos en hoja tabloide de 33×48 cm (área imprimible de 32×47 cm). Elige el material: papel couché, papel opalina, papel adhesivo, vinil blanco o vinil transparente. Acabados opcionales: laminado, suaje e impresión por el reverso.',
+        variants: ['Papel Adhesivo', 'Papel Couché', 'Papel Opalina', 'Vinil Blanco', 'Vinil Transparente'],
+        views: ['STICKERS MEDIDAS.png', 'STICKERS TRANS 1.jfif', 'STICKERS TRANS 2.jfif', 'STICKER 2.jfif', 'STICKER 3.jfif', 'STICKERS 4.jfif', 'LIB COLOREAR 1.png', 'TARJ PRESEN 1.png'] },
+      { id: 'vinil-corte-colores', name: 'Vinil de Corte de Colores', category: 'Materiales por Metro', price: '$640.00 MXN / metro ($160 por ¼ m)', basePrice: 160, quote: 'vinil-corte',
+        description: 'Vinil de corte de color sólido en rollo de 55 cm. Se vende por fracciones de ¼ m con 0.4 cm de separación entre diseños.',
+        variants: ['Negro', 'Blanco', 'Rojo', 'Azul Rey', 'Dorado', 'Rose Gold', 'Verde Menta', 'Amarillo Neón', 'Plata'],
+        views: ['GORRA 2.png', 'GORRA 3.png', 'GORRA 4.png', 'GORRA 5.png'] },
+      { id: 'dtf-textil', name: 'DTF Textil', category: 'Materiales por Metro', price: '$400.00 MXN / metro ($100 por ¼ m)', basePrice: 100, quote: 'dtf-textil',
+        description: 'Impresión DTF Textil por metro lineal (55 cm de ancho útil). Alta definición para estampar algodón, poliéster y mezclas.',
+        variants: ['¼ de metro', '½ metro', '1 metro'],
+        views: ['DTF TEX 1.jfif', 'DTF TEX 2.jfif'] },
+      { id: 'dtf-uv', name: 'DTF UV', category: 'Materiales por Metro', price: '$880.00 MXN / metro ($220 por ¼ m)', basePrice: 220, quote: 'dtf-uv',
+        description: 'Impresión DTF UV por metro lineal (55 cm de ancho útil) con barniz en relieve para vasos, termos, cristal y plásticos.',
+        variants: ['¼ de metro', '½ metro', '1 metro'],
+        views: ['DTF UV 1.png', 'DTF UV 2.png', 'DTF UV 3.jfif', 'DTF UV 4.png'] },
+      { id: 'botella-chupon', name: 'Botella Chupón Infantil 500 ml', category: 'Regalos & Termos', price: 'Desde $180.00 MXN', basePrice: 180,
+        description: 'Botella plástica infantil de 500 ml con tapón chupón ergonómico. Resistente e ideal para la escuela o eventos.',
+        views: ['Botella chupon 500 ml 1.png', 'Botella chupon 500 ml 2.png', 'Botella chupon 500 ml 3.png'] },
+      { id: 'burbujas', name: 'Burbujas Personalizadas', category: 'Eventos y Fiestas', price: 'Desde $13.00 MXN', basePrice: 13,
+        description: 'Frascos de burbujas decorados con etiquetas personalizadas de tu tema o personaje favorito.',
+        variants: ['Burbuja con tarjeta', 'Burbuja personalizada'],
+        views: ['BURBUJAS 1.png', 'BURBUJAS 2.png', 'BURBUJAS 3.png'] },
+      { id: 'burbujas-grandes', name: 'Burbujas Grandes', category: 'Eventos y Fiestas', price: 'Desde $40.00 MXN', basePrice: 40,
+        description: 'Botes de burbujas de formato grande con varita y diseño temático personalizado.',
+        views: ['BURBUJAS GRAN 1.png', 'burbujas grandes 2.png', 'BURBUJAS GRAN 3.png'] },
+      { id: 'bolsa-transparente', name: 'Bolsas Transparentes Personalizadas', category: 'Eventos y Fiestas', price: '$35.00 MXN', basePrice: 35,
+        description: 'Bolsas de acetato o PVC transparente con etiqueta personalizada para dulces o recuerdos.',
+        variants: ['Bolsa transparente'],
+        views: ['Bolsa transparente 1.png', 'Bolsa transparente 2.png', 'Bolsa transparente 3.png'] },
+      { id: 'camisa-blanca', name: 'Camisas / Playeras Blancas Personalizadas', category: 'Ropa y Textiles', price: 'Desde $250.00 MXN', basePrice: 250,
+        description: 'Playeras blancas de poliéster o algodón personalizadas con sublimación o DTF textil.',
+        variants: ['Estampado al frente 25 × 25 cm', 'Diseño en la espalda y logo al frente'], sizes: ['Chica', 'Mediana', 'Grande', 'Extra grande', 'Infantil'],
+        views: ['Camisa blanca 1.png', 'Camisa blanca 2.png', 'Camisa blanca 3.png'] },
+      { id: 'vaso-500-popote', colors: true, name: 'Vasos con Popote 500 ml', category: 'Regalos & Termos', price: '$23.00 MXN', basePrice: 23,
+        description: 'Vasos reutilizables de 500 ml con tapa y popote, personalizados con vinil de alta adherencia.',
+        variants: ['Vaso 500 ml'],
+        views: ['Vaso 500 ml 1.png', 'VASOS POPOTE 500 ML 2.png', 'VASOS POPOTE 500 ML 3.png', 'VASO XV 500 ml .png', 'VASO XV 500 ml amarillo.png', 'VASO XV 500 ml azul.png', 'VASO XV 500 ml dorado.png', 'VASO XV 500 ml naranja.png', 'VASO XV 500 ml plateado.png'] },
+      { id: 'botellas-agua-mini', name: 'Botellas de Agua Mini', category: 'Eventos y Fiestas', price: '$15.00 MXN', basePrice: 15,
+        description: 'Botellitas de agua personalizadas con etiqueta temática resistente a la humedad.',
+        variants: ['Botellita de agua 355 ml'],
+        views: ['botellas agua mini 1.png', 'botellas agua mini 2.png', 'botellas agua mini 3.png'] },
+      { id: 'vaso-770-mono', colors: true, name: 'Vaso 770 ml con Moño', category: 'Regalos & Termos', price: '$35.00 MXN', basePrice: 35,
+        description: 'Vaso de gran capacidad con moño y accesorios decorativos, personalizado para regalos y eventos.',
+        variants: ['Vaso 770 ml con moño'],
+        views: ['VASO 770 ml MOÑO 1.png', 'VASO 770 ml MOÑO 2.png', 'VASO 770 ml MOÑO 3.png', 'VASO 770 ml MOÑO 4.png'] },
+      { id: 'vaso-770-std', colors: true, name: 'Vaso 770 ml Estándar', category: 'Regalos & Termos', price: '$30.00 MXN', basePrice: 30,
+        description: 'Vaso acrílico de 770 ml personalizado con vinil de alta resistencia o impresión UV.',
+        variants: ['Vaso 770 ml sencillo'],
+        views: ['VASO 770 ML 1.png', 'VASO 770 ML 2.png', 'VASO boda 770 ml 1.png', 'VASO boda 770 ml 3.png', 'VASO boda 3.png', 'VASO boda 4.png', 'VASO NAV 770 ml 1.png', 'VASO NAV 770 ml 2.png', 'VASO NAV 770 ml 3.png'] },
+      { id: 'tazas', name: 'Tazas Personalizadas', category: 'Regalos & Termos', price: '$75.00 MXN', basePrice: 75,
+        description: 'Tazas de cerámica de 11 oz impresas en sublimación a todo color con diseños exclusivos o corporativos.',
+        variants: ['Taza blanca 11 oz'],
+        views: ['TAZAS 1.png', 'TAZAS 2.png', 'TAZAS 3.png', 'TAZA M 1.png', 'TAZA M 2.png', 'TAZA M 3.png', 'TAZA M 4.png'] },
+      { id: 'tatuajes', name: 'Tatuajes Temporales Personalizados', category: 'Eventos y Fiestas', price: 'Desde $220.00 MXN / paquete', basePrice: 220,
+        description: 'Planillas de tatuajes temporales para la piel, seguros y divertidos, con tu diseño o temática.',
+        variants: ['Paquete de 20 piezas', 'Paquete de 40 piezas', 'Paquete de 60 piezas', 'Paquete de 100 piezas'],
+        views: ['TATUAJES 1.png', 'Tatuajes 2.png', 'TATU 3.png', 'TATU 4.png'] },
+      { id: 'tarjetas-presentacion', name: 'Tarjetas de Presentación', category: 'Impresión y Papelería', price: '$330.00 MXN / 100 piezas', basePrice: 330,
+        description: 'Paquete de 100 tarjetas de presentación de 8.5 × 5.5 cm en couché grueso, con opción de laminado mate, brillante o suaje.',
+        variants: ['Paquete de 100 tarjetas (8.5 × 5.5 cm)'],
+        views: ['TARJ PRESEN 1.png', 'TARJ PRESEN 2.png', 'TARJ PRESEN 3.png', 'TARJ PRESEN 4.png'] },
+      { id: 'sudaderas', name: 'Sudaderas Personalizadas', category: 'Ropa y Textiles', price: 'Desde $330.00 MXN', basePrice: 330,
+        description: 'Sudaderas de algodón suave personalizadas en DTF textil de alta definición y gran durabilidad.',
+        variants: ['Diseño en el pecho', 'Logo y diseño en la espalda'], sizes: ['Chica', 'Mediana', 'Grande', 'Extra grande', 'Infantil'],
+        views: ['SUD 1.png', 'SUD 2.png', 'SUD 3.png', 'SUD 4.png'] },
+      { id: 'joyero-grande', name: 'Joyero Grande Multisección', category: 'Regalos & Termos', price: 'Consultar precio', basePrice: null,
+        description: 'Joyero amplio con compartimentos y grabado o impresión personalizada.',
+        views: ['JOYERO GRA 1.png', 'JOYERO GRA 2.png', 'JOYERO GRA 3.png', 'JOYERO GRA 4.png'] },
+      { id: 'joyero-cuadrado', name: 'Joyero Cuadrado Personalizado', category: 'Regalos & Termos', price: 'Consultar precio', basePrice: null,
+        description: 'Joyero compacto de formato cuadrado, ideal para viaje o como detalle especial.',
+        views: ['JOYERO CUADRADO 1.png', 'JOYERO CUA 2.png', 'JOYERO CUA 3.png'] },
+      { id: 'gorro-cumple', name: 'Gorro Festejado / Cumpleaños', category: 'Eventos y Fiestas', price: 'Desde $35.00 MXN', basePrice: 35,
+        description: 'Gorritos temáticos impresos a color para fiestas infantiles y celebraciones.',
+        views: ['GORRO CUMPLE 1.png', 'GORRO CUMPLE 2.png', 'GORRO CUMPLE 3 .png', 'GORRO CUMPLE 4.png'] },
+      { id: 'gorras', name: 'Gorras Personalizadas', category: 'Ropa y Textiles', price: '$60.00 MXN', basePrice: 60,
+        description: 'Gorras estilo camionero o cerradas personalizadas con parche, vinil o DTF textil.',
+        variants: ['Gorra personalizada'],
+        views: ['GORRA 2.png', 'GORRA 3.png', 'GORRA 4.png', 'GORRA 5.png'] },
+      { id: 'lonas', name: 'Lonas Impresas para Eventos', category: 'Impresión y Papelería', price: 'Consultar precio', basePrice: null,
+        description: 'Lonas infantiles y publicitarias impresas en alta resolución en gran formato, con dobladillo y ojillos.',
+        views: ['LONA 1.png', 'LONA 2.png', 'LONA 3.png'] },
+      { id: 'llaveros-rect', name: 'Llaveros Rectangulares Personalizados', category: 'Regalos & Termos', price: 'Desde $45.00 MXN', basePrice: 45,
+        description: 'Llaveros rectangulares impresos por ambos lados con tu diseño.',
+        views: ['LLAVERO RECT 1.png', 'LLAVERO RECT 2.png', 'LLAVERO RECT 3.png', 'LLAVEROS NAV 5.png', 'LLAVEROS NAV 6.png'] },
+      { id: 'libros-colorear', name: 'Libros y Sets para Colorear', category: 'Impresión y Papelería', price: 'Consultar precio', basePrice: null,
+        description: 'Libritos para colorear temáticos y personalizados, ideales como recuerdo de fiestas.',
+        views: ['LIB COLOREAR 1.png', 'LIB COLOREAR 2.png', 'LIB COLOREAR 3.png'] },
+      { id: 'carrito-personalizado', name: 'Carrito Personalizado', category: 'Eventos y Fiestas', price: 'Consultar precio', basePrice: null,
+        description: 'Carrito de juguete en empaque personalizado con foto, nombre y fecha. Ideal como recuerdo de XV años, bautizos y cumpleaños.',
+        views: ['CARRITO PERS 1.png', 'CARRITO PERS 2.png', 'CARRITO PERS 3.png'] },
+      { id: 'cojin-xv', name: 'Cojín Personalizado XV Años', category: 'Regalos & Termos', price: 'Consultar precio', basePrice: null,
+        description: 'Cojín suave personalizado con nombre y diseño en vinil dorado o del color que elijas. Perfecto para XV años y regalos especiales.',
+        views: ['Cojín XV 1.png', 'Cojín XV 2.png', 'Cojín XV 3.png', 'Cojín XV 4.png'] },
+      { id: 'caja-dulcera', name: 'Caja Dulcera Personalizada', category: 'Eventos y Fiestas', price: 'Consultar precio', basePrice: null,
+        description: 'Caja dulcera con asa, decorada con el nombre y la temática de tu fiesta. Ideal para cumpleaños, bautizos y recuerdos.',
+        views: ['CAJA DULCE 1.png', 'CAJA DULCE 4.png', 'CAJA DULCE NAV 3.png'] },
+      { id: 'caja-dulcera-navidad', name: 'Caja Dulcera Navideña', category: 'Eventos y Fiestas', price: 'Consultar precio', basePrice: null,
+        description: 'Caja dulcera con asa y diseño navideño personalizado. Perfecta para posadas, intercambios y regalos de temporada.',
+        views: ['CAJA DULCE NAV 1.png', 'CAJA DULCE NAV 3.png', 'CAJA DULCE 4.png'] },
+      { id: 'kit-navideno-pintar', name: 'Kit Navideño para Pintar', category: 'Eventos y Fiestas', price: 'Consultar precio', basePrice: null,
+        description: 'Figura de madera para pintar con pinturas de colores y pincel, en bolsa con diseño navideño personalizado. Ideal para posadas, intercambios y actividades con niños.',
+        views: ['ESFERA PINTAR 1.png', 'ESFERA PINTAR 2.png', 'ESFERA PINTAR 3.png'] },
+      { id: 'esfera-acrilico', name: 'Esfera de Acrílico Personalizada', category: 'Regalos & Termos', price: 'Consultar precio', basePrice: null,
+        description: 'Esfera navideña de acrílico con moño y nombre o diseño personalizado. Ideal para el árbol o como regalo de Navidad.',
+        views: ['ESFERA ACRILICO 1.png', 'EFERA ARCRILICO 2.png'] },
+      { id: 'esfera-3d', name: 'Esfera Navideña 3D Personalizada', category: 'Regalos & Termos', price: 'Consultar precio', basePrice: null,
+        description: 'Esfera navideña con moño y nombre personalizado en relieve. Un detalle único para el árbol de cada integrante de la familia.',
+        views: ['ESFERA 3D 1.png', 'ESFERA 3D 2.png'] },
+      { id: 'carta-reyes', name: 'Carta a los Reyes Magos', category: 'Impresión y Papelería', price: 'Consultar precio', basePrice: null,
+        description: 'Carta impresa y personalizada para que los niños escriban sus deseos a los Reyes Magos.',
+        views: ['CARTA REYES.png'] },
+      { id: 'sobre-santa', name: 'Sobre para Carta a Santa', category: 'Impresión y Papelería', price: 'Consultar precio', basePrice: null,
+        description: 'Sobre navideño impreso y personalizado para enviar la carta a Santa Claus.',
+        views: ['SOBRE SANTA.png'] },
+      { id: 'papel-navideno', name: 'Papel de Baño Navideño', category: 'Regalos & Termos', price: '$50.00 MXN', basePrice: 50,
+        description: 'Rollo de papel de baño con diseño navideño divertido. Perfecto para intercambios y regalos de broma.',
+        variants: ['Papel de baño navideño'],
+        views: ['PAPEL NAV.png'] },
+      { id: 'vaso-termico-grande', colors: true, name: 'Vaso Térmico Grande', category: 'Regalos & Termos', price: 'Consultar precio', basePrice: null,
+        description: 'Vaso térmico de acero inoxidable de 20 oz, personalizado con grabado o diseño. Mantiene tus bebidas frías o calientes.',
+        views: ['VASO TERM GRAND 1.JPG', 'VASO TER GRAND 2.png'] }
+    ];
+    // ---------- EVENTOS Y TEMPORADAS ----------
+    const EVENTS = [
+      { id: 'xv', c1: '#F0479E', c2: '#C41672', deco: 'fa-gem', img: 'VASO XV 500 ml .png', name: 'XV años', icon: 'fa-crown', color: '#E62C91',
+        products: ['cojin-xv', 'vaso-770-mono', 'vaso-500-popote', 'carrito-personalizado', 'caja-dulcera', 'burbujas', 'botellas-agua-mini', 'stickers-hoja', 'lonas', 'joyero-grande', 'joyero-cuadrado'] },
+      { id: 'boda', c1: '#D9B65A', c2: '#A9842C', deco: 'fa-champagne-glasses', img: 'VASO boda 770 ml 1.png', dark: true, name: 'Boda', icon: 'fa-ring', color: '#C8A64B',
+        products: ['vaso-770-mono', 'vaso-770-std', 'tazas', 'botellas-agua-mini', 'bolsa-transparente', 'stickers-hoja', 'lonas', 'joyero-grande', 'joyero-cuadrado'] },
+      { id: 'bautizo', c1: '#2BA3E0', c2: '#1468B0', deco: 'fa-cross', img: 'TAZAS 1.png', name: 'Bautizo y Primera Comunión', icon: 'fa-dove', color: '#168FC7',
+        products: ['tazas', 'carrito-personalizado', 'caja-dulcera', 'burbujas', 'botellas-agua-mini', 'bolsa-transparente', 'stickers-hoja'] },
+      { id: 'cumple', c1: '#22C4D2', c2: '#0E8D9E', deco: 'fa-gift', img: 'GORRO CUMPLE 1.png', name: 'Cumpleaños infantil', icon: 'fa-cake-candles', color: '#16B6C7',
+        products: ['gorro-cumple', 'burbujas', 'burbujas-grandes', 'caja-dulcera', 'botella-chupon', 'libros-colorear', 'tatuajes', 'bolsa-transparente', 'botellas-agua-mini', 'lonas'] },
+      { id: 'baby', c1: '#B48AD8', c2: '#8457B5', deco: 'fa-baby', img: 'botellas agua mini 1.png', name: 'Baby shower', icon: 'fa-baby-carriage', color: '#9B6FC3',
+        products: ['botellas-agua-mini', 'bolsa-transparente', 'burbujas', 'caja-dulcera', 'tazas', 'stickers-hoja'] },
+      { id: 'graduacion', c1: '#6A3A9E', c2: '#3E1C64', deco: 'fa-scroll', img: 'Tatuajes 2.png', name: 'Graduación', icon: 'fa-graduation-cap', color: '#2B1838',
+        products: ['tazas', 'vaso-770-std', 'vaso-770-mono', 'vaso-500-popote', 'vaso-termico-grande', 'camisa-blanca', 'sudaderas', 'llaveros-rect', 'joyero-grande', 'joyero-cuadrado', 'lonas', 'tatuajes'] },
+      { id: 'navidad', c1: '#2DB067', c2: '#167A42', deco: 'fa-snowflake', img: 'ESFERA 3D 1.png', name: 'Navidad y posadas', icon: 'fa-tree', color: '#1F9D55',
+        products: ['caja-dulcera-navidad', 'kit-navideno-pintar', 'esfera-3d', 'esfera-acrilico', 'carta-reyes', 'sobre-santa', 'papel-navideno', 'llaveros-rect', 'tazas', 'sudaderas', 'vaso-770-std', 'vaso-770-mono', 'vaso-500-popote', 'vaso-termico-grande', 'stickers-hoja'] },
+      { id: 'escolar', c1: '#F6A92A', c2: '#E07A0B', deco: 'fa-book-open', img: 'Botella chupon 500 ml 1.png', dark: true, name: 'Escolar', icon: 'fa-pencil', color: '#F2A93B',
+        products: ['botella-chupon', 'vaso-500-popote', 'stickers-hoja', 'llaveros-rect', 'libros-colorear', 'camisa-blanca', 'gorras'] },
+      { id: 'valentin', c1: '#EE3B4E', c2: '#B5132A', deco: 'fa-envelope-open', img: 'LLAVERO RECT 1.png', name: 'San Valentín', icon: 'fa-heart', color: '#D7263D',
+        products: ['tazas', 'vaso-770-mono', 'cojin-xv', 'joyero-grande', 'joyero-cuadrado', 'llaveros-rect'] },
+      { id: 'mama', c1: '#F25DA4', c2: '#CC2F7E', deco: 'fa-heart', img: 'JOYERO CUADRADO 1.png', name: 'Día de las Madres', icon: 'fa-hand-holding-heart', color: '#E62C91',
+        products: ['tazas', 'joyero-grande', 'joyero-cuadrado', 'cojin-xv', 'vaso-770-mono', 'llaveros-rect'] },
+      { id: 'papa', c1: '#2D8FE0', c2: '#1B5EB3', deco: 'fa-glasses', img: 'VASO TERM GRAND 1.JPG', name: 'Día del Padre', icon: 'fa-user-tie', color: '#168FC7',
+        products: ['tazas', 'vaso-termico-grande', 'gorras', 'vaso-770-std', 'llaveros-rect', 'camisa-blanca'] },
+      { id: 'nino', c1: '#2CCBD3', c2: '#119AA8', deco: 'fa-star', img: 'BURBUJAS GRAN 1.png', name: 'Día del Niño', icon: 'fa-child-reaching', color: '#16B6C7',
+        products: ['burbujas', 'burbujas-grandes', 'botella-chupon', 'libros-colorear', 'tatuajes', 'gorro-cumple', 'bolsa-transparente', 'caja-dulcera', 'carrito-personalizado'] },
+      { id: 'maestro', c1: '#A055C9', c2: '#6F2E9A', deco: 'fa-apple-whole', img: 'VASO 770 ML 2.png', name: 'Día del Maestro', icon: 'fa-chalkboard-user', color: '#783C99',
+        products: ['tazas', 'vaso-770-std', 'vaso-770-mono', 'llaveros-rect', 'joyero-cuadrado', 'stickers-hoja'] },
+      { id: 'muertos', c1: '#FA8A5F', c2: '#E2573A', deco: 'fa-ghost', img: 'Bolsa transparente 1.png', name: 'Halloween y Día de Muertos', icon: 'fa-skull', color: '#F47E57',
+        products: ['caja-dulcera', 'bolsa-transparente', 'stickers-hoja', 'tatuajes', 'camisa-blanca', 'tazas'] },
+      { id: 'negocios', c1: '#5B2E7E', c2: '#2E1745', deco: 'fa-handshake', img: 'TARJ PRESEN 1.png', name: 'Empresas', icon: 'fa-store', color: '#2B1838',
+        products: ['tarjetas-presentacion', 'stickers-hoja', 'lonas', 'dtf-textil', 'dtf-uv', 'vinil-corte-colores', 'camisa-blanca', 'gorras', 'vaso-termico-grande', 'tazas'] }
+    ];
+    let activeEvent = null;
+
+    // ---------- COLORES DISPONIBLES PARA TERMOS Y VASOS ----------
+    const CUP_COLORS = [
+      { name: 'Azul marino', hex: '#0A196A' }, { name: 'Rosa', hex: '#F974AD' },
+      { name: 'Naranja', hex: '#F09602' }, { name: 'Gris', hex: '#8B8B8B' },
+      { name: 'Ciruela', hex: '#944280' }, { name: 'Terracota', hex: '#C53904' },
+      { name: 'Verde olivo', hex: '#637150' }, { name: 'Verde', hex: '#68A935' },
+      { name: 'Azul noche', hex: '#0B1D35' }, { name: 'Amarillo', hex: '#E8D44F' },
+      { name: 'Lila', hex: '#89569B' }, { name: 'Rojo', hex: '#A30303' },
+      { name: 'Negro', hex: '#010101' }, { name: 'Rosa pastel', hex: '#E7A9B8' },
+      { name: 'Turquesa', hex: '#60DADF' }, { name: 'Blanco', hex: '#F6F6F6' }
+    ];
+    let selectedCupColor = null;
+
+    // ---------- PRECIOS DE VENTA Y MAYOREO ----------
+    // tiers: { min, max (null = sin límite), price (null = Consultar precio) }.
+    // Una cantidad que no cae en ningún rango también se muestra como «Consultar precio».
+    // group: 'design' = piezas iguales (mismo producto, opción y diseño); 'product' = todas las piezas del producto.
+    const PRICING = {
+      'papel-navideno': { unit: ['pieza', 'piezas'], group: 'product', variants: {
+        'Papel de baño navideño': [{ min: 1, max: 6, price: 50 }, { min: 7, max: null, price: 45 }] } },
+      'burbujas': { unit: ['pieza', 'piezas'], group: 'design', variants: {
+        'Burbuja con tarjeta':   [{ min: 1, max: 25, price: 25 }, { min: 26, max: null, price: 20 }],
+        'Burbuja personalizada': [{ min: 1, max: null, price: 13 }] } },
+      'bolsa-transparente': { unit: ['pieza', 'piezas'], group: 'design', variants: {
+        'Bolsa transparente': [{ min: 1, max: 24, price: 35 }, { min: 25, max: null, price: 28 }] } },
+      'gorras': { unit: ['pieza', 'piezas'], group: 'product', variants: {
+        'Gorra personalizada': [{ min: 1, max: 9, price: 60 }, { min: 10, max: null, price: 50 }] } },
+      'camisa-blanca': { unit: ['pieza', 'piezas'], group: 'product', variants: {
+        'Estampado al frente 25 × 25 cm':        [{ min: 1, max: 9, price: 250 }, { min: 10, max: null, price: 195 }],
+        'Diseño en la espalda y logo al frente': [{ min: 1, max: 9, price: 280 }, { min: 10, max: null, price: 235 }] } },
+      'sudaderas': { unit: ['pieza', 'piezas'], group: 'product', variants: {
+        'Diseño en el pecho':          [{ min: 1, max: 6, price: 330 }, { min: 7, max: null, price: 290 }],
+        'Logo y diseño en la espalda': [{ min: 1, max: 6, price: 355 }, { min: 7, max: null, price: 335 }] } },
+      'tazas': { unit: ['pieza', 'piezas'], group: 'product', variants: {
+        'Taza blanca 11 oz': [{ min: 1, max: 5, price: 75 }, { min: 6, max: null, price: 35 }] } },
+      'botellas-agua-mini': { unit: ['pieza', 'piezas'], group: 'product', variants: {
+        'Botellita de agua 355 ml': [{ min: 1, max: 24, price: 15 }, { min: 25, max: null, price: 10 }] } },
+      'vaso-500-popote': { unit: ['vaso', 'vasos'], group: 'product', variants: {
+        'Vaso 500 ml': [{ min: 1, max: 25, price: 23 }, { min: 26, max: null, price: 19 }] } },
+      'vaso-770-std': { unit: ['vaso', 'vasos'], group: 'product', variants: {
+        'Vaso 770 ml sencillo': [{ min: 1, max: 30, price: 30 }, { min: 31, max: null, price: 27 }] } },
+      'vaso-770-mono': { unit: ['vaso', 'vasos'], group: 'product', variants: {
+        'Vaso 770 ml con moño': [{ min: 1, max: 30, price: 35 }, { min: 31, max: null, price: 32 }] } },
+      'tarjetas-presentacion': { unit: ['paquete', 'paquetes'], group: 'product', pack: true, variants: {
+        'Paquete de 100 tarjetas (8.5 × 5.5 cm)': [{ min: 1, max: null, price: 330 }] } },
+      'tatuajes': { unit: ['paquete', 'paquetes'], group: 'product', pack: true, variants: {
+        'Paquete de 20 piezas':  [{ min: 1, max: null, price: 220 }],
+        'Paquete de 40 piezas':  [{ min: 1, max: null, price: 370 }],
+        'Paquete de 60 piezas':  [{ min: 1, max: null, price: 480 }],
+        'Paquete de 100 piezas': [{ min: 1, max: null, price: 750 }] } }
+    };
+    function tierFor(productId, variant, qty) {
+      const rule = PRICING[productId]; if (!rule) return null;
+      const tiers = rule.variants[variant] || Object.values(rule.variants)[0];
+      const t = tiers.find(t => qty >= t.min && (t.max == null || qty <= t.max));
+      return { price: t ? t.price : null, wholesale: !!t && tiers.indexOf(t) > 0, tiers };
+    }
+    const designKey = (variant, phrase, fileName) => [variant, (phrase || '').trim().toLowerCase(), fileName || ''].join('|');
+    function sameGroup(line, productId, variant, design) {
+      if (line.productId !== productId) return false;
+      return PRICING[productId].group === 'product' || (line.variant === variant && line.design === design);
+    }
+    const unitWord = (productId, n) => PRICING[productId].unit[n === 1 ? 0 : 1];
+    function tierLines(productId, tiers) {
+      const w = n => unitWord(productId, n), out = [];
+      const range = (a, b) => b == null ? `Desde ${a} ${w(2)}` : a === b ? `${a} ${w(a)}` : b === a + 1 ? `${a} y ${b} ${w(2)}` : `${a} a ${b} ${w(2)}`;
+      let next = 1;
+      tiers.forEach((t, i) => {
+        if (t.min > next) out.push({ label: range(next, t.min - 1), price: null });
+        out.push({ label: range(t.min, t.max), price: t.price, wholesale: i > 0 });
+        next = t.max == null ? Infinity : t.max + 1;
+      });
+      return out;
+    }
+
+    const CATEGORIES = ['Todos', 'Regalos & Termos', 'Eventos y Fiestas', 'Ropa y Textiles', 'Impresión y Papelería', 'Materiales por Metro'];
+
+    // ---------- ESTADO ----------
+    const store = {
+      get(k, d) { try { const v = localStorage.getItem('ps_' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+      set(k, v) { try { localStorage.setItem('ps_' + k, JSON.stringify(v)); } catch (e) {} }
+    };
+    let cart = store.get('cart', []);
+    let favorites = store.get('favs', []);
+    let activeCategory = 'Todos';
+    let searchTerm = '';
+    let showOnlyFavs = false;
+    let currentProduct = null;
+    let currentNav = 'catalog';
+
+    const imgFallback = "this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 10 10%22%3E%3Crect width=%2210%22 height=%2210%22 fill=%22%23F8F6FB%22/%3E%3C/svg%3E'";
+
+    // ---------- NAVEGACIÓN ----------
+    function setNav(key) {
+      currentNav = key;
+      document.querySelectorAll('[data-nav]').forEach(a => {
+        if (a.dataset.nav === key) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      });
+    }
+    function switchView(viewName) {
+      if (viewName === 'labels-calculator') { openStickerQuoter(); return; }
+      const map = { 'catalog': 'catalog-view', 'materiales': 'materiales-view', 'detail': 'product-detail-view' };
+      Object.values(map).forEach(id => document.getElementById(id).classList.add('hidden'));
+      document.getElementById(map[viewName] || 'catalog-view').classList.remove('hidden');
+      document.getElementById('home-sections').classList.toggle('hidden', viewName !== 'catalog');
+      document.getElementById('contacto').classList.toggle('hidden', viewName === 'detail' && window.innerWidth < 768);
+      if (viewName !== 'detail') setNav(viewName);
+      if (viewName === 'materiales') calculateMeterNesting();
+      window.scrollTo({ top: 0 });
+    }
+    window.switchView = switchView;
+    window.showSection = switchView;
+
+    function goHome() { resetFilters(); switchView('catalog'); }
+    function goCatalog(category) {
+      switchView('catalog');
+      setNav('catalog-grid');
+      if (category) { activeCategory = category; activeEvent = null; showOnlyFavs = false; searchTerm = ''; renderCatalog(); }
+      requestAnimationFrame(() => document.getElementById('catalog-view').scrollIntoView());
+    }
+    function goContact() { if (!document.getElementById('product-detail-view').classList.contains('hidden')) switchView('catalog'); document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' }); }
+    function resetFilters() { activeCategory = 'Todos'; activeEvent = null; searchTerm = ''; showOnlyFavs = false; document.querySelectorAll('input[type=search]').forEach(i => i.value = ''); renderCatalog(); }
+    function toggleMobileSearch() {
+      const box = document.getElementById('mobile-search');
+      box.classList.toggle('hidden');
+      if (!box.classList.contains('hidden')) document.getElementById('search-input').focus();
+    }
+    function onSearch(v) {
+      searchTerm = v.trim().toLowerCase();
+      showOnlyFavs = false; activeCategory = 'Todos'; activeEvent = null;
+      if (document.getElementById('catalog-view').classList.contains('hidden')) switchView('catalog');
+      renderCatalog();
+      document.getElementById('catalog-view').scrollIntoView();
+    }
+    function stepInput(id, d) {
+      const el = document.getElementById(id);
+      el.value = Math.max(1, (parseInt(el.value) || 0) + d);
+      el.dispatchEvent(new Event('input'));
+    }
+    Object.assign(window, { goHome, goCatalog, goContact, toggleMobileSearch, onSearch, stepInput });
+
+    // ---------- CATÁLOGO ----------
+    const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    const CAT_STYLE = {
+      'Todos': { bg: '#F8F6FB', fg: '#2B1838', solid: '#2B1838' },
+      'Regalos & Termos': { bg: '#FFE3F1', fg: '#B8186F', solid: '#E62C91' },
+      'Eventos y Fiestas': { bg: '#D8F5F8', fg: '#0B7D89', solid: '#16B6C7' },
+      'Ropa y Textiles': { bg: '#DDF0FB', fg: '#0F6F9E', solid: '#168FC7' },
+      'Impresión y Papelería': { bg: '#EFE3F7', fg: '#783C99', solid: '#783C99' },
+      'Materiales por Metro': { bg: '#FFF1CC', fg: '#7A5E12', solid: '#C8A64B' }
+    };
+    const CAT_LABEL = { 'Todos': 'Todo', 'Regalos & Termos': 'Regalos y termos', 'Eventos y Fiestas': 'Fiestas', 'Ropa y Textiles': 'Ropa', 'Impresión y Papelería': 'Papelería', 'Materiales por Metro': 'DTF y vinil' };
+
+    function renderChips() {
+      const box = document.getElementById('category-chips');
+      box.innerHTML = '';
+      CATEGORIES.forEach(cat => {
+        const b = document.createElement('button');
+        const count = cat === 'Todos' ? productsDatabase.length : productsDatabase.filter(p => p.category === cat).length;
+        b.className = 'chip shrink-0 h-10 px-4 rounded-full bg-white border border-line text-sm font-semibold';
+        const on = cat === activeCategory && !showOnlyFavs && !searchTerm && !activeEvent;
+        b.setAttribute('aria-pressed', on);
+        if (on) { b.style.background = CAT_STYLE[cat].solid; b.style.borderColor = CAT_STYLE[cat].solid; b.style.color = cat === 'Materiales por Metro' ? '#2B1838' : '#fff'; }
+        else { b.style.background = CAT_STYLE[cat].bg; b.style.borderColor = 'transparent'; b.style.color = CAT_STYLE[cat].fg; }
+        b.innerHTML = `${CAT_LABEL[cat]} <span class="opacity-60 font-normal">${count}</span>`;
+        b.onclick = () => { activeCategory = cat; activeEvent = null; showOnlyFavs = false; searchTerm = ''; document.querySelectorAll('input[type=search]').forEach(i => i.value = ''); renderCatalog(); };
+        box.appendChild(b);
+      });
+    }
+
+    function productCard(product) {
+      const isFav = favorites.includes(product.id);
+      const card = document.createElement('article');
+      const st = CAT_STYLE[product.category] || CAT_STYLE['Todos'];
+      card.className = 'relative rounded-[22px] overflow-hidden flex flex-col cursor-pointer active:scale-[.98] transition';
+      card.style.background = st.bg;
+      card.onclick = () => openProductDetail(product.id);
+      card.innerHTML = `
+        <div class="p-2 pb-0">
+          <div class="relative aspect-square bg-white rounded-2xl overflow-hidden">
+            <img src="${IMG(product.views[0])}" alt="${product.name}" loading="lazy" onerror="${imgFallback}" class="absolute inset-0 w-full h-full object-contain">
+            <span class="absolute bottom-2 left-2 text-[10px] font-bold text-white rounded-full px-2 py-0.5" style="background:${st.solid}${product.category === 'Materiales por Metro' ? ';color:#2B1838' : ''}">${CAT_LABEL[product.category]}</span>
+          </div>
+        </div>
+        <div class="px-3 pb-3 pt-2.5 flex-1 flex flex-col">
+          <h3 class="text-sm font-bold leading-snug line-clamp-2 text-ink">${product.name}</h3>
+          ${product.colors ? `<div class="flex items-center gap-1 mt-1.5" aria-label="${CUP_COLORS.length} colores disponibles">${CUP_COLORS.slice(0, 7).map(c => `<span class="w-3.5 h-3.5 rounded-full border border-black/10" style="background:${c.hex}"></span>`).join('')}<span class="text-[11px] font-semibold text-soft ml-0.5">+${CUP_COLORS.length - 7}</span></div>` : ''}
+          <p class="mt-auto pt-1.5 text-[13px] font-extrabold" style="color:${st.fg}">${product.price.replace(' MXN', '')}</p>
+        </div>`;
+      const fav = document.createElement('button');
+      fav.className = 'absolute top-2 right-2 w-9 h-9 rounded-full bg-white/90 shadow-sm grid place-items-center text-fucsia';
+      fav.setAttribute('aria-label', isFav ? 'Quitar de favoritos' : 'Guardar en favoritos');
+      fav.innerHTML = `<i class="${isFav ? 'fas' : 'far'} fa-heart"></i>`;
+      fav.onclick = e => { e.stopPropagation(); toggleFavorite(product.id); };
+      card.appendChild(fav);
+      return card;
+    }
+
+    function renderCatalog() {
+      renderChips();
+      const grid = document.getElementById('products-grid');
+      grid.innerHTML = '';
+      let list = productsDatabase;
+      const ev = EVENTS.find(e => e.id === activeEvent);
+      if (showOnlyFavs) list = list.filter(p => favorites.includes(p.id));
+      else if (ev) list = ev.products.map(id => productsDatabase.find(p => p.id === id)).filter(Boolean);
+      else if (activeCategory !== 'Todos') list = list.filter(p => p.category === activeCategory);
+      if (searchTerm) list = list.filter(p => norm(p.name + ' ' + p.category + ' ' + p.description).includes(norm(searchTerm)));
+
+      document.getElementById('catalog-title').textContent = showOnlyFavs ? 'Tus favoritos' : searchTerm ? `Resultados para “${searchTerm}”` : ev ? ev.name : (activeCategory === 'Todos' ? 'Catálogo' : CAT_LABEL[activeCategory]);
+      const pill = document.getElementById('event-pill');
+      pill.classList.toggle('hidden', !ev || showOnlyFavs || !!searchTerm);
+      pill.innerHTML = ev ? `<button onclick="clearEvent()" class="inline-flex items-center gap-2 h-10 pl-2 pr-4 rounded-full text-white text-sm font-semibold" style="background:${ev.color}"><span class="w-7 h-7 rounded-full bg-white/25 grid place-items-center"><i class="fas ${ev.icon} text-xs"></i></span>${ev.name}<i class="fas fa-xmark ml-1 opacity-80"></i><span class="sr-only">Quitar filtro</span></button>` : '';
+      document.getElementById('catalog-subtitle').textContent = `${list.length} producto${list.length === 1 ? '' : 's'}. Toca uno para personalizarlo.`;
+      document.getElementById('catalog-empty').classList.toggle('hidden', list.length > 0);
+      document.getElementById('catalog-empty-text').textContent = showOnlyFavs ? 'Aún no guardas favoritos. Toca el corazón de un producto para guardarlo aquí.' : 'Ningún producto coincide con tu búsqueda. Prueba con otra palabra.';
+      list.forEach(p => grid.appendChild(productCard(p)));
+    }
+    window.renderCatalog = renderCatalog;
+
+    function renderEvents() {
+      const box = document.getElementById('event-tiles');
+      box.innerHTML = EVENTS.map(e => {
+        const n = e.products.filter(id => productsDatabase.some(p => p.id === id)).length;
+        return `<button onclick="showEvent('${e.id}')" class="occ-card" style="--c1:${e.c1};--c2:${e.c2}" aria-label="${e.name}: ver ${n} productos">
+          <span class="occ-body">
+            <span class="occ-badge" aria-hidden="true"><i class="fas ${e.icon}"></i></span>
+            <span class="occ-title">${e.name}</span>
+            <span class="occ-count">${n} producto${n === 1 ? '' : 's'}</span>
+            <i class="fas ${e.deco} occ-deco" aria-hidden="true"></i>
+          </span>
+          <span class="occ-photo"><img src="${IMG(e.img)}" alt="" loading="lazy" onerror="${imgFallback}"></span>
+        </button>`;
+      }).join('');
+    }
+    function showEvent(id) {
+      activeEvent = id; activeCategory = 'Todos'; showOnlyFavs = false; searchTerm = '';
+      document.querySelectorAll('input[type=search]').forEach(i => i.value = '');
+      switchView('catalog'); setNav('catalog-grid'); renderCatalog();
+      requestAnimationFrame(() => document.getElementById('catalog-view').scrollIntoView());
+    }
+    function clearEvent() { activeEvent = null; renderCatalog(); }
+    Object.assign(window, { showEvent, clearEvent });
+
+    function filterCatalogCategory(cat) {
+      if (cat === 'etiquetas') { openStickerQuoter(); return; }
+      goCatalog(cat);
+    }
+    window.filterCatalogCategory = filterCatalogCategory;
+
+    // ---------- FAVORITOS ----------
+    function toggleFavorite(id) {
+      const added = !favorites.includes(id);
+      favorites = added ? [...favorites, id] : favorites.filter(f => f !== id);
+      store.set('favs', favorites);
+      updateFavUI();
+      renderCatalog();
+      if (currentProduct && !document.getElementById('product-detail-view').classList.contains('hidden')) renderRelated();
+      toast(added ? 'Guardado en favoritos' : 'Quitado de favoritos');
+    }
+    function updateFavUI() {
+      const c = document.getElementById('fav-count');
+      c.textContent = favorites.length;
+      c.classList.toggle('hidden', !favorites.length);
+      if (currentProduct) document.getElementById('detail-fav-btn').innerHTML = `<i class="${favorites.includes(currentProduct.id) ? 'fas' : 'far'} fa-heart"></i>`;
+    }
+    function showFavorites() { switchView('catalog'); showOnlyFavs = true; activeEvent = null; renderCatalog(); setNav('catalog-grid'); requestAnimationFrame(() => document.getElementById('catalog-view').scrollIntoView()); }
+    Object.assign(window, { toggleFavorite, showFavorites });
+
+    // ---------- FICHA DE PRODUCTO ----------
+    function selectView(i) {
+      const p = currentProduct;
+      document.getElementById('main-product-image').src = IMG(p.views[i]);
+      document.querySelectorAll('.thumb-btn').forEach(b => b.setAttribute('aria-pressed', +b.dataset.i === i));
+      document.querySelectorAll('.thumb-btn').forEach(b => {
+        const on = +b.dataset.i === i;
+        b.classList.toggle('border-fucsia', on); b.classList.toggle('border-line', !on);
+      });
+    }
+
+    function openProductDetail(productId) {
+      const product = productsDatabase.find(p => p.id === productId);
+      if (!product) return;
+      currentProduct = product;
+
+      document.getElementById('breadcrumb-product-name').textContent = product.name;
+      document.getElementById('detail-category').textContent = CAT_LABEL[product.category] || product.category;
+      const st = CAT_STYLE[product.category] || CAT_STYLE['Todos'];
+      const dc = document.getElementById('detail-category'); dc.style.background = st.bg; dc.style.color = st.fg;
+      document.getElementById('detail-media').style.setProperty('--tint', st.bg);
+      document.getElementById('mobile-gallery').style.background = st.bg;
+      document.getElementById('mobile-thumbs').style.background = st.bg;
+      document.getElementById('zoom-box').style.background = st.bg;
+      document.getElementById('detail-price').style.color = st.fg;
+      document.getElementById('detail-title').textContent = product.name;
+      document.getElementById('detail-price').textContent = product.price;
+      document.getElementById('detail-description').textContent = product.description;
+      document.getElementById('detail-phrase').value = '';
+      document.getElementById('detail-file').value = '';
+      document.getElementById('qty-input').value = 1;
+      document.getElementById('detail-variant').innerHTML = (product.variants || DEFAULT_VARIANTS).map(v => `<option>${v}</option>`).join('');
+      document.getElementById('detail-size-wrap').classList.toggle('hidden', !product.sizes);
+      document.getElementById('detail-size').innerHTML = (product.sizes || []).map(v => `<option>${v}</option>`).join('');
+      const rule = PRICING[product.id];
+      document.getElementById('detail-variant-label').textContent = rule && rule.pack ? 'Paquete' : product.sizes ? 'Diseño' : 'Opción';
+      document.getElementById('detail-qty-label').textContent = rule ? `Cantidad de ${rule.unit[1]}` : 'Cantidad';
+      const single = (product.variants || DEFAULT_VARIANTS).length === 1;
+      document.getElementById('detail-variant-wrap').classList.toggle('hidden', single);
+      document.getElementById('detail-qty-wrap').classList.toggle('col-span-2', single);
+
+      const isSheet = product.quote === 'sheet';
+      document.getElementById('sticker-quoter').classList.toggle('hidden', !isSheet);
+      document.getElementById('detail-variant-row').classList.toggle('hidden', isSheet);
+      document.getElementById('detail-total-box').classList.toggle('hidden', !isSheet && !rule);
+      const quoteBtn = document.getElementById('detail-quote-btn');
+      quoteBtn.classList.toggle('hidden', !product.quote);
+      quoteBtn.querySelector('span').textContent = product.quote === 'sheet' ? 'Personalizar y cotizar' : 'Calcular precio por metro';
+
+      selectedCupColor = null;
+      document.getElementById('detail-colors-box').classList.toggle('hidden', !product.colors);
+      if (product.colors) renderCupColors();
+      updateDetailWA();
+      document.getElementById('main-product-image').alt = product.name;
+
+      // Galería móvil (deslizable) + miniaturas numeradas
+      const gallery = document.getElementById('mobile-gallery');
+      gallery.innerHTML = product.views.map((n, i) => `<div class="snap-center shrink-0 w-full aspect-square relative p-4" data-slide="${i}"><div class="relative w-full h-full bg-white rounded-3xl overflow-hidden"><img src="${IMG(n)}" alt="${product.name}, vista ${i + 1}" onerror="${imgFallback}" class="absolute inset-0 w-full h-full object-contain"></div></div>`).join('');
+      gallery.scrollLeft = 0;
+      const thumbHtml = (n, i, size) => `<button class="thumb-btn relative shrink-0 ${size} rounded-xl border-2 ${i === 0 ? 'border-fucsia' : 'border-line'} bg-white p-1" data-i="${i}" aria-label="Ver foto ${i + 1}">
+          <img src="${IMG(n)}" alt="" onerror="${imgFallback}" class="w-full h-full object-contain rounded-lg">
+          <span class="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full bg-ink text-white text-[10px] font-bold grid place-items-center">${i + 1}</span></button>`;
+      document.getElementById('mobile-thumbs').innerHTML = product.views.map((n, i) => thumbHtml(n, i, 'w-16 h-16')).join('');
+      document.getElementById('thumbnails-container').innerHTML = product.views.map((n, i) => thumbHtml(n, i, 'w-full aspect-square')).join('');
+      document.querySelectorAll('.thumb-btn').forEach(b => b.onclick = () => {
+        const i = +b.dataset.i;
+        selectView(i);
+        gallery.scrollTo({ left: i * gallery.clientWidth, behavior: 'smooth' });
+      });
+      selectView(0);
+
+      updateFavUI();
+      renderRelated();
+      switchView('detail');
+      if (isSheet) calculateSheetNesting();
+      updateDetailPricing();
+    }
+    window.openProductDetail = openProductDetail;
+
+    // Precio en vivo en la ficha (incluye las piezas del mismo grupo que ya están en el carrito)
+    function updateDetailPricing() {
+      const p = currentProduct, rule = p && PRICING[p.id];
+      const box = document.getElementById('detail-pricing');
+      box.classList.toggle('hidden', !rule);
+      if (!rule) return;
+      const qty = Math.max(1, parseInt(document.getElementById('qty-input').value) || 1);
+      const variant = document.getElementById('detail-variant').value;
+      const file = document.getElementById('detail-file').files[0];
+      const design = designKey(variant, document.getElementById('detail-phrase').value, file && file.name);
+      const inCart = cart.filter(l => sameGroup(l, p.id, variant, design)).reduce((s, l) => s + l.qty, 0);
+      const groupQty = qty + inCart;
+      const t = tierFor(p.id, variant, groupQty);
+      document.getElementById('detail-unit-word').textContent = rule.unit[0];
+      document.getElementById('detail-unit-price').textContent = t.price != null ? money(t.price) : 'Consultar precio';
+      document.getElementById('detail-wholesale-tag').classList.toggle('hidden', !(t.wholesale && t.price != null));
+      document.getElementById('sheet-total-bar').textContent = t.price != null ? money(t.price * qty) : 'Consultar';
+      document.getElementById('detail-tiers').innerHTML = tierLines(p.id, t.tiers).map(l =>
+        `<li class="flex justify-between gap-3"><span class="text-soft">${l.label}</span><span class="font-semibold">${l.price != null ? money(l.price) + (rule.pack ? '' : ' c/u') + (l.wholesale ? ' <span class="text-[#1F8A4C]">mayoreo</span>' : '') : 'Consultar precio'}</span></li>`).join('');
+      const note = rule.group === 'design'
+        ? 'El mayoreo cuenta piezas iguales: mismo producto, opción y diseño.'
+        : rule.pack ? 'Precio total por paquete.' : `El mayoreo cuenta todas las ${rule.unit[1]} de este producto en tu pedido.`;
+      document.getElementById('detail-group-note').textContent = note + (inCart ? ` Ya tienes ${inCart} ${unitWord(p.id, inCart)} en el carrito que cuentan para el mayoreo.` : '');
+    }
+    window.updateDetailPricing = updateDetailPricing;
+    ['detail-variant', 'detail-phrase', 'qty-input', 'detail-file'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('input', updateDetailPricing); el.addEventListener('change', updateDetailPricing);
+    });
+    document.getElementById('whatsapp-btn').addEventListener('click', e => {
+      if (currentProduct && currentProduct.quote === 'sheet') { e.preventDefault(); sendSheetQuoteWA(); }
+    });
+
+    document.getElementById('mobile-gallery').addEventListener('scroll', e => {
+      const g = e.currentTarget;
+      const i = Math.round(g.scrollLeft / Math.max(1, g.clientWidth));
+      if (currentProduct && i < currentProduct.views.length) {
+        document.querySelectorAll('#mobile-thumbs .thumb-btn').forEach(b => { const on = +b.dataset.i === i; b.classList.toggle('border-fucsia', on); b.classList.toggle('border-line', !on); });
+      }
+    }, { passive: true });
+
+    function renderCupColors() {
+      const box = document.getElementById('detail-colors');
+      box.innerHTML = '';
+      CUP_COLORS.forEach(c => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'cup-swatch';
+        b.style.background = c.hex;
+        if (['Blanco', 'Amarillo', 'Rosa pastel', 'Turquesa'].includes(c.name)) b.style.setProperty('--check', '#2B1838');
+        b.setAttribute('role', 'radio');
+        b.setAttribute('aria-checked', selectedCupColor === c.name);
+        b.setAttribute('aria-label', c.name);
+        b.title = c.name;
+        b.onclick = () => { selectedCupColor = c.name; renderCupColors(); updateDetailWA(); };
+        box.appendChild(b);
+      });
+      const label = document.getElementById('detail-color-name');
+      label.textContent = selectedCupColor || 'elige uno';
+      label.classList.toggle('text-soft', !selectedCupColor);
+      label.classList.toggle('text-fucsia', !!selectedCupColor);
+    }
+    function updateDetailWA() {
+      const p = currentProduct; if (!p) return;
+      document.getElementById('whatsapp-btn').href = waLink(`Hola PERSONALIZA STUDIO, me interesa el producto: ${p.name}${selectedCupColor ? ` en color ${selectedCupColor}` : ''}`);
+    }
+
+    function renderRelated() {
+      const grid = document.getElementById('related-grid');
+      grid.innerHTML = '';
+      const same = productsDatabase.filter(p => p.id !== currentProduct.id && p.category === currentProduct.category);
+      const others = productsDatabase.filter(p => p.id !== currentProduct.id && p.category !== currentProduct.category);
+      [...same, ...others].slice(0, 4).forEach(p => grid.appendChild(productCard(p)));
+    }
+
+    (function () {
+      const box = document.getElementById('zoom-box');
+      const img = document.getElementById('main-product-image');
+      box.addEventListener('mousemove', e => {
+        const r = box.getBoundingClientRect();
+        img.style.transformOrigin = `${((e.clientX - r.left) / r.width) * 100}% ${((e.clientY - r.top) / r.height) * 100}%`;
+        box.classList.add('zooming');
+      });
+      box.addEventListener('mouseleave', () => box.classList.remove('zooming'));
+    })();
+
+    function updateQty(change) {
+      const input = document.getElementById('qty-input');
+      input.value = Math.max(1, (parseInt(input.value) || 1) + change);
+      updateDetailPricing();
+    }
+    function quoteCurrentProduct() {
+      if (!currentProduct || !currentProduct.quote) return;
+      if (currentProduct.quote === 'sheet') {
+        document.getElementById('sticker-quoter').scrollIntoView({ behavior: 'smooth' });
+      } else {
+        if (currentProduct.quote === 'vinil-corte') {
+          const c = VINYL_COLORS.find(c => c.name === document.getElementById('detail-variant').value);
+          if (c) selectedVinylColor = c;
+        }
+        openMeterCalculator(currentProduct.quote);
+      }
+    }
+    // Cotizador de STICKERS dentro de su ficha
+    function openStickerQuoter() {
+      openProductDetail('stickers-hoja');
+      requestAnimationFrame(() => document.getElementById('sticker-quoter').scrollIntoView());
+    }
+    window.openStickerQuoter = openStickerQuoter;
+
+    function addDetailToCart() {
+      const p = currentProduct;
+      if (p.quote === 'sheet') { addSheetQuoteToCart(); return; }
+      const qty = Math.max(1, parseInt(document.getElementById('qty-input').value) || 1);
+      const phrase = document.getElementById('detail-phrase').value.trim();
+      const variant = document.getElementById('detail-variant').value;
+      const file = document.getElementById('detail-file').files[0];
+      if (p.colors && !selectedCupColor) {
+        toast('Elige el color de tu vaso');
+        document.getElementById('detail-colors-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      const size = p.sizes ? document.getElementById('detail-size').value : '';
+      const details = [p.colors && `color ${selectedCupColor}`, variant, size && `talla ${size}`, phrase && `“${phrase}”`, file && `diseño: ${file.name}`].filter(Boolean).join(', ');
+      if (PRICING[p.id]) {
+        addToCart({ productId: p.id, variant, design: designKey(variant, phrase, file && file.name), name: p.name, details, qty });
+        updateDetailPricing();
+        return;
+      }
+      const unit = p.basePrice;
+      addToCart({ name: p.name, details, qty, unit, total: unit != null ? unit * qty : null });
+    }
+    Object.assign(window, { updateQty, quoteCurrentProduct, addDetailToCart });
+
+    // ---------- CARRITO ----------
+    function addToCart(item) {
+      cart.push(item);
+      store.set('cart', cart);
+      renderCart();
+      toast('Agregado al carrito');
+    }
+    // Aplica precio regular o de mayoreo a cada renglón según el total de su grupo
+    function repriceCart() {
+      cart.forEach(line => {
+        if (!line.productId || !PRICING[line.productId]) return;
+        const groupQty = cart.filter(l => sameGroup(l, line.productId, line.variant, line.design)).reduce((s, l) => s + l.qty, 0);
+        const t = tierFor(line.productId, line.variant, groupQty);
+        line.unit = t.price;
+        line.wholesale = t.wholesale && t.price != null;
+        line.total = t.price != null ? t.price * line.qty : null;
+      });
+    }
+    function renderCart() {
+      repriceCart();
+      const list = document.getElementById('cart-items');
+      const count = cart.reduce((s, i) => s + (i.pieces ? 1 : i.qty), 0);
+      const total = cart.reduce((s, i) => s + (i.total || 0), 0);
+      document.getElementById('cart-count').textContent = count;
+      const tab = document.getElementById('cart-count-tab');
+      tab.textContent = count; tab.classList.toggle('hidden', !count);
+      document.getElementById('cart-count').classList.toggle('hidden', !count);
+      document.getElementById('cart-total-header').textContent = money(total);
+      document.getElementById('cart-total').textContent = money(total) + ' MXN';
+      document.getElementById('cart-note').classList.toggle('hidden', !cart.some(i => i.total == null));
+      if (!cart.length) {
+        list.innerHTML = `<div class="text-center py-10"><p class="text-soft">Tu carrito está vacío.</p><button onclick="closeCart(); goCatalog();" class="mt-4 h-11 px-5 rounded-xl bg-ink text-white font-semibold text-sm">Ver catálogo</button></div>`;
+        return;
+      }
+      list.innerHTML = '';
+      cart.forEach((i, idx) => {
+        const row = document.createElement('div');
+        row.className = 'rounded-2xl bg-paper p-4 flex gap-3 items-start';
+        row.innerHTML = `<div class="flex-1 min-w-0">
+            <p class="font-semibold leading-snug">${i.name}</p>
+            ${i.details ? `<p class="text-sm text-soft mt-0.5 break-words">${i.details}</p>` : ''}
+            <p class="text-sm text-soft mt-0.5">${i.pieces ? i.pieces : 'Cantidad: ' + i.qty + (i.productId && PRICING[i.productId] ? ' ' + unitWord(i.productId, i.qty) : '')}${i.productId && i.unit != null && !PRICING[i.productId].pack ? ` · ${money(i.unit)} c/u` : ''}</p>
+            ${i.wholesale ? '<p class="text-xs font-semibold text-[#1F8A4C] mt-0.5">Precio de mayoreo</p>' : ''}
+            <p class="font-bold mt-1.5">${i.total != null ? money(i.total) : 'Consultar precio'}</p>
+          </div>
+          <button class="w-10 h-10 rounded-full bg-white grid place-items-center text-soft shrink-0" aria-label="Quitar ${i.name}"><i class="fas fa-trash-can"></i></button>`;
+        row.querySelector('button').onclick = () => { cart.splice(idx, 1); store.set('cart', cart); renderCart(); if (currentProduct) updateDetailPricing(); };
+        list.appendChild(row);
+      });
+    }
+    function openCart() {
+      document.getElementById('cart-overlay').classList.remove('hidden');
+      document.getElementById('cart-panel').classList.remove('translate-y-full', 'md:translate-x-full');
+    }
+    function closeCart() {
+      document.getElementById('cart-overlay').classList.add('hidden');
+      document.getElementById('cart-panel').classList.add('translate-y-full', 'md:translate-x-full');
+    }
+    function clearCart() { cart = []; store.set('cart', cart); renderCart(); if (currentProduct) updateDetailPricing(); }
+    function sendCartWA() {
+      if (!cart.length) { toast('Tu carrito está vacío'); return; }
+      repriceCart();
+      const lines = cart.map((i, n) => `${n + 1}. ${i.name}${i.details ? ' (' + i.details + ')' : ''}, ${i.pieces || 'cantidad ' + i.qty}${i.productId && i.unit != null && !PRICING[i.productId].pack ? ' a ' + money(i.unit) + ' c/u' + (i.wholesale ? ' (mayoreo)' : '') : ''}: ${i.total != null ? money(i.total) : 'consultar precio'}`);
+      const total = cart.reduce((s, i) => s + (i.total || 0), 0);
+      window.open(waLink(`Hola PERSONALIZA STUDIO, quiero hacer este pedido:\n\n${lines.join('\n')}\n\nTotal estimado: ${money(total)} MXN`), '_blank');
+    }
+    let toastTimer;
+    function toast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.classList.remove('opacity-0');
+      clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.add('opacity-0'), 1800);
+    }
+    Object.assign(window, { openCart, closeCart, clearCart, sendCartWA });
+
+    // ---------- MATERIALES POR METRO (55 cm) ----------
+    const METER_MATERIALS = {
+      'dtf-textil':  { name: 'DTF Textil', perMeter: 400, img: 'DTF TEX 1.jfif', desc: 'Playeras, sudaderas, gorras y telas.' },
+      'dtf-uv':      { name: 'DTF UV', perMeter: 880, img: 'DTF UV 1.png', desc: 'Vasos, termos, cristal y superficies rígidas.' },
+      'vinil-corte': { name: 'Vinil de Corte de Colores', perMeter: 640, img: 'GORRA 2.png', desc: 'Colores sólidos para textil y rotulación.' }
+    };
+    const VINYL_COLORS = [
+      { name: 'Negro', hex: '#1F1F1F' }, { name: 'Blanco', hex: '#FFFFFF' }, { name: 'Rojo', hex: '#D62828' },
+      { name: 'Azul Rey', hex: '#1D3FBB' }, { name: 'Dorado', hex: '#C9A227' }, { name: 'Rose Gold', hex: '#E0A899' },
+      { name: 'Verde Menta', hex: '#98E2C6' }, { name: 'Amarillo Neón', hex: '#E9FF2E' }, { name: 'Plata', hex: '#BFC3C9' }
+    ];
+    const SERVICES = { corte: 20, depilado: 30, transfer: 25, vector: 50 };
+    let currentMeterMaterial = 'dtf-textil';
+    let meterRotated = false;
+    let selectedVinylColor = VINYL_COLORS[0];
+    let lastMeterQuote = null;
+
+    function renderMaterialCards() {
+      const box = document.getElementById('material-cards');
+      box.innerHTML = '';
+      Object.entries(METER_MATERIALS).forEach(([key, m]) => {
+        const b = document.createElement('button');
+        b.className = 'seg text-left rounded-2xl border-2 border-line bg-white p-3 flex sm:flex-col gap-3 items-center sm:items-start transition';
+        b.setAttribute('aria-pressed', key === currentMeterMaterial);
+        b.innerHTML = `<img src="${IMG(m.img)}" alt="" onerror="${imgFallback}" class="w-16 h-16 sm:w-full sm:h-24 object-contain rounded-xl bg-paper shrink-0">
+          <div class="min-w-0">
+            <p class="font-bold leading-tight">${m.name}</p>
+            <p class="text-xs text-soft mt-0.5">${m.desc}</p>
+            <p class="text-sm font-bold text-fucsia mt-1">${money(m.perMeter)} / m</p>
+          </div>`;
+        b.onclick = () => openMeterCalculator(key, true);
+        box.appendChild(b);
+      });
+    }
+
+    function renderSwatches() {
+      const box = document.getElementById('vinyl-swatches');
+      box.innerHTML = '';
+      VINYL_COLORS.forEach(c => {
+        const b = document.createElement('button');
+        b.className = 'swatch w-10 h-10 rounded-full border border-black/10';
+        b.setAttribute('aria-pressed', c.name === selectedVinylColor.name);
+        b.style.background = c.name === 'Rose Gold' ? 'linear-gradient(135deg,#F2C4B6,#C98C7E)' : c.name === 'Plata' ? 'linear-gradient(135deg,#E6E8EB,#9EA3AA)' : c.name === 'Dorado' ? 'linear-gradient(135deg,#F1D778,#B8901C)' : c.hex;
+        b.title = c.name; b.setAttribute('aria-label', c.name);
+        b.onclick = () => { selectedVinylColor = c; renderSwatches(); calculateMeterNesting(); };
+        box.appendChild(b);
+      });
+      document.getElementById('vinyl-color-name').textContent = selectedVinylColor.name;
+    }
+
+    function openMeterCalculator(key, stay) {
+      if (!METER_MATERIALS[key]) key = 'dtf-textil';
+      currentMeterMaterial = key;
+      const m = METER_MATERIALS[key];
+      document.getElementById('meter-title').textContent = m.name;
+      document.getElementById('meter-rate').textContent = `${money(m.perMeter)} / m`;
+      document.getElementById('vinyl-colors-box').classList.toggle('hidden', key !== 'vinil-corte');
+      renderMaterialCards();
+      renderSwatches();
+      if (!stay) switchView('materiales'); else calculateMeterNesting();
+    }
+
+    function toggleRotateMeterDesign() {
+      meterRotated = !meterRotated;
+      document.getElementById('rotate-meter-btn').innerHTML = `<i class="fas fa-rotate"></i> Girar diseño 90° <span class="text-soft font-normal">(${meterRotated ? 'girado' : 'normal'})</span>`;
+      document.getElementById('rotate-meter-btn').classList.toggle('border-plum', meterRotated);
+      calculateMeterNesting();
+    }
+
+    function meterLayout(w, h, qty) {
+      if (w > ROLL_W || w <= 0 || h <= 0) return null;
+      const perRow = Math.max(1, Math.floor((ROLL_W + SEP) / (w + SEP) + 1e-9));
+      const rows = Math.ceil(qty / perRow);
+      const lengthCm = rows * h + (rows - 1) * SEP;
+      const fractions = Math.max(1, Math.ceil(lengthCm / FRACTION_CM - 1e-9));
+      return { w, h, perRow, rows, lengthCm, fractions };
+    }
+
+    function calculateMeterNesting() {
+      const w0 = parseFloat(document.getElementById('meter-width').value) || 0;
+      const h0 = parseFloat(document.getElementById('meter-height').value) || 0;
+      const qty = Math.max(1, parseInt(document.getElementById('meter-qty').value) || 1);
+      const [w, h] = meterRotated ? [h0, w0] : [w0, h0];
+      const m = METER_MATERIALS[currentMeterMaterial];
+      const hint = document.getElementById('meter-hint');
+
+      const L = meterLayout(w, h, qty);
+      const alt = meterLayout(h, w, qty);
+      if (!L) {
+        hint.textContent = w > ROLL_W ? `Tu diseño mide ${w} cm de ancho y el rollo tiene ${ROLL_W} cm.${alt ? ' Toca “Girar diseño 90°” para acomodarlo.' : ' Reduce la medida para que quepa.'}` : 'Escribe el ancho y el alto de tu diseño.';
+        hint.classList.remove('hidden');
+        ['meter-per-row', 'meter-rows', 'meter-fractions'].forEach(id => document.getElementById(id).textContent = '0');
+        document.getElementById('meter-length-cm').textContent = '—';
+        document.getElementById('meter-total-price').textContent = '$0.00 MXN';
+        document.getElementById('meter-total-bar').textContent = '$0.00';
+        lastMeterQuote = null;
+        drawMeterCanvas(null);
+        return;
+      }
+      if (alt && alt.fractions < L.fractions) {
+        hint.innerHTML = `Si giras el diseño 90° usarías <b>${alt.fractions}</b> fracciones en vez de <b>${L.fractions}</b> y te ahorrarías ${money((L.fractions - alt.fractions) * m.perMeter / 4)}.`;
+        hint.classList.remove('hidden');
+      } else hint.classList.add('hidden');
+
+      const meters = L.fractions / 4;
+      const base = L.fractions * (m.perMeter / 4);
+      let services = 0;
+      const used = [];
+      if (document.getElementById('srv-corte').checked) { services += SERVICES.corte * meters; used.push('Corte'); }
+      if (document.getElementById('srv-depilado').checked) { services += SERVICES.depilado * meters; used.push('Depilado'); }
+      if (document.getElementById('srv-transfer').checked) { services += SERVICES.transfer * meters; used.push('Transfer'); }
+      if (document.getElementById('srv-vector').checked) { services += SERVICES.vector; used.push('Vectorización'); }
+      const total = base + services;
+
+      document.getElementById('meter-used-size').textContent = `${L.w} × ${L.h} cm`;
+      document.getElementById('meter-per-row').textContent = L.perRow;
+      document.getElementById('meter-rows').textContent = L.rows;
+      document.getElementById('meter-length-cm').textContent = `${L.lengthCm.toFixed(1)} cm`;
+      document.getElementById('meter-fractions').textContent = `${L.fractions} (${meters.toFixed(2)} m)`;
+      document.getElementById('meter-base-cost').textContent = money(base);
+      document.getElementById('meter-services-cost').textContent = money(services);
+      document.getElementById('meter-unit-cost').textContent = money(total / qty);
+      document.getElementById('meter-total-price').textContent = money(total) + ' MXN';
+      document.getElementById('meter-total-bar').textContent = money(total);
+
+      lastMeterQuote = { material: m.name, w0, h0, qty, L, meters, base, services, used, total,
+        color: currentMeterMaterial === 'vinil-corte' ? selectedVinylColor.name : null };
+      drawMeterCanvas(L, qty);
+    }
+
+    function drawMeterCanvas(L, qty) {
+      const canvas = document.getElementById('meterCanvas');
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      const cssW = Math.min(330, canvas.parentElement.clientWidth || 330);
+      const lengthDraw = L ? L.fractions * FRACTION_CM : 50;
+      const margin = { l: 34, r: 8, t: 22, b: 10 };
+      const scale = Math.min((cssW - margin.l - margin.r) / ROLL_W, 520 / lengthDraw);
+      const rollW = ROLL_W * scale, rollH = lengthDraw * scale;
+      const cssH = Math.ceil(rollH + margin.t + margin.b);
+      canvas.style.width = cssW + 'px'; canvas.style.height = cssH + 'px';
+      canvas.width = cssW * dpr; canvas.height = cssH * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, cssW, cssH);
+      const x0 = margin.l + ((cssW - margin.l - margin.r) - rollW) / 2, y0 = margin.t;
+
+      ctx.fillStyle = '#6E6178'; ctx.font = '600 11px Figtree, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('55 cm', x0 + rollW / 2, 14);
+      ctx.fillStyle = '#F8F6FB'; ctx.fillRect(x0, y0, rollW, rollH);
+      ctx.strokeStyle = '#CDBFDB'; ctx.lineWidth = 1; ctx.strokeRect(x0 + .5, y0 + .5, rollW - 1, rollH - 1);
+      if (!L) return;
+
+      ctx.textAlign = 'right'; ctx.font = '600 10px Figtree, sans-serif';
+      for (let f = 0; f < L.fractions; f++) {
+        const y = y0 + f * FRACTION_CM * scale;
+        if (f > 0) { ctx.setLineDash([4, 3]); ctx.strokeStyle = '#B9A6CC'; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x0 + rollW, y); ctx.stroke(); ctx.setLineDash([]); }
+        if (L.fractions <= 24 || (f + 1) % 4 === 0) { ctx.fillStyle = '#783C99'; ctx.fillText(((f + 1) / 4 % 1 === 0) ? `${(f + 1) / 4} m` : '¼', x0 - 6, y + Math.min(14, FRACTION_CM * scale - 2)); }
+      }
+
+      const isVinyl = currentMeterMaterial === 'vinil-corte';
+      const fill = isVinyl ? selectedVinylColor.hex : (currentMeterMaterial === 'dtf-uv' ? '#16B6C7' : '#783C99');
+      ctx.globalAlpha = isVinyl ? 0.9 : 0.55;
+      ctx.fillStyle = fill;
+      ctx.strokeStyle = isVinyl && ['Blanco', 'Amarillo Neón'].includes(selectedVinylColor.name) ? '#94A3B8' : 'rgba(43,24,56,.5)';
+      ctx.lineWidth = 0.8;
+      const pw = L.w * scale, ph = L.h * scale, gap = SEP * scale;
+      let n = 0;
+      for (let r = 0; r < L.rows && n < qty; r++) {
+        for (let c = 0; c < L.perRow && n < qty; c++, n++) {
+          const x = x0 + c * (pw + gap), y = y0 + r * (ph + gap);
+          ctx.fillRect(x, y, pw, ph);
+          if (pw > 3 && ph > 3) ctx.strokeRect(x + .4, y + .4, pw - .8, ph - .8);
+        }
+      }
+      ctx.globalAlpha = 1;
+      const usedY = y0 + L.lengthCm * scale;
+      ctx.strokeStyle = '#E62C91'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x0, usedY); ctx.lineTo(x0 + rollW, usedY); ctx.stroke();
+    }
+
+    function meterQuoteText(q) {
+      return `Hola PERSONALIZA STUDIO, quiero cotizar ${q.material}:\n` +
+        `• Diseño: ${q.w0} × ${q.h0} cm${meterRotated ? ' (girado 90°)' : ''}\n• Piezas: ${q.qty}\n` +
+        (q.color ? `• Color: ${q.color}\n` : '') +
+        `• Acomodo: ${q.L.perRow} por fila, ${q.L.rows} filas (${q.L.lengthCm.toFixed(1)} cm)\n` +
+        `• Fracciones de ¼ m: ${q.L.fractions} (${q.meters.toFixed(2)} m)\n` +
+        (q.used.length ? `• Servicios: ${q.used.join(', ')}\n` : '') +
+        `• Total estimado: ${money(q.total)} MXN`;
+    }
+    function sendMeterQuoteWA() { if (!lastMeterQuote) { toast('Revisa las medidas de tu diseño'); return; } window.open(waLink(meterQuoteText(lastMeterQuote)), '_blank'); }
+    function addMeterQuoteToCart() {
+      const q = lastMeterQuote; if (!q) { toast('Revisa las medidas de tu diseño'); return; }
+      addToCart({ name: q.material, details: [`${q.w0}×${q.h0} cm`, q.color, q.used.join(', ')].filter(Boolean).join(', '),
+        qty: 1, pieces: `${q.qty} piezas en ${q.meters.toFixed(2)} m`, total: q.total });
+    }
+    Object.assign(window, { openMeterCalculator, toggleRotateMeterDesign, calculateMeterNesting, sendMeterQuoteWA, addMeterQuoteToCart });
+
+    // ---------- ETIQUETAS POR HOJA 33×48 ----------
+    const SHEET_MATERIALS = {
+      'couche': { name: 'Papel Couché', price: 56 }, 'opalina': { name: 'Papel Opalina', price: 56 },
+      'adhesivo': { name: 'Papel Adhesivo', price: 56 }, 'vinil-blanco': { name: 'Vinil Blanco', price: 88 },
+      'vinil-transparente': { name: 'Vinil Transparente', price: 88 }
+    };
+    // Acabados de STICKERS: costo adicional por hoja
+    const STICKER_FINISHES = {
+      'sk-laminado': { none: { name: 'Sin laminado', price: 0 }, one: { name: 'Laminado de un lado', price: 17.6 }, both: { name: 'Laminado de ambos lados', price: 35.2 } },
+      'sk-suaje':    { none: { name: 'Sin suaje', price: 0 }, half: { name: 'Suaje de medio corte', price: 56 }, full: { name: 'Suaje de corte completo', price: 96 } },
+      'sk-reverso':  { none: { name: 'Sin impresión por el reverso', price: 0 }, yes: { name: 'Impresión por el reverso', price: 17.6 } }
+    };
+    let lastSheetQuote = null;
+
+    function sheetFit(w, h) {
+      const cols = Math.floor((SHEET.usableW + SEP) / (w + SEP) + 1e-9);
+      const rows = Math.floor((SHEET.usableH + SEP) / (h + SEP) + 1e-9);
+      return { w, h, cols, rows, perPage: cols * rows };
+    }
+
+    function calculateSheetNesting() {
+      const w = parseFloat(document.getElementById('sheet-width').value) || 0;
+      const h = parseFloat(document.getElementById('sheet-height').value) || 0;
+      const qty = Math.max(1, parseInt(document.getElementById('sheet-qty').value) || 1);
+      const mat = SHEET_MATERIALS[document.getElementById('sheet-material-select').value];
+      const finishes = Object.keys(STICKER_FINISHES).map(group => {
+        const sel = document.querySelector(`input[name="${group}"]:checked`);
+        return STICKER_FINISHES[group][sel ? sel.value : 'none'];
+      });
+      const hint = document.getElementById('sheet-hint');
+
+      const a = sheetFit(w, h), b = sheetFit(h, w);
+      const fit = (w > 0 && h > 0) ? (b.perPage > a.perPage ? b : a) : { perPage: 0 };
+      if (!fit.perPage) {
+        hint.textContent = (w > 0 && h > 0) ? 'El sticker es más grande que el área imprimible de 32 × 47 cm. Reduce la medida.' : 'Escribe el ancho y el alto de tu sticker.';
+        hint.classList.remove('hidden');
+        ['sheet-per-page', 'sheet-total-pages', 'sheet-cols', 'sheet-rows', 'sheet-free-slots'].forEach(id => document.getElementById(id).textContent = '0');
+        ['sheet-layout', 'sheet-leftover'].forEach(id => document.getElementById(id).textContent = '—');
+        document.getElementById('sheet-total-price').textContent = 'Consultar precio';
+        document.getElementById('sheet-total-bar').textContent = 'Consultar';
+        lastSheetQuote = null; drawSheetCanvas(null); return;
+      }
+      const rotated = fit === b && b.perPage > a.perPage;
+      if (rotated) { hint.textContent = `Acomodamos tus stickers girados porque así caben ${b.perPage} por hoja en vez de ${a.perPage}.`; hint.classList.remove('hidden'); }
+      else hint.classList.add('hidden');
+
+      const pages = Math.ceil(qty / fit.perPage);
+      const base = pages * mat.price;
+      const chosen = finishes.filter(x => x.price > 0);
+      const extrasPerSheet = chosen.reduce((sum, x) => sum + x.price, 0);
+      const extras = pages * extrasPerSheet;
+      const total = base + extras;
+      const usedW = fit.cols * fit.w + (fit.cols - 1) * SEP;
+      const usedH = fit.rows * fit.h + (fit.rows - 1) * SEP;
+      const r1 = n => Math.round(n * 10) / 10;
+
+      document.getElementById('sheet-layout').textContent = `${fit.w} × ${fit.h} cm${rotated ? ' (girado)' : ''}`;
+      document.getElementById('sheet-cols').textContent = fit.cols;
+      document.getElementById('sheet-rows').textContent = fit.rows;
+      document.getElementById('sheet-free-slots').textContent = pages * fit.perPage - qty;
+      document.getElementById('sheet-leftover').textContent = `${r1(SHEET.usableW - usedW)} × ${r1(SHEET.usableH - usedH)} cm`;
+      document.getElementById('sheet-per-page').textContent = fit.perPage;
+      document.getElementById('sheet-total-pages').textContent = pages;
+      // Stickers: el precio se da por WhatsApp (los costos internos siguen calculándose, no se muestran)
+      document.getElementById('sheet-total-price').textContent = 'Consultar precio';
+
+      lastSheetQuote = { mat: mat.name, w, h, qty, fit, pages, base, extrasTotal: extras, total, extras: chosen.map(x => x.name) };
+      const tb = document.getElementById('sheet-total-bar'); if (tb) tb.textContent = 'Consultar';
+      drawSheetCanvas(fit, Math.min(qty, fit.perPage));
+    }
+
+    function drawSheetCanvas(fit, count) {
+      const canvas = document.getElementById('sheetCanvas');
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      const cssW = Math.min(330, canvas.parentElement.clientWidth || 330);
+      const cssH = Math.round(cssW * 480 / 330);
+      canvas.style.width = cssW + 'px'; canvas.style.height = cssH + 'px';
+      canvas.width = cssW * dpr; canvas.height = cssH * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, cssW, cssH);
+      const scale = Math.min((cssW - 20) / SHEET.w, (cssH - 20) / SHEET.h);
+      const sw = SHEET.w * scale, sh = SHEET.h * scale;
+      const x0 = (cssW - sw) / 2, y0 = (cssH - sh) / 2;
+      ctx.shadowColor = 'rgba(43,24,56,.18)'; ctx.shadowBlur = 12; ctx.shadowOffsetY = 4;
+      ctx.fillStyle = '#FFFFFF'; ctx.fillRect(x0, y0, sw, sh);
+      ctx.shadowColor = 'transparent';
+      ctx.strokeStyle = '#E9E3F0'; ctx.strokeRect(x0 + .5, y0 + .5, sw - 1, sh - 1);
+      const mx = (SHEET.w - SHEET.usableW) / 2 * scale, my = (SHEET.h - SHEET.usableH) / 2 * scale;
+      ctx.setLineDash([4, 3]); ctx.strokeStyle = '#B9A6CC'; ctx.strokeRect(x0 + mx, y0 + my, SHEET.usableW * scale, SHEET.usableH * scale); ctx.setLineDash([]);
+      if (!fit) return;
+      const pw = fit.w * scale, ph = fit.h * scale, gap = SEP * scale;
+      ctx.fillStyle = 'rgba(230,44,145,.28)'; ctx.strokeStyle = '#E62C91'; ctx.lineWidth = .8;
+      let n = 0;
+      for (let r = 0; r < fit.rows && n < count; r++) for (let c = 0; c < fit.cols && n < count; c++, n++) {
+        const x = x0 + mx + c * (pw + gap), y = y0 + my + r * (ph + gap);
+        ctx.beginPath();
+        if (ctx.roundRect && pw > 6 && ph > 6) ctx.roundRect(x, y, pw, ph, Math.min(4, pw / 6)); else ctx.rect(x, y, pw, ph);
+        ctx.fill(); ctx.stroke();
+      }
+    }
+
+    function sheetQuoteText(q) {
+      return `Hola PERSONALIZA STUDIO, quiero cotizar STICKERS (hoja 33×48 cm):\n` +
+        `• Material: ${q.mat}\n• Medida: ${q.w} × ${q.h} cm\n• Cantidad: ${q.qty}\n` +
+        `• ${q.fit.perPage} stickers por hoja, ${q.pages} hoja(s)\n` +
+        (q.extras.length ? `• Acabados: ${q.extras.join(', ')}\n` : '') +
+        (document.getElementById('detail-phrase').value.trim() ? `• Texto: ${document.getElementById('detail-phrase').value.trim()}\n` : '') +
+        `¿Me pueden dar el precio?`;
+    }
+    function sendSheetQuoteWA() { if (!lastSheetQuote) { toast('Revisa las medidas de tu sticker'); return; } window.open(waLink(sheetQuoteText(lastSheetQuote)), '_blank'); }
+    function addSheetQuoteToCart() {
+      const q = lastSheetQuote; if (!q) { toast('Revisa las medidas de tu sticker'); return; }
+      const phrase = document.getElementById('detail-phrase').value.trim();
+      const file = document.getElementById('detail-file').files[0];
+      addToCart({ name: `Stickers ${q.mat}`, details: [`${q.w}×${q.h} cm`, ...q.extras, phrase && `“${phrase}”`, file && `diseño: ${file.name}`].filter(Boolean).join(', '), qty: 1, pieces: `${q.qty} stickers en ${q.pages} hoja(s)`, total: null });
+    }
+    Object.assign(window, { calculateSheetNesting, sendSheetQuoteWA, addSheetQuoteToCart });
+
+    // ---------- SIMULADOR CELULAR ----------
+    function toggleMobileSimulator() {
+      const overlay = document.getElementById('sim-overlay');
+      const frame = document.getElementById('sim-frame');
+      const label = document.getElementById('mobile-sim-label');
+      if (overlay.classList.contains('hidden')) {
+        frame.srcdoc = PAGE_SOURCE.replace('<head>', '<head><script>window.__SIM=true<\/script>');
+        overlay.classList.remove('hidden');
+        label.textContent = 'Vista Normal Escritorio';
+      } else {
+        overlay.classList.add('hidden');
+        frame.srcdoc = '';
+        label.textContent = 'Ver Simulador Celular';
+      }
+    }
+    window.toggleMobileSimulator = toggleMobileSimulator;
+    document.getElementById('sim-overlay').addEventListener('click', e => { if (e.target.id === 'sim-overlay') toggleMobileSimulator(); });
+
+    // ---------- INICIO ----------
+    document.querySelectorAll('img[data-img]').forEach(i => { i.src = IMG(i.dataset.img); i.setAttribute('onerror', imgFallback); });
+    document.querySelectorAll('a[data-wa]').forEach(a => a.href = waLink(a.dataset.wa));
+    document.getElementById('wa-display').textContent = '+' + WA_NUMBER.replace(/^52(\d{3})(\d{3})(\d{4})$/, '52 $1 $2 $3');
+    document.getElementById('year').textContent = new Date().getFullYear();
+    if (IS_SIM) { document.getElementById('sim-btn-wrap').remove(); document.getElementById('sim-overlay').remove(); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCart(); const o = document.getElementById('sim-overlay'); if (o && !o.classList.contains('hidden')) toggleMobileSimulator(); } });
+    window.addEventListener('resize', () => {
+      if (!document.getElementById('materiales-view').classList.contains('hidden')) calculateMeterNesting();
+      if (currentProduct && currentProduct.quote === 'sheet' && !document.getElementById('product-detail-view').classList.contains('hidden')) calculateSheetNesting();
+    });
+
+    function buildMarquee() {
+      const half = Math.ceil(productsDatabase.length / 2);
+      const rows = [productsDatabase.slice(0, half), productsDatabase.slice(half)];
+      ['marquee-a', 'marquee-b'].forEach((id, r) => {
+        const items = rows[r];
+        const html = (dup) => items.map(p => `<button class="sticker" ${dup ? 'tabindex="-1" aria-hidden="true"' : ''} aria-label="${p.name}" onclick="openProductDetail('${p.id}')"><img src="${IMG(p.views[0])}" alt="" loading="lazy" onerror="${imgFallback}"></button>`).join('');
+        document.getElementById(id).innerHTML = html(false) + html(true);
+      });
+    }
+    buildMarquee();
+    renderEvents();
+    renderCatalog();
+    renderCart();
+    updateFavUI();
+    renderMaterialCards();
+    renderSwatches();
+    switchView('catalog');
+  </script>
+</body>
+</html>
