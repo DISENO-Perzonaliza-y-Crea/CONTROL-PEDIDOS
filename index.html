@@ -241,6 +241,7 @@
     .benefit-ic { width:52px; height:52px; border-radius:18px; }
     .benefit-ic svg { width:52%; height:52%; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
     @media (min-width:768px) { .benefit-ic { width:72px; height:72px; border-radius:24px; } }
+    #sim-btn-wrap { display:none !important; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col pb-[calc(64px+env(safe-area-inset-bottom))]">
@@ -712,8 +713,9 @@
         description: 'Frascos de burbujas decorados con etiquetas personalizadas de tu tema o personaje favorito.',
         variants: ['Burbuja con tarjeta', 'Burbuja personalizada'],
         views: ['BURBUJAS 1.png', 'BURBUJAS 2.png', 'BURBUJAS 3.png'] },
-      { id: 'burbujas-grandes', name: 'Burbujas Grandes', category: 'Eventos y Fiestas', price: 'Desde $40.00 MXN', basePrice: 40,
+      { id: 'burbujas-grandes', name: 'Burbujas Grandes', category: 'Eventos y Fiestas', price: '$20.00 MXN', basePrice: 20,
         description: 'Botes de burbujas de formato grande con varita y diseño temático personalizado.',
+        variants: ['Burbuja grande'],
         views: ['BURBUJAS GRAN 1.png', 'burbujas grandes 2.png', 'BURBUJAS GRAN 3.png'] },
       { id: 'bolsa-transparente', name: 'Bolsas Transparentes Personalizadas', category: 'Eventos y Fiestas', price: '$35.00 MXN', basePrice: 35,
         description: 'Bolsas de acetato o PVC transparente con etiqueta personalizada para dulces o recuerdos.',
@@ -723,7 +725,7 @@
         description: 'Playeras blancas de poliéster o algodón personalizadas con sublimación o DTF textil.',
         variants: ['Estampado al frente 25 × 25 cm', 'Diseño en la espalda y logo al frente'], sizes: ['Chica', 'Mediana', 'Grande', 'Extra grande', 'Infantil'],
         views: ['Camisa blanca 1.png', 'Camisa blanca 2.png', 'Camisa blanca 3.png'] },
-      { id: 'vaso-500-popote', colors: true, name: 'Vasos con Popote 500 ml', category: 'Regalos & Termos', price: '$23.00 MXN', basePrice: 23,
+      { id: 'vaso-500-popote', colors: true, name: 'Vasos con Popote 500 ml', category: 'Regalos & Termos', price: '$22.00 MXN', basePrice: 22,
         description: 'Vasos reutilizables de 500 ml con tapa y popote, personalizados con vinil de alta adherencia.',
         variants: ['Vaso 500 ml'],
         views: ['Vaso 500 ml 1.png', 'VASOS POPOTE 500 ML 2.png', 'VASOS POPOTE 500 ML 3.png', 'VASO XV 500 ml .png', 'VASO XV 500 ml amarillo.png', 'VASO XV 500 ml azul.png', 'VASO XV 500 ml dorado.png', 'VASO XV 500 ml naranja.png', 'VASO XV 500 ml plateado.png'] },
@@ -739,7 +741,7 @@
         description: 'Vaso acrílico de 770 ml personalizado con vinil de alta resistencia o impresión UV.',
         variants: ['Vaso 770 ml sencillo'],
         views: ['VASO 770 ML 1.png', 'VASO 770 ML 2.png', 'VASO boda 770 ml 1.png', 'VASO boda 770 ml 3.png', 'VASO boda 3.png', 'VASO boda 4.png', 'VASO NAV 770 ml 1.png', 'VASO NAV 770 ml 2.png', 'VASO NAV 770 ml 3.png'] },
-      { id: 'tazas', name: 'Tazas Personalizadas', category: 'Regalos & Termos', price: '$75.00 MXN', basePrice: 75,
+      { id: 'tazas', name: 'Tazas Personalizadas', category: 'Regalos & Termos', price: '$80.00 MXN', basePrice: 80,
         description: 'Tazas de cerámica de 11 oz impresas en sublimación a todo color con diseños exclusivos o corporativos.',
         variants: ['Taza blanca 11 oz'],
         views: ['TAZAS 1.png', 'TAZAS 2.png', 'TAZAS 3.png', 'TAZA M 1.png', 'TAZA M 2.png', 'TAZA M 3.png', 'TAZA M 4.png'] },
@@ -795,14 +797,17 @@
       { id: 'esfera-acrilico', name: 'Esfera de Acrílico Personalizada', category: 'Regalos & Termos', price: 'Consultar precio', basePrice: null,
         description: 'Esfera navideña de acrílico con moño y nombre o diseño personalizado. Ideal para el árbol o como regalo de Navidad.',
         views: ['ESFERA ACRILICO 1.png', 'EFERA ARCRILICO 2.png'] },
-      { id: 'esfera-3d', name: 'Esfera Navideña 3D Personalizada', category: 'Regalos & Termos', price: 'Consultar precio', basePrice: null,
+      { id: 'esfera-3d', name: 'Esfera Navideña 3D Personalizada', category: 'Regalos & Termos', price: '$65.00 MXN', basePrice: 65,
         description: 'Esfera navideña con moño y nombre personalizado en relieve. Un detalle único para el árbol de cada integrante de la familia.',
+        variants: ['Esfera 3D con nombre'],
         views: ['ESFERA 3D 1.png', 'ESFERA 3D 2.png'] },
-      { id: 'carta-reyes', name: 'Carta a los Reyes Magos', category: 'Impresión y Papelería', price: 'Consultar precio', basePrice: null,
+      { id: 'carta-reyes', name: 'Carta a los Reyes Magos', category: 'Impresión y Papelería', price: '$20.00 MXN', basePrice: 20,
         description: 'Carta impresa y personalizada para que los niños escriban sus deseos a los Reyes Magos.',
+        variants: ['Carta a los Reyes Magos'],
         views: ['CARTA REYES.png'] },
-      { id: 'sobre-santa', name: 'Sobre para Carta a Santa', category: 'Impresión y Papelería', price: 'Consultar precio', basePrice: null,
+      { id: 'sobre-santa', name: 'Sobre para Carta a Santa o Reyes', category: 'Impresión y Papelería', price: '$25.00 MXN', basePrice: 25,
         description: 'Sobre navideño impreso y personalizado para enviar la carta a Santa Claus.',
+        variants: ['Sobre para carta'],
         views: ['SOBRE SANTA.png'] },
       { id: 'papel-navideno', name: 'Papel de Baño Navideño', category: 'Regalos & Termos', price: '$50.00 MXN', basePrice: 50,
         description: 'Rollo de papel de baño con diseño navideño divertido. Perfecto para intercambios y regalos de broma.',
@@ -812,6 +817,11 @@
         description: 'Vaso térmico de acero inoxidable de 20 oz, personalizado con grabado o diseño. Mantiene tus bebidas frías o calientes.',
         views: ['VASO TERM GRAND 1.JPG', 'VASO TER GRAND 2.png'] }
     ];
+    // Orden general en todo el sitio: vasos primero, luego los demás productos y al final vinil y DTF
+    (() => {
+      const rank = p => p.category === 'Materiales por Metro' ? 2 : /^vaso/.test(p.id) ? 0 : 1;
+      productsDatabase.sort((a, b) => rank(a) - rank(b));
+    })();
     // ---------- EVENTOS Y TEMPORADAS ----------
     const EVENTS = [
       { id: 'xv', c1: '#F0479E', c2: '#C41672', deco: 'fa-gem', img: 'VASO XV 500 ml .png', name: 'XV años', icon: 'fa-crown', color: '#E83E9B',
@@ -878,14 +888,22 @@
         'Estampado al frente 25 × 25 cm':        [{ min: 1, max: 9, price: 250 }, { min: 10, max: null, price: 195 }],
         'Diseño en la espalda y logo al frente': [{ min: 1, max: 9, price: 280 }, { min: 10, max: null, price: 235 }] } },
       'sudaderas': { unit: ['pieza', 'piezas'], group: 'product', variants: {
-        'Diseño en el pecho':          [{ min: 1, max: 6, price: 330 }, { min: 7, max: null, price: 290 }],
+        'Diseño en el pecho':          [{ min: 1, max: 1, price: 330 }, { min: 2, max: 2, price: 295 }, { min: 3, max: 5, price: 330 }, { min: 6, max: null, price: 275 }],
         'Logo y diseño en la espalda': [{ min: 1, max: 6, price: 355 }, { min: 7, max: null, price: 335 }] } },
       'tazas': { unit: ['pieza', 'piezas'], group: 'product', variants: {
-        'Taza blanca 11 oz': [{ min: 1, max: 5, price: 75 }, { min: 6, max: null, price: 35 }] } },
+        'Taza blanca 11 oz': [{ min: 1, max: 5, price: 80 }, { min: 6, max: null, price: 40 }] } },
+      'burbujas-grandes': { unit: ['pieza', 'piezas'], group: 'product', variants: {
+        'Burbuja grande': [{ min: 1, max: 15, price: 20 }, { min: 16, max: null, price: 17 }] } },
+      'esfera-3d': { unit: ['esfera', 'esferas'], group: 'product', variants: {
+        'Esfera 3D con nombre': [{ min: 1, max: null, price: 65 }] } },
+      'carta-reyes': { unit: ['carta', 'cartas'], group: 'product', variants: {
+        'Carta a los Reyes Magos': [{ min: 1, max: 29, price: 20 }, { min: 30, max: null, price: 10 }] } },
+      'sobre-santa': { unit: ['sobre', 'sobres'], group: 'product', variants: {
+        'Sobre para carta': [{ min: 1, max: null, price: 25 }] } },
       'botellas-agua-mini': { unit: ['pieza', 'piezas'], group: 'product', variants: {
         'Botellita de agua 355 ml': [{ min: 1, max: 24, price: 15 }, { min: 25, max: null, price: 10 }] } },
       'vaso-500-popote': { unit: ['vaso', 'vasos'], group: 'product', variants: {
-        'Vaso 500 ml': [{ min: 1, max: 25, price: 23 }, { min: 26, max: null, price: 19 }] } },
+        'Vaso 500 ml': [{ min: 1, max: 19, price: 22 }, { min: 20, max: null, price: 20 }] } },
       'vaso-770-std': { unit: ['vaso', 'vasos'], group: 'product', variants: {
         'Vaso 770 ml sencillo': [{ min: 1, max: 30, price: 30 }, { min: 31, max: null, price: 27 }] } },
       'vaso-770-mono': { unit: ['vaso', 'vasos'], group: 'product', variants: {
@@ -1054,7 +1072,7 @@
       let list = productsDatabase;
       const ev = EVENTS.find(e => e.id === activeEvent);
       if (showOnlyFavs) list = list.filter(p => favorites.includes(p.id));
-      else if (ev) list = ev.products.map(id => productsDatabase.find(p => p.id === id)).filter(Boolean);
+      else if (ev) list = productsDatabase.filter(p => ev.products.includes(p.id));
       else if (activeCategory !== 'Todos') list = list.filter(p => p.category === activeCategory);
       if (searchTerm) list = list.filter(p => norm(p.name + ' ' + p.category + ' ' + p.description).includes(norm(searchTerm)));
 
@@ -1065,6 +1083,13 @@
       document.getElementById('catalog-subtitle').textContent = `${list.length} producto${list.length === 1 ? '' : 's'}. Toca uno para personalizarlo.`;
       document.getElementById('catalog-empty').classList.toggle('hidden', list.length > 0);
       document.getElementById('catalog-empty-text').textContent = showOnlyFavs ? 'Aún no guardas favoritos. Toca el corazón de un producto para guardarlo aquí.' : 'Ningún producto coincide con tu búsqueda. Prueba con otra palabra.';
+      const isMeter = p => p.category === 'Materiales por Metro';
+      const isVaso = p => /^vaso/.test(p.id);
+      if (!ev && !showOnlyFavs && !searchTerm && activeCategory === 'Todos') {
+        list = [...list.filter(p => isVaso(p)), ...list.filter(p => !isVaso(p) && !isMeter(p)), ...list.filter(isMeter)];
+      } else {
+        list = [...list.filter(p => !isMeter(p)), ...list.filter(isMeter)];
+      }
       list.forEach(p => grid.appendChild(productCard(p)));
     }
     window.renderCatalog = renderCatalog;
